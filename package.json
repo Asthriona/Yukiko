@@ -1,0 +1,32 @@
+{
+  "name": "asthrimodbot",
+  "version": "1.0.0",
+  "description": "A simple discord bot to do moderation stuff and few other function",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Asthriona/AsthriModBob.git"
+  },
+  "keywords": [
+    "Discord",
+    "bot",
+    "Asthri",
+    "Asthriona",
+    "NodeJS",
+    "NPM"
+  ],
+  "author": "Asthriona",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/Asthriona/AsthriModBob/issues"
+  },
+  "homepage": "https://github.com/Asthriona/AsthriModBob#readme",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "dotenv": "^8.2.0",
+    "superagent": "^5.1.0"
+  }
+}
