@@ -76,7 +76,7 @@ if(cmd === `${prefix}ping`){
 
 });
 if (process.env.NODE_ENV === 'production'){
-    bot.login("LOL") 
+    bot.login(botConfig.token) 
 }else{
-    bot.login("ANOTHER LOL") 
+    bot.login(botConfig.tokenDev) 
 };
