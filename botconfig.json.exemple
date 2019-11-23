@@ -1,5 +1,5 @@
 {
-    "token": "NProd bot key",
+    "token": "Prod bot key",
     "tokenDev": "dev bot key",
     "prefix": "a!"
 }
