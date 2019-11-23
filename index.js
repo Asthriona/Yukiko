@@ -7,6 +7,15 @@ var pjson = require('./package.json');
 
 var port = 3000;
 
+var util = require('util');
+var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'w'});
+var log_stdout = process.stdout;
+
+console.log = function(d) { //
+  log_file.write(util.format(d) + '\n');
+  log_stdout.write(util.format(d) + '\n');
+};
+
 console.log("Initializing bot...")
 
 require('dotenv').config();
@@ -110,7 +119,6 @@ if(cmd === `${prefix}Salut`){
 if(cmd === `${prefix}DM`){
     return message.author.send('Pog U!')
 }
-
 //botinfo
 if(cmd === `${prefix}info`){
     let bicon = bot.user.displayAvatarURL;
@@ -130,7 +138,7 @@ if(cmd === `${prefix}info`){
 let y = process.openStdin()
 y.addListener("data", res => {
     let x = res.toString().trim().split(/ +/g)
-    bot.channels.get("638455806144151562").send(x.join(" "));
+    bot.channels.get("647689682955534348").send(x.join(" "));
 })
 });
 
