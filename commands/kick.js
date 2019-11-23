@@ -21,7 +21,7 @@ module.exports.run = async (bot, message, args) => {
     .addField("Reason:", kReason)
 
     let incidentChannel = message.guild.channels.find('name', "incident");
-    if(!incidentChannel) return message.channel.send("Oops Erreur 10-Kick :/ <@186195458182479874> ");
+    if(!incidentChannel) return message.channel.send("Oops Erreur 10-Kicknf :/ <@186195458182479874> ");
 
     let publicKick = new discord.RichEmbed()
     .setDescription(`${kUser} got 10-Ricco'd! for **${kReason}***`)
