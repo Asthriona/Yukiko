@@ -126,7 +126,12 @@ if(cmd === `${prefix}info`){
     .setThumbnail(bicon);
     return message.channel.send(botembed)
 }
-
+//Console Chatter
+let y = process.openStdin()
+y.addListener("data", res => {
+    let x = res.toString().trim().split(/ +/g)
+    bot.channels.get("647689682955534348").send(x.join(" "));
+})
 });
 
 if (process.env.NODE_ENV === 'production'){
