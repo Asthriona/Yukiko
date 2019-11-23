@@ -90,6 +90,9 @@ if(cmd === `${prefix}ping`){
 if(cmd === `${prefix}Salut`){
     return message.channel.send(`Hello ${message.author}!`)
 }
+if(cmd === `${prefix}DM`){
+    return message.author.send('Pog U!')
+}
 
 });
 if (process.env.NODE_ENV === 'production'){
