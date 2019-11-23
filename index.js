@@ -111,6 +111,22 @@ if(cmd === `${prefix}DM`){
     return message.author.send('Pog U!')
 }
 
+//botinfo
+if(cmd === `${prefix}info`){
+    let bicon = bot.user.displayAvatarURL;
+    let botembed = new discord.RichEmbed()
+    .setDescription("Bot Information")
+    .setColor("#800080")
+    .addField("Bot Name", bot.user.username)
+    .addField("Version:", pjson.version)
+    .addField("Developped by", "Asthriona")
+    .addField("Created on", bot.user.createdAt)
+    .addField("Git:", "https://github.com/Asthriona/AsthriModBot")
+    .addField("Server using this bot:", bot.guilds.size)
+    .setThumbnail(bicon);
+    return message.channel.send(botembed)
+}
+
 });
 
 if (process.env.NODE_ENV === 'production'){
