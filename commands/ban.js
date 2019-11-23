@@ -12,7 +12,7 @@ module.exports.run = async (bot, message, args) => {
     if(message.member.hasPermission('BAN_MEMBERS', false, false)){
 
     let embed = new discord.RichEmbed()
-    .setDescription("~Kick!~")
+    .setDescription("~Ban!~")
     .setColor("#800080")
     .addField("Ban user: ", `${kUser} with ID ${kUser.id}`)
     .addField("Ban by: ", `<@${message.author.id}> with ID ${message.author.id}`)
