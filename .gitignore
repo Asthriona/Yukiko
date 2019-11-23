@@ -62,3 +62,4 @@ typings/
 
 botconfig.json
 .env
+./node_modules
