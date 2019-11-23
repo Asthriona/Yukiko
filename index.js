@@ -41,6 +41,7 @@ fs.readdir("./commands", (err, files) => {
         bot.commands.set(props.help.name, props);
     });
     console.log("Files Loaded, Moving on!")
+    console.log(`\x1b[32mAsthriona Mod Bot\x1b[0m is now started and running in \x1b[31m${process.env.NODE_ENV} \x1b[0menvironement!`)
 });
 console.log('Setting bot presence...')
 bot.on('ready', () =>{
@@ -95,6 +96,7 @@ if(cmd === `${prefix}DM`){
 }
 
 });
+
 if (process.env.NODE_ENV === 'production'){
     bot.login(botConfig.token) 
 }else{
