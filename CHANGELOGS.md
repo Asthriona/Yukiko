@@ -13,7 +13,8 @@ Cette page me sert a noter l'avancement du bot au file des mise a jours, j'y not
 + Add help (WIP)
 + Add help-commands (WIP)
 + Add help-game (WIP)
-+ uptime
++ Add uptime
++ Add Clear (1 - 100)
 ### Bug
 + Les raison des warn ne peuvent contenire qu'un mot.
 + Uptime Non fonctionel
