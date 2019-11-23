@@ -10,7 +10,7 @@ module.exports.run = async (bot, message, args) => {
     console.log(`${message.author.username} -> ${botmessage}`)
     message.channel.send(botmessage);
 }else{
-    return message.reply("No.");
+    return message.reply("No. https://cdn.asthriona.com/DKUR9Tk.png");
 }
 }
 
