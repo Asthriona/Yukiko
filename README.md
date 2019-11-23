@@ -6,6 +6,7 @@ A simple discord bot to do moderation stuff and few other function
 + ban (avec raison)
 + kick (avec raison)
 + Mute
++ warn
 
 ## Everyone
 + report
@@ -16,11 +17,11 @@ A simple discord bot to do moderation stuff and few other function
 
 # utilisation:
 ## ban :
-```a!ban [@Utilisateur] [Raison]```
-
+```a!ban [@Utilisateur] [Raison]```  
+(Note: Cette commande nessecite un channel #incident sur le serveur ou elle est taper.)
 ## Kick
-```a!kick [@Utilisateur] [Raison]```
-
+```a!kick [@Utilisateur] [Raison]```  
+(Note: Cette commande nessecite un channel #incident sur le serveur ou elle est taper.)
 ## Report
 ```a!report [@Utilisateur] [Raison]```  
 (Note: Cette commande supprimeras le message de l'utilisateur l'ayant taper. pour garder l'anonymat de l'utilisateur ayant envoyer le rapport, cependent les admin peuvent savoirs qui a envoyer ce raport afin de vous contacter en DM pour avoirs plus d'infos sur l'incident. (contact valable sur le serveur de KIRA.))  
@@ -28,10 +29,15 @@ A simple discord bot to do moderation stuff and few other function
 (Note2: Cette commande nessecite un channel #report sur le serveur ou elle est taper.)
 
 ## Mute 
-```a!mute [@Utilisateur] [Time] [Raison]```
+```a!mute [@Utilisateur] [Time] [Raison]```  
 Le temps s'éxprime en anglais par exemple pour mute pendent 10 secondes  
-"```a!mute @Everyone 10s booli!```"
+"```a!mute @Everyone 10s booli!```"  
 Remplacez le "s" par "h" pour mute pendent 10 heures ou par "d" pour mute pendent 10 jours.
+
+## warn 
+```a!warn [@Utilisateur] [Raison]```  
+(Note: Cette commande nessecite un channel #incident sur le serveur ou elle est taper.)
+
 ## ping
 ``` a!ping ```  
 Heu... Pong?
