@@ -38,9 +38,9 @@ fs.readdir("./commands", (err, files) => {
     jsfile.forEach((f, i) =>{
         let props = require(`./commands/${f}`);
         console.log(`${f} Loaded!`);
-        console.log("Files Loaded, Moving on!")
         bot.commands.set(props.help.name, props);
     });
+    console.log("Files Loaded, Moving on!")
 });
 console.log('Setting bot presence...')
 bot.on('ready', () =>{
@@ -49,7 +49,7 @@ bot.on('ready', () =>{
         game: {
             name: 'Developement',
             type: 'PLAYING',
-            url: 'https://www.asthriona.com/'
+            url: 'https://www.asthriona.com/'            
         }
     });
 });
@@ -58,6 +58,19 @@ bot.on('message', async message =>{
     if(message.author.bot) return;
     if(message.channel.type === "dm") return;
 
+    var date = new Date();
+    var dd = String(date.getDate()).padStart(2, '0');
+    var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = date.getFullYear();
+    var hs = date.getHours();
+    var min = date.getMinutes();
+    var sec = date.getSeconds();
+    var ms = date.getMilliseconds();
+    date = hs +':'+ min +':'+ sec +':'+ ms + ' -- ' + mm + '/' + dd + '/' + yyyy + ' ->';
+
+    //Log
+    console.log(`${date} ${message.guild.name} -> ${message.author.username}: ${message.content}`)
+
     let prefix = botConfig.prefix;
     let messageArray = message.content.split(" ");
     let cmd = messageArray[0];
@@ -65,7 +78,7 @@ bot.on('message', async message =>{
 
 
 //Commands Handler
-console.log("Reading Commands Handler...")
+//console.log("Reading Commands Handler...")
 let commandfile = bot.commands.get(messageArray[0].slice(prefix.length));
 if(commandfile) commandfile.run(bot,message,args);
 
@@ -73,6 +86,9 @@ if(commandfile) commandfile.run(bot,message,args);
 if(cmd === `${prefix}ping`){
     console.log(`${message.author.user} used !ping on ${message.guild.name}`)
     return message.channel.send("Pong!");
+}
+if(cmd === `${prefix}Salut`){
+    return message.channel.send(`Hello ${message.author}!`)
 }
 
 });
