@@ -130,7 +130,7 @@ if(cmd === `${prefix}info`){
 let y = process.openStdin()
 y.addListener("data", res => {
     let x = res.toString().trim().split(/ +/g)
-    bot.channels.get("647689682955534348").send(x.join(" "));
+    bot.channels.get("638455806144151562").send(x.join(" "));
 })
 });
 
