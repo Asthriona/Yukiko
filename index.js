@@ -48,11 +48,24 @@ bot.on('ready', () =>{
     bot.user.setStatus('online');
     bot.user.setPresence({
         game: {
-            name: 'Developement',
-            type: 'PLAYING',
+            name: 'Asthriona.com',
+            type: 'WATCHING',
             url: 'https://www.asthriona.com/'            
         }
     });
+     var channelprod = bot.channels.get(botConfig.channelprod);
+     let bicon = bot.user.displayAvatarURL;
+     let versionembed = new discord.RichEmbed()
+     .setColor("#800080")
+     .setAuthor('Bot Online!', 'https://cdn.discordapp.com/emojis/515665388495962112.png', 'https://github.com/Asthriona')
+     .addField("Bot Status:", "Ready!")
+     .addField("Version:", pjson.version)
+     .addField("Version name: ", pjson.codeName)
+     .addField("Environement", `${process.env.NODE_ENV}`)
+     .addField('ChangsLogs:', 'https://git.io/JeufX')
+     .setFooter(`Hosted by Sirius Media Group`, `${bicon}`, 'https://TheWall.ovh')
+     .setThumbnail(bicon);
+     return channelprod.sendMessage(versionembed);
 });
 
 bot.on('message', async message =>{

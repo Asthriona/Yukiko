@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A simple discord bot to do moderation stuff and few other function",
   "main": "index.js",
+  "codeName": "[I'm finally awake.]",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
