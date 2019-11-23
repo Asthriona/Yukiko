@@ -7,6 +7,7 @@ A simple discord bot to do moderation stuff and few other function
 + kick (avec raison)
 + Mute
 + warn
++ clear
 
 ## Everyone
 + report
@@ -37,6 +38,10 @@ Remplacez le "s" par "h" pour mute pendent 10 heures ou par "d" pour mute penden
 ## warn 
 ```a!warn [@Utilisateur] [Raison]```  
 (Note: Cette commande nessecite un channel #incident sur le serveur ou elle est taper.)
+
+## Clear 
+```a!clear [1 - 100]```  
+Supprimer  un nombre de message (L'API de discord ne permet que de supprimer 100 message par commande au max. Si vous avez plus de message a supprimer, retapez la commande.)
 
 ## ping
 ``` a!ping ```  
