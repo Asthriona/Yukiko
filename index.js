@@ -76,7 +76,7 @@ bot.on('ready', () =>{
         .addField('ChangsLogs:', 'https://git.io/JeiBi')
         .setFooter(`Hosted by Sirius Media Group`, `${bicon}`, 'https://TheWall.ovh')
         .setThumbnail(bicon);
-        return channelprod.sendMessage(versionembed);  
+        return channelprod.sendMessage(versionembed), channeldev.sendMessage(versionembed);  
     }
 });
 
@@ -138,7 +138,7 @@ if(cmd === `${prefix}info`){
 let y = process.openStdin()
 y.addListener("data", res => {
     let x = res.toString().trim().split(/ +/g)
-    bot.channels.get("647689682955534348").send(x.join(" "));
+    bot.channels.get("638455806144151562").send(x.join(" "));
 })
 });
 
