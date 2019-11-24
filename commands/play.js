@@ -11,7 +11,7 @@ module.exports.run = async (bot, message, args) => {
             url: "https://www.twitch.tv/Asthriona"
         }
 });
-}elseelse{
+}else{
     return message.reply("No. https://cdn.asthriona.com/DKUR9Tk.png");
 }
 }
