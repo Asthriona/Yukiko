@@ -76,7 +76,7 @@ bot.on('ready', () =>{
         .addField('ChangsLogs:', 'https://git.io/JeiBi')
         .setFooter(`Hosted by Sirius Media Group`, `${bicon}`, 'https://TheWall.ovh')
         .setThumbnail(bicon);
-        return channelprod.sendMessage(versionembed), channeldev.sendMessage(versionembed);  
+        return channelprod.sendMessage(versionembed);  
     }
 });
 
