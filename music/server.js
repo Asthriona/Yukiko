@@ -1,6 +1,7 @@
 var botConfig = require('../botconfig.json');
 var discord = require("discord.js");
 var ytdl = require('ytdl-core');
+require('dotenv').config();
 var streamOptions ={
     seek: 0,
     volume: 0.3
@@ -70,5 +71,9 @@ bot.on('message', async message =>{
     }
     if(message.guild.connection) message.guild.voiceConnection.disconnect();
 });
-bot.login(botConfig.tokenDev)
+if (process.env.NODE_ENV === 'production'){
+    bot.login(botConfig.token) 
+}else{
+    bot.login(botConfig.tokenDev) 
+};
 console.log('Music module is ready!')
