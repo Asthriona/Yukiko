@@ -15,6 +15,19 @@ Cette page me sert a noter l'avancement du bot au file des mise a jours, j'y not
 + Add help-game (WIP)
 + Add uptime
 + Add Clear (1 - 100)
+  
+# 1.0.1
+## ***[OwO]?***  
++ Fix: permission warn/unwarn (la commande est maintenant restrainte au staff.)  
++ Fix: Erreur Ban sans raison (une raison est maintenant obligatoire.)
++ Fix: Erreur Kick sans raison (Une raison est maintenant Obligatoire.)
++ Fix: Permission commande Watch, Play, stream (les membre n'y ont plus acces.)
++ Edit: Changement de liens sur la commande a!help
++ Edit: Traduction francaise a!server-info
++ Edit: Traduction francaise a!info
++ Update: Change logs
++ Suppressions: Weebness de Ash.
+
 ### Bug
 + Les raison des warn ne peuvent contenire qu'un mot.
 + Uptime Non fonctionel
@@ -23,8 +36,8 @@ Cette page me sert a noter l'avancement du bot au file des mise a jours, j'y not
 + les commands a!help a!help-commands et a!help-game ne sont pas fonctionel pour le moment car non-terminer.
 
 ## Road-Map
-+ System d'XP
-+ System de monaie
-+ Leaderboard
-+ commande ranking via Image (A la mee6)
-+ Image Leaderboard
++ System d'XP ***(Prévue en 1.1)***
++ System de monaie ***(Prévue en 1.2)***
++ Leaderboard ***(Prévue en 1.2)***
++ commande ranking via Image ***(A la mee6) (Prévue en 1.2)***
++ Image Leaderboard ***(prévue en 1.2)***
