@@ -12,7 +12,7 @@ module.exports.run = async (bot, message, args) => {
         }
 });
 }else{
-    return message.reply("No. https://cdn.asthriona.com/DKUR9Tk.png");
+    return message.reply("Oy! Tu peut pas changer le jeu au quelle je joue! c'est moi qui decide!");
 }
 }
 module.exports.help = {

@@ -123,14 +123,15 @@ if(cmd === `${prefix}DM`){
 if(cmd === `${prefix}info`){
     let bicon = bot.user.displayAvatarURL;
     let botembed = new discord.RichEmbed()
-    .setDescription("Bot Information")
+    .setTitle("A propos de ce bot")
+    .setDescription("this bot can make your cat explode, Mount the DOGO, burn your egg and clean your house. (but not your room. we tested all of this.(RIP my cat...))")
     .setColor("#800080")
-    .addField("Bot Name", bot.user.username)
+    .addField("Nom du bot", bot.user.username)
     .addField("Version:", pjson.version)
-    .addField("Developped by", "Asthriona")
-    .addField("Created on", bot.user.createdAt)
+    .addField("Developper par", "Asthriona")
+    .addField("Crée le", bot.user.createdAt)
     .addField("Git:", "https://github.com/Asthriona/AsthriModBot")
-    .addField("Server using this bot:", bot.guilds.size)
+    .addField("Nombre de serveur utilisant ce bot: ", bot.guilds.size)
     .setThumbnail(bicon);
     return message.channel.send(botembed)
 }

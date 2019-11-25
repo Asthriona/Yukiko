@@ -6,11 +6,11 @@ module.exports.run = async (bot, message, args) => {
         .setDescription("Server Information")
         .setColor("#800080")
         .setThumbnail(sicon)
-        .addField("Server Name", message.guild.name)
-        .addField("Created on", message.guild.createdAt)
-        .addField("You joined", message.member.joinedAt)
-        .addField("Server Owner", message.guild.owner)
-        .addField("Total members", message.guild.memberCount)
+        .addField("Nom du serveur", message.guild.name)
+        .addField("Crée le", message.guild.createdAt)
+        .addField("Vous l'avez rejoint le: ", message.member.joinedAt)
+        .addField("Propriétaire: ", message.guild.owner)
+        .addField("Nombre de membre: ", message.guild.memberCount)
         return message.channel.send(serverembed);
 }
 
