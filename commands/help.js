@@ -16,7 +16,7 @@ module.exports.run = async (bot, message, args) => {
 //    .setFooter('clique ici pour une liste complete des commandes.', bot.user.displayAvatarURL)
 //
 //    message.channel.send(embed)
-message.reply("<https://github.com/Asthriona/AsthriModBot/blob/master/README.md>")
+message.reply("Clique! -> <https://sh.nishikino.me/f8db2>")
 }
 
 module.exports.help = {
