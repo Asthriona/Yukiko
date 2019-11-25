@@ -1,9 +1,9 @@
 {
   "name": "asthrimodbot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple discord bot to do moderation stuff and few other function",
   "main": "index.js",
-  "codeName": "[I'm finally awake.]",
+  "codeName": "[OwO]?",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
