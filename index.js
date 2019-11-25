@@ -73,7 +73,7 @@ bot.on('ready', () =>{
         .addField("Version:", pjson.version)
         .addField("Version name: ", pjson.codeName)
         .addField("Environement", `${process.env.NODE_ENV}`)
-        .addField('ChangsLogs:', 'https://git.io/JeiBi')
+        .addField('ChangsLogs:', 'https://sh.nishikino.me/e0c79')
         .setFooter(`Hosted by Sirius Media Group`, `${bicon}`, 'https://TheWall.ovh')
         .setThumbnail(bicon);
         return channelprod.sendMessage(versionembed);  
@@ -127,7 +127,7 @@ if(cmd === `${prefix}info`){
     .setDescription("this bot can make your cat explode, Mount the DOGO, burn your egg and clean your house. (but not your room. we tested all of this.(RIP my cat...))")
     .setColor("#800080")
     .addField("Nom du bot", bot.user.username)
-    .addField("Version:", pjson.version)
+    .addField("Version:", `${pjson.version } ${pjson.codeName}`)
     .addField("Developper par", "Asthriona")
     .addField("Crée le", bot.user.createdAt)
     .addField("Git:", "https://github.com/Asthriona/AsthriModBot")
