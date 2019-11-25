@@ -5,11 +5,12 @@ var util = require('util');
 var http = require('http');
 var pjson = require('./package.json');
 
-var port = 3000;
-
 var util = require('util');
 var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'w'});
 var log_stdout = process.stdout;
+//Import music module
+require('./music/server')
+
 
 console.log = function(d) { //
   log_file.write(util.format(d) + '\n');
@@ -22,11 +23,9 @@ require('dotenv').config();
 console.log("Initializing bot in " + process.env.NODE_ENV + " Environement.")
 
 //WebServer For ping monitoring
-http.createServer(function(req, res) {
-    res.write(fs.readFileSync('./monitoring/index.html'));
-    res.end();
-}).listen(port);
-console.log(`Starting Web Server for ping monitoring on port ${port}`);
+console.log("Initializing WebServer...")
+require("./web/server")
+
 
 //DiscordBot
 console.log('Initializing Discord API');
@@ -36,7 +35,7 @@ bot.commands = new discord.Collection();
 //commands Handler
 console.log("Initializing commands handler");
 fs.readdir("./commands", (err, files) => {
-    if(err) console.log("Woops! Somthing wrong happen! " + (err));
+    if(err) console.log("Woops! Somthing wrong sucessfully happen! " + (err));
 
     let jsfile = files.filter(f => f.split(".").pop() === "js")
     if(jsfile.length <= 0){
@@ -58,6 +57,7 @@ bot.on('ready', () =>{
     bot.user.setPresence({
         game: {
             name: 'Asthriona.com',
+            //name: 'Developement...',
             type: 'WATCHING',
             url: 'https://www.asthriona.com/'            
         }
@@ -99,8 +99,8 @@ bot.on('message', async message =>{
 
     let prefix = botConfig.prefix;
     let messageArray = message.content.split(" ");
-    let cmd = messageArray[0];
     let args = messageArray.slice(1);
+    let cmd = messageArray[0];
 
 
 //Commands Handler
@@ -123,16 +123,19 @@ if(cmd === `${prefix}DM`){
 if(cmd === `${prefix}info`){
     let bicon = bot.user.displayAvatarURL;
     let botembed = new discord.RichEmbed()
+    .setThumbnail('https://cdn.discordapp.com/icons/647689682381045772/ee4fb06d56cffabf4e7e2851ee5836cc.jpg')
     .setTitle("A propos de ce bot")
     .setDescription("this bot can make your cat explode, Mount the DOGO, burn your egg and clean your house. (but not your room. we tested all of this.(RIP my cat...))")
     .setColor("#800080")
     .addField("Nom du bot", bot.user.username)
     .addField("Version:", `${pjson.version } ${pjson.codeName}`)
     .addField("Developper par", "Asthriona")
+    .addField("Developper Website", "https://Asthriona.com")
     .addField("Crée le", bot.user.createdAt)
+    //.addField("Sur le serveur depuis:", bot.user.joinedAt)
     .addField("Git:", "https://github.com/Asthriona/AsthriModBot")
     .addField("Nombre de serveur utilisant ce bot: ", bot.guilds.size)
-    .setThumbnail(bicon);
+    //.setThumbnail(bicon);
     return message.channel.send(botembed)
 }
 //Console Chatter
