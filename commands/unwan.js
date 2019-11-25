@@ -22,6 +22,8 @@ module.exports.run = async (bot, message, args) => {
         });
         message.reply("Warn has been removed. Now:" + warns[wUser.id].warns)
 
+}else{
+    return message.reply("Seul les admin et modo ont le droit d'unwarn! D:<")
 }
 }
 
