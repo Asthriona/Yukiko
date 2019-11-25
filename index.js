@@ -52,15 +52,25 @@ fs.readdir("./commands", (err, files) => {
     console.log(`\x1b[32mAsthriona Mod Bot\x1b[0m is now started and running in \x1b[31m${process.env.NODE_ENV} \x1b[0menvironement!`)
 });
 console.log('Setting bot presence...')
+
 bot.on('ready', () =>{
-    bot.user.setStatus('online');
-    bot.user.setPresence({
-        game: {
-            name: 'Asthriona.com',
-            //name: 'Developement...',
-            type: 'WATCHING',
-            url: 'https://www.asthriona.com/'            
-        }
+    if (process.env.NODE_ENV == "production") {
+        bot.user.setStatus('dnd');
+        bot.user.setPresence({
+            game: {
+                name: 'Asthriona.com',
+                type: "WATCHING",
+            }
+        })
+    } else {
+        bot.user.setStatus('dnd');
+        bot.user.setPresence({
+            game: {
+                name: 'Developement',
+                type: "WATCHING",
+            }
+        })
+    }
     });
     if (process.env.NODE_ENV == "production") {
         var channelprod = bot.channels.get(botConfig.channelprod);
@@ -78,7 +88,6 @@ bot.on('ready', () =>{
         .setThumbnail(bicon);
         return channelprod.sendMessage(versionembed);  
     }
-});
 
 bot.on('message', async message =>{
     if(message.author.bot) return;
