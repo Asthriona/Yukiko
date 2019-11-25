@@ -64,11 +64,11 @@ bot.on('message', async message =>{
                 server.queue.splice(i, 1);
             }
             server.dispatcher.end();
-            message.channel.send("Queue is over Quitting VC now.")
+            message.channel.send("Queue stoped. Quitting VC now.")
             console.log('stop The queue')
         }
     }
     if(message.guild.connection) message.guild.voiceConnection.disconnect();
 });
-bot.login(botConfig.token)
+bot.login(botConfig.tokenDev)
 console.log('Music module is ready!')
