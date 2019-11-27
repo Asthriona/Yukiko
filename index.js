@@ -84,8 +84,8 @@ bot.on('ready', () =>{
         .addField("Version name: ", pjson.codeName)
         .addField("Environement", `${process.env.NODE_ENV}`)
         .addField('ChangsLogs:', 'https://sh.nishikino.me/e0c79')
-        //.setFooter(`Hosted by Sirius Media Group`, `${bicon}`, 'https://TheWall.ovh')
-        .setThumbnail(bicon);
+        .setFooter(`Hosted by Sirius Media Group`, `https://cdn.asthriona.com/986868.png`, 'https://TheWall.ovh')
+        //.setThumbnail(bicon);
         return channelprod.sendMessage(versionembed);  
     }
 
@@ -130,7 +130,7 @@ if(cmd === `${prefix}DM`){
 }
 //botinfo
 if(cmd === `${prefix}info`){
-    let bicon = bot.user.displayAvatarURL;
+    //let bicon = bot.user.displayAvatarURL;
     let botembed = new discord.RichEmbed()
     .setThumbnail('https://cdn.discordapp.com/icons/647689682381045772/ee4fb06d56cffabf4e7e2851ee5836cc.jpg')
     .setTitle("A propos de ce bot")
