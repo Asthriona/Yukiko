@@ -23,8 +23,8 @@ require('dotenv').config();
 console.log("Initializing bot in " + process.env.NODE_ENV + " Environement.")
 
 //WebServer For ping monitoring
-console.log("Initializing WebServer...")
-require("./web/server")
+//console.log("Initializing WebServer...")
+//require("./web/server")
 
 
 //DiscordBot
