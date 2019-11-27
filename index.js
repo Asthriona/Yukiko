@@ -74,7 +74,7 @@ bot.on('ready', () =>{
     });
     if (process.env.NODE_ENV == "production") {
         var channelprod = bot.channels.get(botConfig.channelprod);
-        let bicon = bot.user.displayAvatarURL;
+        //let bicon = bot.user.displayAvatarURL;
         let versionembed = new discord.RichEmbed()
         .setColor("#800080")
         .setAuthor('Bot Online!', 'https://cdn.discordapp.com/emojis/515665388495962112.png', 'https://github.com/Asthriona')
