@@ -63,5 +63,5 @@ typings/
 botconfig.json
 .env
 ./node_modules
-warn.json
 commands/botinfo.js
+warn.json.exemple
