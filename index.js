@@ -72,22 +72,22 @@ bot.on('ready', () =>{
         })
     }
     });
-    if (process.env.NODE_ENV == "production") {
-        var channelprod = bot.channels.get(botConfig.channelprod);
-        //let bicon = bot.user.displayAvatarURL;
-        let versionembed = new discord.RichEmbed()
-        .setColor("#800080")
-        .setAuthor('Bot Online!', 'https://cdn.discordapp.com/emojis/515665388495962112.png', 'https://github.com/Asthriona')
-        .setDescription("Le bot viens juste de démaré, il est maintenant fonctionel et a jour!")
-        .addField("Bot Status:", "Ready!")
-        .addField("Version:", pjson.version)
-        .addField("Version name: ", pjson.codeName)
-        .addField("Environement", `${process.env.NODE_ENV}`)
-        .addField('ChangsLogs:', 'https://sh.nishikino.me/e0c79')
-        .setFooter(`Hosted by Sirius Media Group`, `https://cdn.asthriona.com/986868.png`, 'https://TheWall.ovh')
-        //.setThumbnail(bicon);
-        return channelprod.message.channel.send(versionembed);  
-    }
+    //if (process.env.NODE_ENV == "production") {
+    //    var channelprod = bot.channels.get(botConfig.channelprod);
+    //    //let bicon = bot.user.displayAvatarURL;
+    //    let versionembed = new discord.RichEmbed()
+    //    .setColor("#800080")
+    //    .setAuthor('Bot Online!', 'https://cdn.discordapp.com/emojis/515665388495962112.png', 'https://github.com/Asthriona')
+    //    .setDescription("Le bot viens juste de démaré, il est maintenant fonctionel et a jour!")
+    //    .addField("Bot Status:", "Ready!")
+    //    .addField("Version:", pjson.version)
+    //    .addField("Version name: ", pjson.codeName)
+    //    .addField("Environement", `${process.env.NODE_ENV}`)
+    //    .addField('ChangsLogs:', 'https://sh.nishikino.me/e0c79')
+    //    .setFooter(`Hosted by Sirius Media Group`, `https://cdn.asthriona.com/986868.png`, 'https://TheWall.ovh')
+    //    //.setThumbnail(bicon);
+    //    return channelprod.message.channel.send(versionembed);  
+    //}
 
 bot.on('message', async message =>{
     if(message.author.bot) return;
