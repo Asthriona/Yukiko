@@ -15,6 +15,7 @@ A simple discord bot to do moderation stuff and few other function
 + help
 + help-commands
 + help-game
++ Music
 
 # utilisation:
 ## ban :
@@ -58,3 +59,12 @@ affiche les commands disponible.
     
 ```a!help-game```  
 affiche les jeu disponible.  
+
+## Commandes Musique.
+Le bot musique est en beta et risque de ne pas fonctionner corectement, également il lui manque pas mal de fonctionalité important, tel que l'affichage de la playlist, le repeat mode et bien d'autres choses, ce seras ajouter dans le future.  
+```a!play [Liens YouTube]```  
+Sert a jouer une video youtube. Merci de preciser le liens et de verifier qu'il n'y ai rien entre /play et le liens si non le bot crash.  
+```a!stop```  
+Arrete la lecture en cours.  
+```a!skip```  
+passe a la musique suivante dans la playlist.
