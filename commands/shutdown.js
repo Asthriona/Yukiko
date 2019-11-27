@@ -4,7 +4,8 @@ module.exports.run = async (bot, message, args) => {
     if(message.author.id != "186195458182479874") return message.channel.send("You cant shutdown the bot.")
 
     try{
-        await message.channel.send("bot is shuting down...")
+        message.delete().catch(O_o=>{});
+        await message.channel.send(`Bot is shuting down for ${args} Asked by: <@${message.author.id}>`);
         bot.logout
         process.exit()
     } catch(e) {
