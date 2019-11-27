@@ -144,6 +144,7 @@ if(cmd === `${prefix}info`){
     //.addField("Sur le serveur depuis:", bot.user.joinedAt)
     .addField("Git:", "https://github.com/Asthriona/AsthriModBot")
     .addField("Nombre de serveur utilisant ce bot: ", bot.guilds.size)
+    .setThumbnail('https://cdn.asthriona.com/986868.png')
     //.setThumbnail(bicon);
     return message.channel.send(botembed)
 }
