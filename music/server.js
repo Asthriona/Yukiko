@@ -69,6 +69,18 @@ bot.on('message', async message =>{
             console.log('stop The queue')
         }
     }
+    if(cmd === `${prefix}quit`){
+        var server = servers[message.guild.id];
+        if(message.guild.voiceConnection){
+            for(var i = server.queue.length -1; i >=0; i--){
+                server.queue.splice(i, 1);
+            }
+            server.dispatcher.end();
+            message.channel.send("Queue stoped. Quitting VC now.")
+            if(message.guild.connection) message.guild.voiceConnection.disconnect();
+            console.log('stop The queue')
+        }
+    }
     if(message.guild.connection) message.guild.voiceConnection.disconnect();
 });
 if (process.env.NODE_ENV === 'production'){
