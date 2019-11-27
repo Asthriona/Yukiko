@@ -86,7 +86,7 @@ bot.on('ready', () =>{
         .addField('ChangsLogs:', 'https://sh.nishikino.me/e0c79')
         .setFooter(`Hosted by Sirius Media Group`, `https://cdn.asthriona.com/986868.png`, 'https://TheWall.ovh')
         //.setThumbnail(bicon);
-        return channelprod.message.send(versionembed);  
+        return channelprod.message.channel.send(versionembed);  
     }
 
 bot.on('message', async message =>{
