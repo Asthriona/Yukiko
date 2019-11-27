@@ -6,7 +6,7 @@ var indexRouter = require('./routes/router');
 var path = require('path');
 
 console.log("Seting up Port")
-var port = 3598;
+var port = 3000;
 console.log(`Server will listen on port ${port}`)
 app = express();
 
