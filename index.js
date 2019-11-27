@@ -84,7 +84,7 @@ bot.on('ready', () =>{
         .addField("Version name: ", pjson.codeName)
         .addField("Environement", `${process.env.NODE_ENV}`)
         .addField('ChangsLogs:', 'https://sh.nishikino.me/e0c79')
-        .setFooter(`Hosted by Sirius Media Group`, `${bicon}`, 'https://TheWall.ovh')
+        //.setFooter(`Hosted by Sirius Media Group`, `${bicon}`, 'https://TheWall.ovh')
         .setThumbnail(bicon);
         return channelprod.sendMessage(versionembed);  
     }
