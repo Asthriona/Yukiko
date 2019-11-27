@@ -55,7 +55,7 @@ console.log('Setting bot presence...')
 
 bot.on('ready', () =>{
     if (process.env.NODE_ENV == "production") {
-        bot.user.setStatus('dnd');
+        bot.user.setStatus('online');
         bot.user.setPresence({
             game: {
                 name: 'Asthriona.com',
