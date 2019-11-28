@@ -32,7 +32,8 @@
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",
     "ms": "^2.1.2",
-    "opusscript": "0.0.7",
+    "node-opus": "^0.3.3",
+    "simple-youtube-api": "^5.2.1",
     "superagent": "^5.1.0",
     "ytdl-core": "^1.0.1"
   }
