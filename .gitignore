@@ -65,3 +65,4 @@ botconfig.json
 ./node_modules
 commands/botinfo.js
 warn.json.exemple
+music/server.js.old
