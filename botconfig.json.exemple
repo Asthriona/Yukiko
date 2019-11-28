@@ -3,5 +3,6 @@
     "tokenDev": "dev bot key",
     "prefix": "a!"
     "devPrefix": ";",
-    "channelprod": "ChannelID"
+    "channelprod": "ChannelID",
+    "YtKey": "YOUTUBE API KEY"
 }
