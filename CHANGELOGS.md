@@ -32,11 +32,28 @@ Cette page me sert a noter l'avancement du bot au file des mise a jours, j'y not
 ## ***[UwU Music? OwO]***  
 + Ajout: Module de musique [BETA] utilisable via /play /skip /stop
 + Edit: /play ne change plus la présence du bot, la commande est remplacer par /game
++ Update: Change logs
++ Suppressions: Weebness de Ash.  
+## 1.1.1
++ Ajout: Queue system
+## 1.1.2
++ Ajout: Meilleur support de YouTube
++ Ajout: Commande Playlist
+## 1.1.3
++ Ajout: System play/pause
++ Ajout: Commande de volume
++ Ajout: Affichage de la musique en cours sous a chaque changement
++ Ajout: Commande Now Playing
+## 1.1.4
++ Ajout: Support des playlists youtube
++ Ajout: Support du recherche de video youtube
++ Update: Change logs
++ Suppressions: Weebness de Ash. 
+
+
 ### Bug
 + Les raison des warn ne peuvent contenire qu'un mot.
 + Uptime Non fonctionel
-+ Update: Change logs
-+ Suppressions: Weebness de Ash.  
 
 ## Non-bug
 + les commands a!help a!help-commands et a!help-game ne sont pas fonctionel pour le moment car non-terminer.
