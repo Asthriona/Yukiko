@@ -5,7 +5,8 @@ module.exports.run = async (bot, message, args) => {
 
     try{
         message.delete().catch(O_o=>{});
-        await message.channel.send(`Bot is shuting down for ${args} Asked by: <@${message.author.id}>`);
+        await message.channel.send(`Bot is shuting down for ${args} requested by: <@${message.author.id}>`);
+        bot.user.setStatus('INVISIBLE');
         bot.logout
         process.exit()
     } catch(e) {
