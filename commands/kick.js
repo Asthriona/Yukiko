@@ -5,7 +5,7 @@ let p = "a!"
 let bicon = 
 
 module.exports.run = async (bot, message, args) => {
-    let kUser  = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+    let kUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
     if(!kUser) return message.channel.send("Utilisateur Introvable D:");
     let kReason = args.join(" ").slice(22);
     if(!kReason) return message.reply("Hey! Ta oublier la raison! :O")
