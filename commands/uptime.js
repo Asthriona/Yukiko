@@ -3,11 +3,13 @@ var superagent = require("superagent");
 
 module.exports.run = async (bot, message, args) => {
     //Uptime
-    var seconds = Math.floor(seconds % 60);
-    let days = Math.floor(seconds / 86400);
-    let hours = Math.floor(seconds / (60*60));
-    let minutes = Math.floor(seconds % (60*60) / 60);
-    let uptime = `${days} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds`;
+    let totalSeconds = (bot.uptime / 1000);
+    var days = Math.floor(totalSeconds / 86400);
+    var hours = Math.floor(totalSeconds / (60*60));
+    totalSeconds %= 3600;
+    var minutes = Math.floor(totalSeconds % (60*60) / 60);
+    var seconds = Math.floor(totalSeconds % 60);
+    var uptime = `${days} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds`;
 
     message.channel.send(uptime)
     console.log(`${message.author.username} used uptime ${uptime}`)
