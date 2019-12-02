@@ -153,37 +153,7 @@ if(cmd === `${prefix}info`){
 //bot.on('guildMemberAdd', async member => {
 //	let channel = message.guild.channels.find('name', "general");
 //	if (!channel) return;
-if(cmd === `${prefix}test`){
-    var canvas = Canvas.createCanvas(934, 282);
-    var ctx = canvas.getContext('2d');
-    var background = await Canvas.loadImage('https://cdn.asthriona.com/abeeb960-e829-443f-8d18-b6636b01a1ab.jpg');
-    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-    
-    ctx.beginPath();
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.8)'
-    ctx.fillRect(260, 80, 650, 130);
-    ctx.stroke();
-
-    ctx.font = '60px sans-serif';
-    ctx.fillStyle = '#fff';
-    //ctx.fillText(member.displayName, 280, 141);
-    ctx.fillText(message.author.username, 280, 141);
-    
-    ctx.font = '50px sans-serif';
-    ctx.fillStyle = '#fff';
-    ctx.fillText("Welcome on " + message.guild.name , 280, 185);
-
-    //var avatar = await Canvas.loadImage(member.user.displayAvatarURL);
-    var avatar = await Canvas.loadImage(message.author.displayAvatarURL);
-    ctx.beginPath();
-    ctx.arc(140, 128, 110, 0, Math.PI * 2);
-    ctx.closePath();
-    ctx.clip();
-    ctx.drawImage(avatar, 25, 15, 256, 256);
-    
-    var attachment = new discord.Attachment(canvas.toBuffer(), 'welcome-image.png')
-    message.channel.send(attachment);
-};
+    await welcomeText(cmd, prefix, message);
 
 //Console Chatter
 let y = process.openStdin()
@@ -198,3 +168,32 @@ if (process.env.NODE_ENV === 'production'){
 }else{
     bot.login(botConfig.tokenDev) 
 };
+async function welcomeText(cmd, prefix, message) {
+    if (cmd === `${prefix}test`) {
+        var canvas = Canvas.createCanvas(934, 282);
+        var ctx = canvas.getContext('2d');
+        var background = await Canvas.loadImage('https://cdn.asthriona.com/abeeb960-e829-443f-8d18-b6636b01a1ab.jpg');
+        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+        ctx.fillRect(260, 80, 650, 130);
+        ctx.stroke();
+        ctx.font = '60px sans-serif';
+        ctx.fillStyle = '#fff';
+        //ctx.fillText(member.displayName, 280, 141);
+        ctx.fillText(message.author.username, 280, 141);
+        ctx.font = '50px sans-serif';
+        ctx.fillStyle = '#fff';
+        ctx.fillText("Welcome on " + message.guild.name, 280, 185);
+        //var avatar = await Canvas.loadImage(member.user.displayAvatarURL);
+        var avatar = await Canvas.loadImage(message.author.displayAvatarURL);
+        ctx.beginPath();
+        ctx.arc(140, 128, 110, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.clip();
+        ctx.drawImage(avatar, 25, 15, 256, 256);
+        var attachment = new discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
+        message.channel.send(attachment);
+    }
+    ;
+}
