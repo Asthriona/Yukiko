@@ -3,8 +3,10 @@ var superagent = require("superagent");
 var warn = require('../warn.json');
 
 module.exports.run = async (bot, message, args) => {
+    if(!args[0]) return message.reply("No user selected.")
     let iUser  = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
-    if(iUser.bot === true) return message.channel.send ('Bot are not supported yet.')
+    if(!iUser) return message.reply("User not found :/");
+    if(iUser.user.bot === true) return message.reply('Bot are not supported yet.')
     let userEmbed = new discord.RichEmbed()
     .setTitle(bot.user.username)
     .setThumbnail(iUser.user.displayAvatarURL)
