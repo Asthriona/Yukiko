@@ -105,7 +105,9 @@ bot.on('message', async message =>{
     date = hs +':'+ min +':'+ sec +':'+ ms + ' -- ' + mm + '/' + dd + '/' + yyyy + ' ->';
 
     //Log
+    message.channel.startTyping();
     console.log(`${date} ${message.guild.name} -> ${message.author.username}: ${message.content}`)
+    message.channel.stopTyping();
 
     let prefix = botConfig.prefix;
     let messageArray = message.content.split(" ");
