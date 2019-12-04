@@ -47,6 +47,8 @@ Cette page me sert a noter l'avancement du bot au file des mise a jours, j'y not
 ## 1.1.4
 + Ajout: Support des playlists youtube
 + Ajout: Support du recherche de video youtube
++ Ajout: Server Info
++ Ajout: User info
 + Update: Change logs
 + Suppressions: Weebness de Ash. 
 
