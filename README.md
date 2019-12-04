@@ -18,6 +18,8 @@ A simple discord bot to do moderation stuff and few other function
 + help-commands
 + help-game
 + Music
++ user info
++ server info
 
 # utilisation:
 ## ban :
@@ -49,7 +51,16 @@ Supprimer  un nombre de message (L'API de discord ne permet que de supprimer 100
 ## ping
 ``` a!ping ```  
 Heu... Pong?
-Commende de test pour verifier si le bot répond mais a etait tourner en un jeu.
+Commende de test pour verifier si le bot répond mais a etait tourner en un jeu.  
+## Info utilisateur
+```a!user-info [@user]```  
+Affiche les info de l'utilisateur mentionner  
+## Info serveur
+```a!server-info```  
+Affiche les info du serveur  
+## Arreter le bot
+```a!shutdown [RAISON]```  
+Arrete le bot en laissant un message avec la raison et le nom de la perssone qui l'as demander.
 
 ## help, help-commands, help-game
     
@@ -62,8 +73,6 @@ affiche les commands disponible.
 ```a!help-game```  
 affiche les jeu disponible.  
 
-```a!shutdown [RAISON]```  
-Arrete le bot en laissant un message avec la raison et le nom de la perssone qui l'as demander.
 
 ## Commandes Musique.
 Le bot musique est en beta et risque de ne pas fonctionner corectement, également il lui manque pas mal de fonctionalité important, tel que l'affichage de la playlist, le repeat mode et bien d'autres choses, ce seras ajouter dans le future.  
