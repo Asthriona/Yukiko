@@ -2,7 +2,7 @@ var botConfig = require('./botconfig.json');
 var discord = require("discord.js");
 var fs = require('fs');
 var util = require('util');
-var http = require('http');
+//var http = require('http');
 var Canvas = require('canvas');
 var pjson = require('./package.json');
 
