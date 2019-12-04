@@ -1,6 +1,7 @@
 var discord = require('discord.js');
 
 module.exports.run = async (bot, message, args) => {
+    message.channel.startTyping()
         let sicon = message.guild.iconURL;
         let serverembed = new discord.RichEmbed()
         .setDescription("Server Information")
@@ -12,7 +13,9 @@ module.exports.run = async (bot, message, args) => {
         .addField("Propriétaire: ", message.guild.owner)
         .addField("Nombre de membre: ", message.guild.memberCount)
         .addField("Region: ", message.guild.region)
+        message.channel.stopTyping();
         return message.channel.send(serverembed);
+        
 }
 
 
