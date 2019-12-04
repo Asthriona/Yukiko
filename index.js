@@ -5,8 +5,11 @@ var util = require('util');
 //var http = require('http');
 var Canvas = require('canvas');
 var pjson = require('./package.json');
-
+var xp = require('./xp.json')
 var util = require('util');
+
+let cooldown = new Set();
+let cdseconds = 60
 var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'w'});
 var log_stdout = process.stdout;
 //Import music module
@@ -50,7 +53,9 @@ fs.readdir("./commands", (err, files) => {
         bot.commands.set(props.help.name, props);
     });
     console.log("Files Loaded, Moving on!")
-    console.log(`\x1b[32mAsthriona Mod Bot\x1b[0m is now started and running in \x1b[31m${process.env.NODE_ENV} \x1b[0menvironement!`)
+    bot.on('ready', () =>{
+        console.log(`\x1b[32mAsthriona Mod Bot\x1b[0m is now started and running in \x1b[31m${process.env.NODE_ENV} \x1b[0menvironement!`)
+    })
 });
 console.log('Setting bot presence...')
 
@@ -73,22 +78,7 @@ bot.on('ready', () =>{
         })
     }
     });
-    //if (process.env.NODE_ENV == "production") {
-    //    var channelprod = bot.channels.get(botConfig.channelprod);
-    //    //let bicon = bot.user.displayAvatarURL;
-    //    let versionembed = new discord.RichEmbed()
-    //    .setColor("#800080")
-    //    .setAuthor('Bot Online!', 'https://cdn.discordapp.com/emojis/515665388495962112.png', 'https://github.com/Asthriona')
-    //    .setDescription("Le bot viens juste de démaré, il est maintenant fonctionel et a jour!")
-    //    .addField("Bot Status:", "Ready!")
-    //    .addField("Version:", pjson.version)
-    //    .addField("Version name: ", pjson.codeName)
-    //    .addField("Environement", `${process.env.NODE_ENV}`)
-    //    .addField('ChangsLogs:', 'https://sh.nishikino.me/e0c79')
-    //    .setFooter(`Hosted by Sirius Media Group`, `https://cdn.asthriona.com/986868.png`, 'https://TheWall.ovh')
-    //    //.setThumbnail(bicon);
-    //    return channelprod.message.channel.send(versionembed);  
-    //}
+
 
 bot.on('message', async message =>{
     if(message.author.bot) return;
@@ -113,6 +103,37 @@ bot.on('message', async message =>{
     let messageArray = message.content.split(" ");
     let args = messageArray.slice(1);
     let cmd = messageArray[0];
+
+    //XP System
+    let xpAdd = Math.floor(Math.random()*7) + 8;
+    if(!xp[message.author.id]){
+        xp[message.author.id] = {
+            xp: 0,
+            level: -1
+        };
+    }
+    let curxp = xp[message.author.id].xp;
+    let curLvl = xp[message.author.id].level;
+    let nxtLvl = xp[message.author.id].level * 300;
+    xp[message.author.id].xp = curxp + xpAdd;
+    if(nxtLvl <= xp[message.author.id].xp){
+    xp[message.author.id].level = curLvl + 1;
+    await lvlupIMG(message);
+    }
+    fs.writeFile("./xp.json", JSON.stringify(xp), err =>{
+        if(err){
+            console.log(err)
+            message.channel.send("An Error sucessfully happend with the XP system <@[186195458182479874]>")
+        }
+    });
+    console.log(message.author.username + " is Level " + xp[message.author.id].level + " currently have " + xp[message.author.id].xp + " XP");
+
+
+//Force mute.
+if(message.member.roles.find(r => r.name === "muted")){
+    message.delete();
+    message.author.send("You are muted on " + message.guild.name)
+};
 
 
 //Commands Handler
@@ -147,6 +168,7 @@ if(cmd === `${prefix}info`){
     //.addField("Sur le serveur depuis:", bot.user.joinedAt)
     .addField("Git:", "https://github.com/Asthriona/AsthriModBot")
     .addField("Nombre de serveur utilisant ce bot: ", bot.guilds.size)
+    .addField("Avatar by:", "Kimberly Senpai")
     .setThumbnail('https://cdn.asthriona.com/986868.png')
     //.setThumbnail(bicon);
     return message.channel.send(botembed)
@@ -167,9 +189,37 @@ y.addListener("data", res => {
 
 if (process.env.NODE_ENV === 'production'){
     bot.login(botConfig.token) 
+    console.log("login on discord...")
 }else{
     bot.login(botConfig.tokenDev) 
+    console.log("login on discord...")
 };
+async function lvlupIMG(message) {
+    var canvas = Canvas.createCanvas(934, 282);
+    var ctx = canvas.getContext('2d');
+    var background = await Canvas.loadImage('https://cdn.asthriona.com/abeeb960-e829-443f-8d18-b6636b01a1ab.jpg');
+    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+    ctx.fillRect(260, 80, 650, 130);
+    ctx.stroke();
+    ctx.font = '60px sans-serif';
+    ctx.fillStyle = '#fff';
+    ctx.fillText(message.author.username, 280, 141);
+    ctx.font = '50px sans-serif';
+    ctx.fillStyle = '#fff';
+    ctx.fillText("You are now level " + xp[message.author.id].level + " !", 280, 185);
+    var avatar = await Canvas.loadImage(message.author.displayAvatarURL);
+    ctx.beginPath();
+    ctx.arc(140, 128, 110, 0, Math.PI * 2);
+    ctx.closePath();
+    ctx.clip();
+    ctx.drawImage(avatar, 25, 15, 256, 256);
+    var lvlupimg = new discord.Attachment(canvas.toBuffer(), 'lvlup-image.png');
+    message.channel.send(lvlupimg);
+}
+
+//Image generation test
 async function welcomeText(cmd, prefix, message) {
     if (cmd === `${prefix}test`) {
         var canvas = Canvas.createCanvas(934, 282);
