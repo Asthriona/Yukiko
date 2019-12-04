@@ -107,6 +107,7 @@ bot.on('message', async message =>{
             if(!serverQueue) return message.reply("Nothing is currectly playing.");
             return message.channel.send("Now Playing: ***" +serverQueue.songs[0].title + "***")
         } else if(message.content.startsWith(`${prefix}volume`)){
+            if(!message.member.voiceChannel) return message.reply("You are not in the voice channel!")
             if(!serverQueue) return message.reply('There is nothing currently playing.');
             if(!args[1]) return message.reply("The current volume is " + serverQueue.volume);
             serverQueue.volume = args[1];
