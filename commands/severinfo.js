@@ -11,6 +11,7 @@ module.exports.run = async (bot, message, args) => {
         .addField("Vous l'avez rejoint le: ", message.member.joinedAt)
         .addField("Propriétaire: ", message.guild.owner)
         .addField("Nombre de membre: ", message.guild.memberCount)
+        .addField("Region: ", message.guild.region)
         return message.channel.send(serverembed);
 }
 
