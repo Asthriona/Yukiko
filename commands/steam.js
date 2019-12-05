@@ -8,7 +8,7 @@ module.exports.run = async (bot, message, args) => {
         game: {
             name: args.join(" "),
             type: "Streaming",
-            url: "https://www.twitch.tv/Asthriona"
+            url: "https://www.twitch.tv/jacquirenee"
         }
     });
 }else{

@@ -69,11 +69,14 @@ bot.on('ready', () =>{
             }
         })
     } else {
-        bot.user.setStatus('dnd');
+        bot.user.setStatus('online');
         bot.user.setPresence({
             game: {
-                name: 'Developement',
-                type: "WATCHING",
+                name: 'TRP | Mara Fox | SOB',
+                type: 'STREAMING',
+                url: 'https://www.twitch.tv/jacquirenee',
+                smallImage: 'https://static-cdn.jtvnw.net/previews-ttv/live_user_jacquirenee-1280x720.jpg',
+                largeImageURL:"https://static-cdn.jtvnw.net/previews-ttv/live_user_jacquirenee-1280x720.jpg"
             }
         })
     }
@@ -118,8 +121,9 @@ bot.on('message', async message =>{
     xp[message.author.id].xp = curxp + xpAdd;
     if(nxtLvl <= xp[message.author.id].xp){
     xp[message.author.id].level = curLvl + 1;
-    await lvlupIMG(message);
+    //await lvlupIMG(message);
     }
+
     fs.writeFile("./xp.json", JSON.stringify(xp), err =>{
         if(err){
             console.log(err)
@@ -216,7 +220,8 @@ async function lvlupIMG(message) {
     ctx.clip();
     ctx.drawImage(avatar, 25, 15, 256, 256);
     var lvlupimg = new discord.Attachment(canvas.toBuffer(), 'lvlup-image.png');
-    message.channel.send(lvlupimg);
+    let lvlchan = message.guild.channels.find('name', "wall-of-fame");
+    lvlchan.send(message.author + " You Leveled up!", lvlupimg);
 }
 
 //Image generation test
