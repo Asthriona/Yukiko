@@ -33,8 +33,11 @@ console.log("Initializing bot in " + process.env.NODE_ENV + " Environement.")
 
 //DiscordBot
 console.log('Initializing Discord API');
-var bot = new discord.Client({disableEveryone: true});
+var bot = new discord.Client({disableEveryone: true, autoReconnect: true});
 bot.commands = new discord.Collection();
+bot.on('disconnect', () => console.log("\x1b[32mAsthriona Mod Bot\x1b[0m is Disconected... Waiting for reconnect"));
+bot.on('reconnecting', () => console.log("\x1b[32mAsthriona Mod Bot\x1b[0m  is reconnecting."))
+bot.on('ready', () =>console.log(`\x1b[32mAsthriona Mod Bot\x1b[0m is now started and running in \x1b[31m${process.env.NODE_ENV} \x1b[0menvironement!`));
 
 //commands Handler
 console.log("Initializing commands handler");
@@ -53,12 +56,7 @@ fs.readdir("./commands", (err, files) => {
         bot.commands.set(props.help.name, props);
     });
     console.log("Files Loaded, Moving on!")
-    bot.on('ready', () =>{
-        console.log(`\x1b[32mAsthriona Mod Bot\x1b[0m is now started and running in \x1b[31m${process.env.NODE_ENV} \x1b[0menvironement!`)
-    })
 });
-bot.on('disconnect', () => console.log("\x1b[32mAsthriona Mod Bot\x1b[0m is Disconected... Waiting for reconnect"));
-bot.on('reconnecting', () => console.log("\x1b[32mAsthriona Mod Bot\x1b[0m  is reconnecting."))
 console.log('Setting bot presence...')
 
 bot.on('ready', () =>{
@@ -112,7 +110,7 @@ bot.on('message', async message =>{
     if(!xp[message.author.id]){
         xp[message.author.id] = {
             xp: 0,
-            level: -1
+            level: 0
         };
     }
     let curxp = xp[message.author.id].xp;
@@ -164,15 +162,14 @@ if(cmd === `${prefix}info`){
     .setTitle("A propos de ce bot")
     .setDescription("this bot can make your cat explode, Mount the DOGO, burn your egg and clean your house. (but not your room. we tested all of this.(RIP my cat...))")
     .setColor("#800080")
-    .addField("Nom du bot", bot.user.username)
+    .addField("Bot name:", bot.user.username)
     .addField("Version:", `${pjson.version } ${pjson.codeName}`)
-    .addField("Developper par", "Asthriona")
+    .addField("Developped by:", "Asthriona")
     .addField("Developper Website", "https://Asthriona.com")
-    .addField("Crée le", bot.user.createdAt)
-    //.addField("Sur le serveur depuis:", bot.user.joinedAt)
+    .addField("Created on", bot.user.createdAt)
+    .addField("On the server since:", bot.user.joinedAt)
     .addField("Git:", "https://github.com/Asthriona/AsthriModBot")
-    .addField("Nombre de serveur utilisant ce bot: ", bot.guilds.size)
-    .addField("Avatar by:", "Kimberly Senpai")
+    .addField("Server Using this server: ", bot.guilds.size)
     .setThumbnail('https://cdn.asthriona.com/986868.png')
     //.setThumbnail(bicon);
     return message.channel.send(botembed)
