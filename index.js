@@ -26,10 +26,6 @@ console.log("Initializing bot...")
 require('dotenv').config();
 console.log("Initializing bot in " + process.env.NODE_ENV + " Environement.")
 
-//WebServer For ping monitoring
-//console.log("Initializing WebServer...")
-//require("./web/server")
-
 
 //DiscordBot
 console.log('Initializing Discord API');
@@ -99,6 +95,11 @@ bot.on('message', async message =>{
     //Log
     console.log(`${date} ${message.guild.name} -> ${message.author.username}: ${message.content}`)
 
+    //leave message
+    bot.on('guildMemberRemove', member => {
+        return bot.channels.get('648520829620977668').send(member.user.username + " Est partit :c https://cdn.asthriona.com/sad.gif"), console.log( member.user.username + ' Left ' + message.guild.name);
+    });
+
     let prefix = botConfig.prefix;
     let messageArray = message.content.split(" ");
     let args = messageArray.slice(1);
@@ -118,7 +119,7 @@ bot.on('message', async message =>{
     xp[message.author.id].xp = curxp + xpAdd;
     if(nxtLvl <= xp[message.author.id].xp){
     xp[message.author.id].level = curLvl + 1;
-    //await lvlupIMG(message);
+    await lvlupIMG(message);
     }
 
     fs.writeFile("./xp.json", JSON.stringify(xp), err =>{
@@ -135,13 +136,6 @@ if(message.member.roles.find(r => r.name === "muted")){
     message.delete();
     message.author.send("You are muted on " + message.guild.name)
 };
-
-bot.on('guildMemberAdd', member => {
-    return bot.channel.get('638455892408270898').send(member.user.username + "A rejoin le serveur! Amuse toi bien! :)"), console.log(member.user.username + ' Join ' + message.guild.name);
-})
-bot.on('guildMemberRemove', member => {
-    return bot.channels.get('638455892408270898').send(member.user.username + " Est partit :c https://cdn.asthriona.com/sad.gif"), console.log( member.user.username + ' Left ' + message.guild.name);
-});
 
 //Commands Handler
 //console.log("Reading Commands Handler...")
@@ -180,11 +174,11 @@ if(cmd === `${prefix}info`){
     return message.channel.send(botembed)
 }
 //Client join
-//bot.on('guildMemberAdd', async member => {
-//	let channel = message.guild.channels.find('name', "general");
-//	if (!channel) return;
+bot.on('guildMemberAdd', async member => {
+	let channel = message.guild.channels.find('name', "general");
+	if (!channel) return;
     await welcomeText(cmd, prefix, message);
-
+});
 //Console Chatter
 let y = process.openStdin()
 y.addListener("data", res => {
@@ -203,7 +197,7 @@ if (process.env.NODE_ENV === 'production'){
 async function lvlupIMG(message) {
     var canvas = Canvas.createCanvas(934, 282);
     var ctx = canvas.getContext('2d');
-    var background = await Canvas.loadImage('https://cdn.asthriona.com/abeeb960-e829-443f-8d18-b6636b01a1ab.jpg');
+    var background = await Canvas.loadImage('https://cdn.asthriona.com/discordbotCard.jpg');
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
     ctx.beginPath();
     ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
@@ -223,15 +217,15 @@ async function lvlupIMG(message) {
     ctx.drawImage(avatar, 25, 15, 256, 256);
     var lvlupimg = new discord.Attachment(canvas.toBuffer(), 'lvlup-image.png');
     let lvlchan = message.guild.channels.find('name', "wall-of-fame");
-    lvlchan.send(message.author + " You Leveled up!", lvlupimg);
-}
+    return lvlchan.send(message.author + " You Leveled up!", lvlupimg);
+};
 
-//Image generation test
+//Welcome cards
 async function welcomeText(cmd, prefix, message) {
-    if (cmd === `${prefix}test`) {
+
         var canvas = Canvas.createCanvas(934, 282);
         var ctx = canvas.getContext('2d');
-        var background = await Canvas.loadImage('https://cdn.asthriona.com/abeeb960-e829-443f-8d18-b6636b01a1ab.jpg');
+        var background = await Canvas.loadImage('https://cdn.asthriona.com/discordbotCard.jpg');
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
         ctx.beginPath();
         ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
@@ -239,12 +233,10 @@ async function welcomeText(cmd, prefix, message) {
         ctx.stroke();
         ctx.font = '60px sans-serif';
         ctx.fillStyle = '#fff';
-        //ctx.fillText(member.displayName, 280, 141);
         ctx.fillText(message.author.username, 280, 141);
         ctx.font = '50px sans-serif';
         ctx.fillStyle = '#fff';
         ctx.fillText("Welcome on " + message.guild.name, 280, 185);
-        //var avatar = await Canvas.loadImage(member.user.displayAvatarURL);
         var avatar = await Canvas.loadImage(message.author.displayAvatarURL);
         ctx.beginPath();
         ctx.arc(140, 128, 110, 0, Math.PI * 2);
@@ -252,7 +244,5 @@ async function welcomeText(cmd, prefix, message) {
         ctx.clip();
         ctx.drawImage(avatar, 25, 15, 256, 256);
         var attachment = new discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
-        message.channel.send(attachment);
-    }
-    ;
-}
+        return message.channel.send(attachment);
+};
