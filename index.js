@@ -82,7 +82,6 @@ bot.on('ready', () =>{
     }
     });
 
-
 bot.on('message', async message =>{
     if(message.author.bot) return;
     if(message.channel.type === "dm") return;
@@ -137,6 +136,9 @@ if(message.member.roles.find(r => r.name === "muted")){
     message.author.send("You are muted on " + message.guild.name)
 };
 
+bot.on('guildMemberRemove', member => {
+  return bot.channels.get('638455892408270898').send(message.author.username + " Est partit :c https://cdn.asthriona.com/sad.gif")
+})
 
 //Commands Handler
 //console.log("Reading Commands Handler...")
