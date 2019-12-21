@@ -6,7 +6,7 @@ var Canvas = require('canvas');
 module.exports.run = async (bot, message, args) => {
     var canvas = Canvas.createCanvas(934, 282);
     var ctx = canvas.getContext('2d');
-    var background = await Canvas.loadImage('https://cdn.asthriona.com/abeeb960-e829-443f-8d18-b6636b01a1ab.jpg');
+    var background = await Canvas.loadImage('https://cdn.asthriona.com/discordbotCard.jpg');
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
     ctx.beginPath();
     ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
