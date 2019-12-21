@@ -136,8 +136,11 @@ if(message.member.roles.find(r => r.name === "muted")){
     message.author.send("You are muted on " + message.guild.name)
 };
 
+bot.on('guildMemberAdd', member => {
+    return bot.channel.get('638455892408270898').send(member.user.username + "A rejoin le serveur! Amuse toi bien! :)"), console.log(member.user.username + ' Join ' + message.guild.name);
+})
 bot.on('guildMemberRemove', member => {
-    return bot.channels.get('638455892408270898').send(member.user.username + " Est partit :c https://cdn.asthriona.com/sad.gif"), console.log( member.user.username + ' Left the server');
+    return bot.channels.get('638455892408270898').send(member.user.username + " Est partit :c https://cdn.asthriona.com/sad.gif"), console.log( member.user.username + ' Left ' + message.guild.name);
 });
 
 //Commands Handler
