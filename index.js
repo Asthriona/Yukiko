@@ -8,8 +8,8 @@ var pjson = require('./package.json');
 var xp = require('./xp.json')
 var util = require('util');
 
-let cooldown = new Set();
-let cdseconds = 60
+// let cooldown = new Set();
+// let cdseconds = 60
 var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'w'});
 var log_stdout = process.stdout;
 //Import music module
@@ -97,7 +97,11 @@ bot.on('message', async message =>{
 
     //leave message
     bot.on('guildMemberRemove', member => {
-        return bot.channels.get('648520829620977668').send(member.user.username + " Est partit :c https://cdn.asthriona.com/sad.gif"), console.log( member.user.username + ' Left ' + message.guild.name);
+        return bot.channels.get('638455892408270898').send(member.user.username + " Est partit :c https://cdn.asthriona.com/sad.gif"), console.log( member.user.username + ' Left ' + message.guild.name);
+    });
+    //welcome
+    bot.on('guild.guildMemberAdd', member => {
+        return bot.channels.get('638455892408270898').send(member.user.username + " a rejoin le serveur! Bienvenue!"), console.log(member.user.username + " has join " + message.guild.name);
     });
 
     let prefix = botConfig.prefix;
@@ -174,11 +178,11 @@ if(cmd === `${prefix}info`){
     return message.channel.send(botembed)
 }
 //Client join
-bot.on('guildMemberAdd', async member => {
-	let channel = message.guild.channels.find('name', "general");
-	if (!channel) return;
-    await welcomeText(cmd, prefix, message);
-});
+//bot.on('guildMemberAdd', async member => {
+//	let channel = message.guild.channels.find('name', "general");
+//	if (!channel) return;
+//  await welcomeText(cmd, prefix, message);
+//});
 //Console Chatter
 let y = process.openStdin()
 y.addListener("data", res => {
