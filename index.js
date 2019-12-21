@@ -137,8 +137,8 @@ if(message.member.roles.find(r => r.name === "muted")){
 };
 
 bot.on('guildMemberRemove', member => {
-  return bot.channels.get('638455892408270898').send(message.author.username + " Est partit :c https://cdn.asthriona.com/sad.gif")
-})
+    return bot.channels.get('638455892408270898').send(member.user.username + " Est partit :c https://cdn.asthriona.com/sad.gif"), console.log( member.user.username + ' Left the server');
+});
 
 //Commands Handler
 //console.log("Reading Commands Handler...")
