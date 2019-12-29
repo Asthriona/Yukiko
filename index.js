@@ -13,7 +13,7 @@ var util = require('util');
 var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'w'});
 var log_stdout = process.stdout;
 //Import music module
-require('./music/server')
+//require('./music/server')
 
 
 console.log = function(d) { //
@@ -96,14 +96,14 @@ bot.on('message', async message =>{
     console.log(`${date} ${message.guild.name} -> ${message.author.username}: ${message.content}`)
 
     //leave message
-    bot.on('guildMemberRemove', member => {
-        return bot.channels.get('638455892408270898').send(member.user.username + " Est partit :c https://cdn.asthriona.com/sad.gif"), console.log( member.user.username + ' Left ' + message.guild.name);
-    });
-    //welcome
-    bot.on('guild.guildMemberAdd', member => {
-        return bot.channels.get('638455892408270898').send(member.user.username + " a rejoin le serveur! Bienvenue!"), console.log(member.user.username + " has join " + message.guild.name);
-    });
-
+    //bot.on('guildMemberRemove', member => {
+    //    return bot.channels.get('648520829620977668').send(member.user.username + " Left the server." /* https://cdn.asthriona.com/sad.gif"*/), console.log( member.user.username + ' Left ' + message.guild.name);
+    //});
+    ////welcome
+    //bot.on('guildMemberAdd', member => {
+    //    return bot.channels.get('648520829620977668').send(member.user.username + " has joined the server! Welcome!"), console.log(member.user.username + " has join " + message.guild.name);
+    //});
+//
     let prefix = botConfig.prefix;
     let messageArray = message.content.split(" ");
     let args = messageArray.slice(1);
