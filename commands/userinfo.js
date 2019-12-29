@@ -19,7 +19,7 @@ module.exports.run = async (bot, message, args) => {
     .addField("Account Created at:", /*iUser.createdAt*/ "Feature not Supported yet", true)
     .addField('Roles:', iUser.roles.map(r => `${r}`).join(' | '), true)
     //console.log(iUser)
-    return message.channel.send(userEmbed)
+    message.channel.send(userEmbed)
     message.channel.stopTyping();
     
     
