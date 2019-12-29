@@ -178,7 +178,7 @@ if(cmd === `${prefix}host`){
     var niketoi = os.cpus("model")
     
 
-          message.channel.send('CPU Usage: ' + Math.round(v * 100) + '% | Free RAM: ' + Math.round(ram) + "% | Load: " + load + " |  Name " + hostname + " | uptime: " + Math.round(uptime / 86400) + " Jours | CPu: " + niketoi );
+          message.channel.send('CPU Usage: ' + Math.round(v * 100) + '% | Free RAM: ' + Math.round(ram) + "% | Load: " + Math.round(load) + " |  Name " + hostname + " | uptime: " + Math.round(uptime / 3600 / 24) + " Jours | CPu: " + niketoi );
     });
 
 }
