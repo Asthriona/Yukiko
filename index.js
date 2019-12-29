@@ -7,7 +7,8 @@ var Canvas = require('canvas');
 var pjson = require('./package.json');
 var xp = require('./xp.json')
 var util = require('util');
-var os = require('os-utils');
+var os = require('os');
+var osu = require('os-utils')
 
 // let cooldown = new Set();
 // let cdseconds = 60
@@ -168,16 +169,16 @@ if(cmd === `${prefix}DM`){
 
 
 if(cmd === `${prefix}host`){
-    var cpu = os.cpuUsage(function(v){
+    var cpu = osu.cpuUsage(function(v){
     var ram = os.freemem() * 100 / os.totalmem();
-    //var uptime = os.uptime(function(up){});
+    var uptime = os.uptime();
     var load = os.loadavg();
-    var name = os.hostname()
+    var hostname = os.hostname();
+    //var ip = os.networkInterfaces(address)
+    var niketoi = os.cpus("model")
+    
 
-
-          message.channel.send('CPU Usage: ' + Math.round(v * 100) + '% | Free RAM: ' + Math.round(ram) + "% | Load: " + load + "|  Name" + name );
-        
-        
+          message.channel.send('CPU Usage: ' + Math.round(v * 100) + '% | Free RAM: ' + Math.round(ram) + "% | Load: " + load + " |  Name " + hostname + " | uptime: " + Math.round(uptime / 86400) + " Jours | CPu: " + niketoi );
     });
 
 }
