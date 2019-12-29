@@ -7,6 +7,7 @@ var Canvas = require('canvas');
 var pjson = require('./package.json');
 var xp = require('./xp.json')
 var util = require('util');
+var os = require('os-utils');
 
 // let cooldown = new Set();
 // let cdseconds = 60
@@ -164,6 +165,24 @@ if(cmd === `${prefix}Salut`){
 if(cmd === `${prefix}DM`){
     return message.author.send('Pog U!')
 }
+
+
+if(cmd === `${prefix}host`){
+    var cpu = os.cpuUsage(function(v){
+    var ram = os.freemem() * 100 / os.totalmem();
+    //var uptime = os.uptime(function(up){});
+    var load = os.loadavg();
+    var name = os.hostname()
+
+
+          message.channel.send('CPU Usage: ' + Math.round(v * 100) + '% | Free RAM: ' + Math.round(ram) + "% | Load: " + load + "|  Name" + name );
+        
+        
+    });
+
+}
+
+
 //botinfo
 if(cmd === `${prefix}info`){
     //let bicon = bot.user.displayAvatarURL;
