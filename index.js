@@ -13,7 +13,7 @@ var util = require('util');
 var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'w'});
 var log_stdout = process.stdout;
 //Import music module
-//require('./music/server')
+require('./music/server');
 
 
 console.log = function(d) { //
@@ -29,11 +29,25 @@ console.log("Initializing bot in " + process.env.NODE_ENV + " Environement.")
 
 //DiscordBot
 console.log('Initializing Discord API');
-var bot = new discord.Client({disableEveryone: true, autoReconnect: true});
+var bot = new discord.Client({disableEveryone: true});
 bot.commands = new discord.Collection();
 bot.on('disconnect', () => console.log("\x1b[32mAsthriona Mod Bot\x1b[0m is Disconected... Waiting for reconnect"));
 bot.on('reconnecting', () => console.log("\x1b[32mAsthriona Mod Bot\x1b[0m  is reconnecting."))
 bot.on('ready', () =>console.log(`\x1b[32mAsthriona Mod Bot\x1b[0m is now started and running in \x1b[31m${process.env.NODE_ENV} \x1b[0menvironement!`));
+
+bot.on ("guildMemberAdd", member => {
+    const channel = member.guild.channels.find(channel => channel.name === "bienvenue");
+    if(!channel) return;
+
+    channel.send(`bienvenue sur  le serveur de Kira ${member}! Pense a aller accepter le reglement pour avoirs acces au serveur complet!`);
+});
+
+bot.on ("guildMemberRemove", member => {
+    const channel = member.guild.channels.find(channel => channel.name === "bienvenue");
+    if(!channel) return;
+
+    channel.send(`${member} Viens de quitter le serveur! https://cdn.asthriona.com/sad.gif`);
+});
 
 //commands Handler
 console.log("Initializing commands handler");
@@ -94,16 +108,9 @@ bot.on('message', async message =>{
 
     //Log
     console.log(`${date} ${message.guild.name} -> ${message.author.username}: ${message.content}`)
-
     //leave message
-    //bot.on('guildMemberRemove', member => {
-    //    return bot.channels.get('648520829620977668').send(member.user.username + " Left the server." /* https://cdn.asthriona.com/sad.gif"*/), console.log( member.user.username + ' Left ' + message.guild.name);
-    //});
-    ////welcome
-    //bot.on('guildMemberAdd', member => {
-    //    return bot.channels.get('648520829620977668').send(member.user.username + " has joined the server! Welcome!"), console.log(member.user.username + " has join " + message.guild.name);
-    //});
-//
+
+
     let prefix = botConfig.prefix;
     let messageArray = message.content.split(" ");
     let args = messageArray.slice(1);
@@ -184,12 +191,13 @@ if(cmd === `${prefix}info`){
 //  await welcomeText(cmd, prefix, message);
 //});
 //Console Chatter
-let y = process.openStdin()
-y.addListener("data", res => {
-    let x = res.toString().trim().split(/ +/g)
-    bot.channels.get("638455806144151562").send(x.join(" "));
-})
+    let y = process.openStdin()
+    y.addListener("data", res => {
+        let x = res.toString().trim().split(/ +/g)
+        bot.channels.get("638455806144151562").send(x.join(" "));
+    });
 });
+
 
 if (process.env.NODE_ENV === 'production'){
     bot.login(botConfig.token) 
