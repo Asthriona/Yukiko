@@ -176,7 +176,7 @@ if(commandfile) commandfile.run(bot,message,args);
 //Commands
 if(cmd === `${prefix}ping`){
     console.log(`${message.author.user} used !ping on ${message.guild.name}`)
-    return message.channel.send("Pong! " + message.author.id);
+    return message.channel.send("Pong! ");
 }
 if(cmd === `${prefix}Salut`){
     return message.channel.send(`Hello ${message.author}!`)
