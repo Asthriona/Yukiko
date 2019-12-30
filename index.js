@@ -2,7 +2,6 @@ var botConfig = require('./botconfig.json');
 var discord = require("discord.js");
 var fs = require('fs');
 var util = require('util');
-//var http = require('http');
 var Canvas = require('canvas');
 var pjson = require('./package.json');
 var xp = require('./xp.json')
@@ -10,11 +9,23 @@ var util = require('util');
 var os = require('os');
 var osu = require('os-utils')
 
-// let cooldown = new Set();
-// let cdseconds = 60
+
+
+    //Mongodb
+    var mongoose = require("mongoose");
+    
+    let dbusername = botConfig.dbuser;
+    let dbpasswd = botConfig.dbpass;
+    mongoose.connect('mongodb+srv://' + dbusername + ':'+ dbpasswd +'@yukiko-pcvs8.mongodb.net/discordbot?retryWrites=true&w=majority', {
+        useNewUrlParser: true,
+        useUnifiedTopology: false
+    });
+    var Users = require('./model/xp.js')
+    console.log("Connected to YukikoDB!");
+
+
 var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'w'});
 var log_stdout = process.stdout;
-//Import music module
 require('./music/server');
 
 
@@ -110,7 +121,6 @@ bot.on('message', async message =>{
 
     //Log
     console.log(`${date} ${message.guild.name} -> ${message.author.username}: ${message.content}`)
-    //leave message
 
 
     let prefix = botConfig.prefix;
@@ -119,30 +129,38 @@ bot.on('message', async message =>{
     let cmd = messageArray[0];
 
     //XP System
+    //DA NEW XP SYSTEM 2.0
     let xpAdd = Math.floor(Math.random()*7) + 8;
-    if(!xp[message.author.id]){
-        xp[message.author.id] = {
-            xp: 0,
-            level: 0
-        };
-    }
-    let curxp = xp[message.author.id].xp;
-    let curLvl = xp[message.author.id].level;
-    let nxtLvl = xp[message.author.id].level * 300;
-    xp[message.author.id].xp = curxp + xpAdd;
-    if(nxtLvl <= xp[message.author.id].xp){
-    xp[message.author.id].level = curLvl + 1;
-    await lvlupIMG(message);
-    }
+    console.log(xpAdd)
+    let messageAdd = +1
 
-    fs.writeFile("./xp.json", JSON.stringify(xp), err =>{
-        if(err){
-            console.log(err)
-            message.channel.send("An Error sucessfully happend with the XP system <@[186195458182479874]>")
+
+    Users.findOne({
+        did: message.author
+    }, (err, users) =>{
+        if(err) console.log(err);
+        if(!users){
+            var newUsers = new Users({
+                did: message.author,
+                xp: xpAdd,
+                level: 0,
+                message: messageAdd
+            })
+            newUsers.save().catch(error => console.log(error));
+        }else{
+            users.xp = users.xp + xpAdd;
+            users.message = users.message + messageAdd
+
+            let nxtlvl = users.xp * 300
+            if(nxtlvl <= users.xp){
+                users.level = users.level +1
+                lvlupIMG(message);
+            }
+            users.save().catch(error => console.log(error));
         }
-    });
-    console.log(message.author.username + " is Level " + xp[message.author.id].level + " currently have " + xp[message.author.id].xp + " XP");
+    })
 
+    
 
 //Force mute.
 if(message.member.roles.find(r => r.name === "muted")){
@@ -158,7 +176,7 @@ if(commandfile) commandfile.run(bot,message,args);
 //Commands
 if(cmd === `${prefix}ping`){
     console.log(`${message.author.user} used !ping on ${message.guild.name}`)
-    return message.channel.send("Pong!");
+    return message.channel.send("Pong! " + message.author.id);
 }
 if(cmd === `${prefix}Salut`){
     return message.channel.send(`Hello ${message.author}!`)
@@ -166,23 +184,6 @@ if(cmd === `${prefix}Salut`){
 if(cmd === `${prefix}DM`){
     return message.author.send('Pog U!')
 }
-
-
-if(cmd === `${prefix}host`){
-    var cpu = osu.cpuUsage(function(v){
-    var ram = os.freemem() * 100 / os.totalmem();
-    var uptime = os.uptime();
-    var load = os.loadavg();
-    var hostname = os.hostname();
-    //var ip = os.networkInterfaces(address)
-    var niketoi = os.cpus("model")
-    
-
-          message.channel.send('CPU Usage: ' + Math.round(v * 100) + '% | Free RAM: ' + Math.round(ram) + "% | Load: " + Math.round(load) + " |  Name " + hostname + " | uptime: " + Math.round(uptime / 3600 / 24) + " Jours | CPu: " + niketoi );
-    });
-
-}
-
 
 //botinfo
 if(cmd === `${prefix}info`){
