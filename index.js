@@ -18,7 +18,7 @@ var osu = require('os-utils')
     let dbpasswd = botConfig.dbpass;
     mongoose.connect('mongodb+srv://' + dbusername + ':'+ dbpasswd +'@yukiko-pcvs8.mongodb.net/discordbot?retryWrites=true&w=majority', {
         useNewUrlParser: true,
-        useUnifiedTopology: false
+        useUnifiedTopology: true
     });
     var Users = require('./model/xp.js')
     console.log("Connected to YukikoDB!");
@@ -152,7 +152,7 @@ bot.on('message', async message =>{
             users.message = users.message + messageAdd
 
             let nxtlvl = users.xp * 300
-            if(nxtlvl <= users.xp){
+            if(users.xp >= nxtlvl){
                 users.level = users.level +1
                 lvlupIMG(message);
             }
