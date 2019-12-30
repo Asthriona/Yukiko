@@ -48,17 +48,15 @@ bot.on('disconnect', () => console.log("\x1b[32mAsthriona Mod Bot\x1b[0m is Disc
 bot.on('reconnecting', () => console.log("\x1b[32mAsthriona Mod Bot\x1b[0m  is reconnecting."))
 bot.on('ready', () =>console.log(`\x1b[32mAsthriona Mod Bot\x1b[0m is now started and running in \x1b[31m${process.env.NODE_ENV} \x1b[0menvironement!`));
 
-bot.on ("guildMemberAdd", member => {
+bot.on ("guildMemberAdd", async member => {
     const channel = member.guild.channels.find(channel => channel.name === "bienvenue");
     if(!channel) return;
-
-    channel.send(`bienvenue sur  le serveur de Kira ${member}! Pense a aller accepter le reglement pour avoirs acces au serveur complet!`);
+    return await WelcomeCad(member, channel);
 });
 
 bot.on ("guildMemberRemove", member => {
     const channel = member.guild.channels.find(channel => channel.name === "bienvenue");
     if(!channel) return;
-
     channel.send(`${member} Viens de quitter le serveur! https://cdn.asthriona.com/sad.gif`);
 });
 
@@ -227,6 +225,32 @@ if (process.env.NODE_ENV === 'production'){
     bot.login(botConfig.tokenDev) 
     console.log("login on discord...")
 };
+async function WelcomeCad(member, channel) {
+    var canvas = Canvas.createCanvas(934, 282);
+    var ctx = canvas.getContext('2d');
+    var background = await Canvas.loadImage('https://cdn.asthriona.com/discordbotCard.jpg');
+    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+    ctx.fillRect(260, 80, 650, 130);
+    ctx.stroke();
+    ctx.font = '60px sans-serif';
+    ctx.fillStyle = '#fff';
+    ctx.fillText(member.user.username, 280, 141);
+    ctx.font = '50px sans-serif';
+    ctx.fillStyle = '#fff';
+    ctx.fillText("Welcome on " + member.guild.name, 280, 185);
+    var avatar = await Canvas.loadImage(member.user.displayAvatarURL);
+    ctx.beginPath();
+    ctx.arc(140, 128, 110, 0, Math.PI * 2);
+    ctx.closePath();
+    ctx.clip();
+    ctx.drawImage(avatar, 25, 15, 256, 256);
+    var attachment = new discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
+    channel.send(`bienvenue sur  le serveur ${member.guild.name}, ${member}! Pense a aller accepter le reglement pour avoirs acces au serveur complet!`);
+    channel.send(attachment)
+}
+
 async function lvlupIMG(message) {
     var canvas = Canvas.createCanvas(934, 282);
     var ctx = canvas.getContext('2d');
@@ -251,31 +275,4 @@ async function lvlupIMG(message) {
     var lvlupimg = new discord.Attachment(canvas.toBuffer(), 'lvlup-image.png');
     let lvlchan = message.guild.channels.find('name', "wall-of-fame");
     return lvlchan.send(message.author + " You Leveled up!", lvlupimg);
-};
-
-//Welcome cards
-async function welcomeText(cmd, prefix, message) {
-
-        var canvas = Canvas.createCanvas(934, 282);
-        var ctx = canvas.getContext('2d');
-        var background = await Canvas.loadImage('https://cdn.asthriona.com/discordbotCard.jpg');
-        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-        ctx.beginPath();
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
-        ctx.fillRect(260, 80, 650, 130);
-        ctx.stroke();
-        ctx.font = '60px sans-serif';
-        ctx.fillStyle = '#fff';
-        ctx.fillText(message.author.username, 280, 141);
-        ctx.font = '50px sans-serif';
-        ctx.fillStyle = '#fff';
-        ctx.fillText("Welcome on " + message.guild.name, 280, 185);
-        var avatar = await Canvas.loadImage(message.author.displayAvatarURL);
-        ctx.beginPath();
-        ctx.arc(140, 128, 110, 0, Math.PI * 2);
-        ctx.closePath();
-        ctx.clip();
-        ctx.drawImage(avatar, 25, 15, 256, 256);
-        var attachment = new discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
-        return message.channel.send(attachment);
 };
