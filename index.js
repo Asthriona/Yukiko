@@ -149,10 +149,20 @@ bot.on('message', async message =>{
             users.xp = users.xp + xpAdd;
             users.message = users.message + messageAdd
 
-            let nxtlvl = users.xp * 300
+            let nxtlvl = 300*Math.pow(2, users.level)
             if(users.xp >= nxtlvl){
                 users.level = users.level +1
-                lvlupIMG(message);
+
+                //lvl up embed
+                let lvlupEmbed = new discord.RichEmbed()
+                .setTitle(message.author.username + " is now level " + users.level)
+                .setThumbnail(message.author.displayAvatarURL)
+                .addField("You are now level: ", users.level, true)
+                .addField("Xp to level up: ", users.xp * 300, true)
+                .addField("you have: ", + users.xp + " xp", true)
+                .setFooter("Powered by Yukiko Bot", bot.user.displayAvatarURL)
+                message.channel.send(lvlupEmbed);
+                
             }
             users.save().catch(error => console.log(error));
         }
@@ -250,29 +260,3 @@ async function WelcomeCad(member, channel) {
     channel.send(`bienvenue sur  le serveur ${member.guild.name}, ${member}! Pense a aller accepter le reglement pour avoirs acces au serveur complet!`);
     channel.send(attachment)
 }
-
-async function lvlupIMG(message) {
-    var canvas = Canvas.createCanvas(934, 282);
-    var ctx = canvas.getContext('2d');
-    var background = await Canvas.loadImage('https://cdn.asthriona.com/discordbotCard.jpg');
-    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-    ctx.beginPath();
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
-    ctx.fillRect(260, 80, 650, 130);
-    ctx.stroke();
-    ctx.font = '60px sans-serif';
-    ctx.fillStyle = '#fff';
-    ctx.fillText(message.author.username, 280, 141);
-    ctx.font = '50px sans-serif';
-    ctx.fillStyle = '#fff';
-    ctx.fillText("You are now level " + xp[message.author.id].level + " !", 280, 185);
-    var avatar = await Canvas.loadImage(message.author.displayAvatarURL);
-    ctx.beginPath();
-    ctx.arc(140, 128, 110, 0, Math.PI * 2);
-    ctx.closePath();
-    ctx.clip();
-    ctx.drawImage(avatar, 25, 15, 256, 256);
-    var lvlupimg = new discord.Attachment(canvas.toBuffer(), 'lvlup-image.png');
-    let lvlchan = message.guild.channels.find('name', "wall-of-fame");
-    return lvlchan.send(message.author + " You Leveled up!", lvlupimg);
-};
