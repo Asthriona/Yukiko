@@ -220,7 +220,7 @@ async function lvlupIMG(message) {
     ctx.fillText(message.author.username, 280, 141);
     ctx.font = '50px sans-serif';
     ctx.fillStyle = '#fff';
-    ctx.fillText("You are now level " + xp[message.author.id].level + " !", 280, 185);
+    ctx.fillText("あなたは今レベルです " + xp[message.author.id].level + " !", 280, 185);
     var avatar = await Canvas.loadImage(message.author.displayAvatarURL);
     ctx.beginPath();
     ctx.arc(140, 128, 110, 0, Math.PI * 2);
@@ -229,7 +229,7 @@ async function lvlupIMG(message) {
     ctx.drawImage(avatar, 25, 15, 256, 256);
     var lvlupimg = new discord.Attachment(canvas.toBuffer(), 'lvlup-image.png');
     let lvlchan = message.guild.channels.find('name', "wall-of-fame");
-    return lvlchan.send(message.author + " You Leveled up!", lvlupimg);
+    return lvlchan.send(message.author + " Вы выровнялись!", lvlupimg);
 };
 
 //Welcome cards
