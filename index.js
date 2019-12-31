@@ -156,7 +156,7 @@ bot.on('message', async message =>{
                 .setTitle(message.author.username + " is now level " + users.level)
                 .setThumbnail(message.author.displayAvatarURL)
                 .addField("You are now level: ", users.level, true)
-                .addField("Xp to level up: ", users.xp * 300, true)
+                .addField("Xp to level up: ", 300*Math.pow(2, users.level), true)
                 .addField("you have: ", + users.xp + " xp", true)
                 .setFooter("Powered by Yukiko Bot", bot.user.displayAvatarURL)
                 message.channel.send(lvlupEmbed);
