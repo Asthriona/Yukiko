@@ -33,10 +33,10 @@ module.exports.run = async (bot, message, args) => {
         for(i = 0; i < res.length; i++){
             let member = message.guild.members.get(res[i].did) || "User is gone :/"
             if(member === "User is gone :/"){
-                embed.addField(`${i+1}. ${member}`, `**Level**: ${res[i].xp}`)
+                embed.addField(`${i+1}. ${member}`, `**Level**: ${res[i].level} || **XP**: ${res[i].xp}`)
 
             }else{
-                embed.addField(`${i+1}. ${member.user.username}`, `**Level**: ${res[i].xp}`)
+                embed.addField(`${i+1}. ${member.user.username}`, `**Level**: ${res[i].level} || **XP**: ${res[i].xp}`)
             }
         }
     }else{
@@ -45,10 +45,10 @@ module.exports.run = async (bot, message, args) => {
         for(i = 0; i < 10; i++){
             let member = message.guild.members.get(res[i].did) || "User is gone :/"
             if(member === "User is gone :/"){
-                embed.addField(`${i+1}. ${member}`, `**Level**: ${res[i].xp}`)
+                embed.addField(`${i+1}. ${member}`, `**Level**: ${res[i].level} || **XP**: ${res[i].xp}`)
 
             }else{
-                embed.addField(`${i+1}. ${member.user.username}`, `**Level**: ${res[i].xp}`, true)
+                embed.addField(`${i+1}. ${member.user.username}`, `**Level**: ${res[i].level} || **XP**: ${res[i].xp}`, true)
             }
         }
     }
