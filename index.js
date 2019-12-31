@@ -131,13 +131,13 @@ bot.on('message', async message =>{
 
 
     Users.findOne({
-        did: message.author,
+        did: message.author.id,
         serverID: message.guild.id
     }, (err, users) =>{
         if(err) console.log(err);
         if(!users){
             var newUsers = new Users({
-                did: message.author,
+                did: message.author.id,
                 serverID: message.guild.id,
                 xp: xpAdd,
                 level: 0,
@@ -166,7 +166,7 @@ bot.on('message', async message =>{
             users.save().catch(error => console.log(error));
         }
     });
-    
+
 //Force mute.
 if(message.member.roles.find(r => r.name === "muted")){
     message.delete();
