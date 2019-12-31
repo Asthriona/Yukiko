@@ -4,7 +4,6 @@ var fs = require('fs');
 var util = require('util');
 var Canvas = require('canvas');
 var pjson = require('./package.json');
-var xp = require('./xp.json')
 var util = require('util');
 var os = require('os');
 var osu = require('os-utils')
