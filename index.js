@@ -27,6 +27,11 @@ var osu = require('os-utils')
 var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'w'});
 var log_stdout = process.stdout;
 require('./music/server');
+
+console.log = function(d) { //
+    log_file.write(util.format(d) + '\n');
+    log_stdout.write(util.format(d) + '\n');
+  };
 console.log("Initializing bot...")
 
 require('dotenv').config();
@@ -161,10 +166,7 @@ bot.on('message', async message =>{
             users.save().catch(error => console.log(error));
         }
     });
-
-
     
-
 //Force mute.
 if(message.member.roles.find(r => r.name === "muted")){
     message.delete();
