@@ -1,5 +1,7 @@
 var discord = require("discord.js");
 var superagent = require("superagent");
+var os = require('os');
+var osu = require('os-utils')
 
 module.exports.run = async (bot, message, args) => {
     var cpu = osu.cpuUsage(function(v){
@@ -21,7 +23,7 @@ module.exports.run = async (bot, message, args) => {
               .addField("Load:", load, true)
               .addField("Server Hostname:", hostname)
               .addField("Server Uptime:", Math.round(uptime / 3600 / 24) + "days", true)
-              .setFooter("Powered by Asthriona LLC")
+              .setFooter("Powered by Asthriona LLC", bot.user.displayAvatarURL)
               return message.channel.send(systemEmbed)
         });
 }
