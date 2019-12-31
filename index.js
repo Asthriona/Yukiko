@@ -27,18 +27,10 @@ var osu = require('os-utils')
 var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'w'});
 var log_stdout = process.stdout;
 require('./music/server');
-
-
-console.log = function(d) { //
-  log_file.write(util.format(d) + '\n');
-  log_stdout.write(util.format(d) + '\n');
-};
-
 console.log("Initializing bot...")
 
 require('dotenv').config();
 console.log("Initializing bot in " + process.env.NODE_ENV + " Environement.")
-
 
 //DiscordBot
 console.log('Initializing Discord API');
@@ -134,12 +126,14 @@ bot.on('message', async message =>{
 
 
     Users.findOne({
-        did: message.author
+        did: message.author,
+        serverID: message.guild.id
     }, (err, users) =>{
         if(err) console.log(err);
         if(!users){
             var newUsers = new Users({
                 did: message.author,
+                serverID: message.guild.id,
                 xp: xpAdd,
                 level: 0,
                 message: messageAdd
@@ -166,7 +160,8 @@ bot.on('message', async message =>{
             }
             users.save().catch(error => console.log(error));
         }
-    })
+    });
+
 
     
 
@@ -192,24 +187,33 @@ if(cmd === `${prefix}Salut`){
 if(cmd === `${prefix}DM`){
     return message.author.send('Pog U!')
 }
+if(cmd == `${prefix}leaderboard`){
+    Users.find({
+        serverID: message.guild.id
+    }, function(err, docs) {
+        if (err) console.log(err);
+        message.reply(docs);
+        })
+        .sort([["xp", 1], ["xp", "descending"]]);
+}
 
 //botinfo
 if(cmd === `${prefix}info`){
-    //let bicon = bot.user.displayAvatarURL;
+    let bicon = bot.user.displayAvatarURL;
     let botembed = new discord.RichEmbed()
-    .setThumbnail('https://cdn.discordapp.com/icons/647689682381045772/ee4fb06d56cffabf4e7e2851ee5836cc.jpg')
+    .setThumbnail(bicon)
     .setTitle("A propos de ce bot")
     .setDescription("this bot can make your cat explode, Mount the DOGO, burn your egg and clean your house. (but not your room. we tested all of this.(RIP my cat...))")
     .setColor("#800080")
-    .addField("Bot name:", bot.user.username)
-    .addField("Version:", `${pjson.version } ${pjson.codeName}`)
-    .addField("Developped by:", "Asthriona")
-    .addField("Developper Website", "https://Asthriona.com")
-    .addField("Created on", bot.user.createdAt)
-    .addField("On the server since:", bot.user.joinedAt)
-    .addField("Git:", "https://github.com/Asthriona/AsthriModBot")
-    .addField("Server Using this server: ", bot.guilds.size)
-    .setThumbnail('https://cdn.asthriona.com/986868.png')
+    .addField("Bot name:", bot.user.username, true)
+    .addField("Version:", `${pjson.version } ${pjson.codeName}`, true)
+    .addField("Developped by:", "Asthriona", true)
+    .addField("Developper Website", "https://Asthriona.com", true)
+    .addField("Created on", bot.user.createdAt, true)
+    .addField("On the server since:", bot.user.joinedAt, true)
+    .addField("Git:", "https://github.com/Asthriona/AsthriModBot", true)
+    .addField('Site: ', 'http://yukiko.nishikino.me/', true)
+    .addField("Server Using this server: ", bot.guilds.size, true)
     //.setThumbnail(bicon);
     return message.channel.send(botembed)
 }
