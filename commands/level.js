@@ -32,7 +32,6 @@ module.exports.run = async (bot, message, args) => {
         embed.setColor("#351B96")
         for(i = 0; i < res.length; i++){
             let member = message.guild.members.get(res[i].did) || "User is gone :/"
-            console.log(message.guild.members)
             if(member === "User is gone :/"){
                 embed.addField(`${i+1}. ${member}`, `**Level**: ${res[i].xp}`)
 
