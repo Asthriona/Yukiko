@@ -41,13 +41,14 @@ module.exports.run = async (bot, message, args) => {
     //Temp New Cards
 
     Users.findOne({
-        did: message.author
+        did: message.author,
+        serverID: message.guild.id
     }, (err, users) =>{
         if(err) console.log(err);
     //Show Level & XP
     let nxtlvl = 300*Math.pow(2, users.level)
     var xpleft = nxtlvl-users.xp;
-    ctx.font = '50px sans-serif';
+    ctx.font = '40px sans-serif';
     ctx.fillStyle = '#fff';
     ctx.fillText("You are level " + users.level +" - "+ users.xp + " XP", 280, 180);
     //xp Left
