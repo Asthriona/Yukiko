@@ -41,7 +41,7 @@ module.exports.run = async (bot, message, args) => {
     //Temp New Cards
 
     Users.findOne({
-        did: message.author,
+        did: message.author.id,
         serverID: message.guild.id
     }, (err, users) =>{
         if(err) console.log(err);
@@ -57,8 +57,6 @@ module.exports.run = async (bot, message, args) => {
     ctx.fillText("Next Level in "+ xpleft + " xp", 280, 225);
     var lvlimg = new discord.Attachment(canvas.toBuffer(), 'lvlup-image.png');
     message.channel.send(lvlimg);
-
-
     });
 
     }     
