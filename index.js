@@ -2,30 +2,39 @@ var botConfig = require('./botconfig.json');
 var discord = require("discord.js");
 var fs = require('fs');
 var util = require('util');
-//var http = require('http');
 var Canvas = require('canvas');
 var pjson = require('./package.json');
-var xp = require('./xp.json')
 var util = require('util');
+var os = require('os');
+var osu = require('os-utils')
 
-// let cooldown = new Set();
-// let cdseconds = 60
+
+
+    //Mongodb
+    var mongoose = require("mongoose");
+    
+    let dbusername = botConfig.dbuser;
+    let dbpasswd = botConfig.dbpass;
+    mongoose.connect('mongodb+srv://' + dbusername + ':'+ dbpasswd +'@yukiko-pcvs8.mongodb.net/discordbot?retryWrites=true&w=majority', {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    });
+    var Users = require('./model/xp.js')
+    console.log("Connected to YukikoDB!");
+
+
 var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'w'});
 var log_stdout = process.stdout;
-//Import music module
 require('./music/server');
 
-
 console.log = function(d) { //
-  log_file.write(util.format(d) + '\n');
-  log_stdout.write(util.format(d) + '\n');
-};
-
+    log_file.write(util.format(d) + '\n');
+    log_stdout.write(util.format(d) + '\n');
+  };
 console.log("Initializing bot...")
 
 require('dotenv').config();
 console.log("Initializing bot in " + process.env.NODE_ENV + " Environement.")
-
 
 //DiscordBot
 console.log('Initializing Discord API');
@@ -35,17 +44,15 @@ bot.on('disconnect', () => console.log("\x1b[32mAsthriona Mod Bot\x1b[0m is Disc
 bot.on('reconnecting', () => console.log("\x1b[32mAsthriona Mod Bot\x1b[0m  is reconnecting."))
 bot.on('ready', () =>console.log(`\x1b[32mAsthriona Mod Bot\x1b[0m is now started and running in \x1b[31m${process.env.NODE_ENV} \x1b[0menvironement!`));
 
-bot.on ("guildMemberAdd", member => {
+bot.on ("guildMemberAdd", async member => {
     const channel = member.guild.channels.find(channel => channel.name === "bienvenue");
     if(!channel) return;
-
-    channel.send(`bienvenue sur  le serveur de Kira ${member}! Pense a aller accepter le reglement pour avoirs acces au serveur complet!`);
+    return await WelcomeCad(member, channel);
 });
 
 bot.on ("guildMemberRemove", member => {
     const channel = member.guild.channels.find(channel => channel.name === "bienvenue");
     if(!channel) return;
-
     channel.send(`${member} Viens de quitter le serveur! https://cdn.asthriona.com/sad.gif`);
 });
 
@@ -108,7 +115,6 @@ bot.on('message', async message =>{
 
     //Log
     console.log(`${date} ${message.guild.name} -> ${message.author.username}: ${message.content}`)
-    //leave message
 
 
     let prefix = botConfig.prefix;
@@ -117,30 +123,48 @@ bot.on('message', async message =>{
     let cmd = messageArray[0];
 
     //XP System
+    //DA NEW XP SYSTEM 2.0
     let xpAdd = Math.floor(Math.random()*7) + 8;
-    if(!xp[message.author.id]){
-        xp[message.author.id] = {
-            xp: 0,
-            level: 0
-        };
-    }
-    let curxp = xp[message.author.id].xp;
-    let curLvl = xp[message.author.id].level;
-    let nxtLvl = xp[message.author.id].level * 300;
-    xp[message.author.id].xp = curxp + xpAdd;
-    if(nxtLvl <= xp[message.author.id].xp){
-    xp[message.author.id].level = curLvl + 1;
-    await lvlupIMG(message);
-    }
+    console.log(xpAdd)
+    let messageAdd = +1
 
-    fs.writeFile("./xp.json", JSON.stringify(xp), err =>{
-        if(err){
-            console.log(err)
-            message.channel.send("An Error sucessfully happend with the XP system <@[186195458182479874]>")
+
+    Users.findOne({
+        did: message.author.id,
+        serverID: message.guild.id
+    }, (err, users) =>{
+        if(err) console.log(err);
+        if(!users){
+            var newUsers = new Users({
+                did: message.author.id,
+                serverID: message.guild.id,
+                xp: xpAdd,
+                level: 0,
+                message: messageAdd
+            })
+            newUsers.save().catch(error => console.log(error));
+        }else{
+            users.xp = users.xp + xpAdd;
+            users.message = users.message + messageAdd
+
+            let nxtlvl = 300*Math.pow(2, users.level)
+            if(users.xp >= nxtlvl){
+                users.level = users.level +1
+
+                //lvl up embed
+                let lvlupEmbed = new discord.RichEmbed()
+                .setTitle(message.author.username + " is now level " + users.level)
+                .setThumbnail(message.author.displayAvatarURL)
+                .addField("You are now level: ", users.level, true)
+                .addField("Xp to level up: ", 300*Math.pow(2, users.level), true)
+                .addField("you have: ", + users.xp + " xp", true)
+                .setFooter("Powered by Yukiko Bot", bot.user.displayAvatarURL)
+                message.channel.send(lvlupEmbed);
+                
+            }
+            users.save().catch(error => console.log(error));
         }
     });
-    console.log(message.author.username + " is Level " + xp[message.author.id].level + " currently have " + xp[message.author.id].xp + " XP");
-
 
 //Force mute.
 if(message.member.roles.find(r => r.name === "muted")){
@@ -156,7 +180,7 @@ if(commandfile) commandfile.run(bot,message,args);
 //Commands
 if(cmd === `${prefix}ping`){
     console.log(`${message.author.user} used !ping on ${message.guild.name}`)
-    return message.channel.send("Pong!");
+    return message.channel.send("Pong! ");
 }
 if(cmd === `${prefix}Salut`){
     return message.channel.send(`Hello ${message.author}!`)
@@ -164,23 +188,33 @@ if(cmd === `${prefix}Salut`){
 if(cmd === `${prefix}DM`){
     return message.author.send('Pog U!')
 }
+if(cmd == `${prefix}leaderboard`){
+    Users.find({
+        serverID: message.guild.id
+    }, function(err, docs) {
+        if (err) console.log(err);
+        message.reply(docs);
+        })
+        .sort([["xp", 1], ["xp", "descending"]]);
+}
+
 //botinfo
 if(cmd === `${prefix}info`){
-    //let bicon = bot.user.displayAvatarURL;
+    let bicon = bot.user.displayAvatarURL;
     let botembed = new discord.RichEmbed()
-    .setThumbnail('https://cdn.discordapp.com/icons/647689682381045772/ee4fb06d56cffabf4e7e2851ee5836cc.jpg')
+    .setThumbnail(bicon)
     .setTitle("A propos de ce bot")
     .setDescription("this bot can make your cat explode, Mount the DOGO, burn your egg and clean your house. (but not your room. we tested all of this.(RIP my cat...))")
     .setColor("#800080")
-    .addField("Bot name:", bot.user.username)
-    .addField("Version:", `${pjson.version } ${pjson.codeName}`)
-    .addField("Developped by:", "Asthriona")
-    .addField("Developper Website", "https://Asthriona.com")
-    .addField("Created on", bot.user.createdAt)
-    .addField("On the server since:", bot.user.joinedAt)
-    .addField("Git:", "https://github.com/Asthriona/AsthriModBot")
-    .addField("Server Using this server: ", bot.guilds.size)
-    .setThumbnail('https://cdn.asthriona.com/986868.png')
+    .addField("Bot name:", bot.user.username, true)
+    .addField("Version:", `${pjson.version } ${pjson.codeName}`, true)
+    .addField("Developped by:", "Asthriona", true)
+    .addField("Developper Website", "https://Asthriona.com", true)
+    .addField("Created on", bot.user.createdAt, true)
+    .addField("On the server since:", bot.user.joinedAt, true)
+    .addField("Git:", "https://github.com/Asthriona/AsthriModBot", true)
+    .addField('Site: ', 'http://yukiko.nishikino.me/', true)
+    .addField("Server Using this server: ", bot.guilds.size, true)
     //.setThumbnail(bicon);
     return message.channel.send(botembed)
 }
@@ -206,7 +240,7 @@ if (process.env.NODE_ENV === 'production'){
     bot.login(botConfig.tokenDev) 
     console.log("login on discord...")
 };
-async function lvlupIMG(message) {
+async function WelcomeCad(member, channel) {
     var canvas = Canvas.createCanvas(934, 282);
     var ctx = canvas.getContext('2d');
     var background = await Canvas.loadImage('https://cdn.asthriona.com/discordbotCard.jpg');
@@ -217,44 +251,17 @@ async function lvlupIMG(message) {
     ctx.stroke();
     ctx.font = '60px sans-serif';
     ctx.fillStyle = '#fff';
-    ctx.fillText(message.author.username, 280, 141);
+    ctx.fillText(member.user.username, 280, 141);
     ctx.font = '50px sans-serif';
     ctx.fillStyle = '#fff';
-    ctx.fillText("You are now level " + xp[message.author.id].level + " !", 280, 185);
-    var avatar = await Canvas.loadImage(message.author.displayAvatarURL);
+    ctx.fillText("Welcome on " + member.guild.name, 280, 185);
+    var avatar = await Canvas.loadImage(member.user.displayAvatarURL);
     ctx.beginPath();
     ctx.arc(140, 128, 110, 0, Math.PI * 2);
     ctx.closePath();
     ctx.clip();
     ctx.drawImage(avatar, 25, 15, 256, 256);
-    var lvlupimg = new discord.Attachment(canvas.toBuffer(), 'lvlup-image.png');
-    let lvlchan = message.guild.channels.find('name', "wall-of-fame");
-    return lvlchan.send(message.author + " You Leveled up!", lvlupimg);
-};
-
-//Welcome cards
-async function welcomeText(cmd, prefix, message) {
-
-        var canvas = Canvas.createCanvas(934, 282);
-        var ctx = canvas.getContext('2d');
-        var background = await Canvas.loadImage('https://cdn.asthriona.com/discordbotCard.jpg');
-        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-        ctx.beginPath();
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
-        ctx.fillRect(260, 80, 650, 130);
-        ctx.stroke();
-        ctx.font = '60px sans-serif';
-        ctx.fillStyle = '#fff';
-        ctx.fillText(message.author.username, 280, 141);
-        ctx.font = '50px sans-serif';
-        ctx.fillStyle = '#fff';
-        ctx.fillText("Welcome on " + message.guild.name, 280, 185);
-        var avatar = await Canvas.loadImage(message.author.displayAvatarURL);
-        ctx.beginPath();
-        ctx.arc(140, 128, 110, 0, Math.PI * 2);
-        ctx.closePath();
-        ctx.clip();
-        ctx.drawImage(avatar, 25, 15, 256, 256);
-        var attachment = new discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
-        return message.channel.send(attachment);
-};
+    var attachment = new discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
+    channel.send(`bienvenue sur  le serveur ${member.guild.name}, ${member}! Pense a aller accepter le reglement pour avoirs acces au serveur complet!`);
+    channel.send(attachment)
+}

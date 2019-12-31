@@ -49,7 +49,7 @@ bot.on('message', async message =>{
         } catch (error) {
             try {
                 var videos = await youtube.searchVideos(searchString, 1);
-                console.log("Searching: " + searchString + "Requested by " + message.author.username)
+                console.log("Searching: " + searchString + " Requested by " + message.author.username)
                 var video = await youtube.getVideoByID(videos[0].id);
             } catch (err) {
                 console.log(err);
@@ -60,12 +60,14 @@ bot.on('message', async message =>{
     }
         //console.log(video)
         async function handleVideo(video, message, voiceChannel){
+            var video = await youtube.getVideoByID(videos[0].id);
             var serverQueue = queue.get(message.guild.id)
             var song = {
                 id: video.id,
                 title: Util.escapeMarkdown(video.title),
-                url: `https://www.youtube.com/watch?v=${video.id}`
+                url: "https://www.youtube.com/watch?v=" + video.id
             };
+            console.log(song)
             if(!serverQueue){
                 var queueConstruct = {
                     textChannel: message.channel,
@@ -135,10 +137,14 @@ ${serverQueue.songs.map(song => `> **-** ${song.title}`).join('\n')}
             }
             return message.reply("There is nothing playing.")
         }
-        return undefined
 //fin du bot
 });
 function play(guild, song){
+    var song = {
+        id: video.id,
+        title: Util.escapeMarkdown(video.title),
+        url: "https://www.youtube.com/watch?v=" + video.id
+    };
     var serverQueue = queue.get(guild.id)
     if(!song) {
         serverQueue.voiceChannel.leave();
