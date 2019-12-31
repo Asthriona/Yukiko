@@ -3,7 +3,6 @@ var superagent = require("superagent");
 var warn = require('../warn.json');
 
 module.exports.run = async (bot, message, args) => {
-    message.channel.startTyping()
     if(!args[0]) return message.reply("No user selected.")
     let iUser  = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
     if(!iUser) return message.reply("User not found :/");
@@ -20,7 +19,6 @@ module.exports.run = async (bot, message, args) => {
     .addField('Roles:', iUser.roles.map(r => `${r}`).join(' | '), true)
     //console.log(iUser)
     message.channel.send(userEmbed)
-    message.channel.stopTyping();
     
     
 }
