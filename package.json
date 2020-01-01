@@ -28,6 +28,7 @@
   },
   "homepage": "https://sh.nishikino.me/2dfdb",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "canvas": "^2.6.0",
     "discord.js": "^11.5.1",
     "dotenv": "^8.2.0",
