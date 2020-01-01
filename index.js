@@ -14,7 +14,7 @@ var osu = require('os-utils')
     
     let dbusername = botConfig.dbuser;
     let dbpasswd = botConfig.dbpass;
-    mongoose.connect('mongodb+srv://' + dbusername + ':'+ dbpasswd +'@yukiko-pcvs8.mongodb.net/yukikotest?retryWrites=true&w=majority', {
+    mongoose.connect('mongodb+srv://' + dbusername + ':'+ dbpasswd +'@yukiko-pcvs8.mongodb.net/discordbot?retryWrites=true&w=majority', {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });
@@ -139,7 +139,8 @@ bot.on('message', async message =>{
                 serverID: message.guild.id,
                 xp: xpAdd,
                 level: 0,
-                message: messageAdd
+                message: messageAdd,
+                avatarURL: message.author.displayAvatarURL
             })
 
             newUsers.save().catch(error => console.log(error));
@@ -147,6 +148,7 @@ bot.on('message', async message =>{
             users.xp = users.xp + xpAdd;
             users.message = users.message + messageAdd
             users.username = message.author.username
+            users.avatarURL = message.author.displayAvatarURL
 
             let nxtlvl = 300*Math.pow(2, users.level)
             if(users.xp >= nxtlvl){
@@ -185,6 +187,9 @@ if(cmd === `${prefix}ping`){
     console.log(`${message.author.user} used !ping on ${message.guild.name}`)
     return message.channel.send("Pong! ");
 }
+if(cmd === `${prefix}lb`){
+    return message.channel.send(` Voici le liens du Leaderboard \n http://yukiko.nishikino.me/${message.guild.id}`)
+}
 if(cmd === `${prefix}Salut`){
     return message.channel.send(`Hello ${message.author}!`)
 }
@@ -199,14 +204,6 @@ if(cmd == `${prefix}leaderboard`){
         message.reply(docs);
         })
         .sort([["xp", 1], ["xp", "descending"]]);
-}
-//author
-if(cmd === `${prefix}author`){
-    message.channel.send(`${message.author.username}`)
-}
-//authorID
-if(cmd === `${prefix}authorid`){
-    message.channel.send(message.author.id)
 }
 //botinfo
 if(cmd === `${prefix}info`){

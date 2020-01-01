@@ -6,6 +6,7 @@ var userSchema = new mongoose.Schema({
     serverID: String,
     xp: Number,
     level: Number,
-    message: Number
+    message: Number,
+    avatarURL: String
 })
 module.exports = mongoose.model("Users", userSchema);
