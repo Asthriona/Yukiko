@@ -9,19 +9,17 @@ var os = require('os');
 var osu = require('os-utils')
 
 
-
     //Mongodb
     var mongoose = require("mongoose");
     
     let dbusername = botConfig.dbuser;
     let dbpasswd = botConfig.dbpass;
-    mongoose.connect('mongodb+srv://' + dbusername + ':'+ dbpasswd +'@yukiko-pcvs8.mongodb.net/discordbot?retryWrites=true&w=majority', {
+    mongoose.connect('mongodb+srv://' + dbusername + ':'+ dbpasswd +'@yukiko-pcvs8.mongodb.net/yukikotest?retryWrites=true&w=majority', {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });
     var Users = require('./model/xp.js')
     console.log("Connected to YukikoDB!");
-
 
 var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'w'});
 var log_stdout = process.stdout;
@@ -137,15 +135,18 @@ bot.on('message', async message =>{
         if(!users){
             var newUsers = new Users({
                 did: message.author.id,
+                username: message.author.username,
                 serverID: message.guild.id,
                 xp: xpAdd,
                 level: 0,
                 message: messageAdd
             })
+
             newUsers.save().catch(error => console.log(error));
         }else{
             users.xp = users.xp + xpAdd;
             users.message = users.message + messageAdd
+            users.username = message.author.username
 
             let nxtlvl = 300*Math.pow(2, users.level)
             if(users.xp >= nxtlvl){
@@ -166,6 +167,8 @@ bot.on('message', async message =>{
         }
     });
 
+    //add Username
+    Users.aggregate([{$addfields: {username: ""}}])
 //Force mute.
 if(message.member.roles.find(r => r.name === "muted")){
     message.delete();
@@ -197,7 +200,14 @@ if(cmd == `${prefix}leaderboard`){
         })
         .sort([["xp", 1], ["xp", "descending"]]);
 }
-
+//author
+if(cmd === `${prefix}author`){
+    message.channel.send(`${message.author.username}`)
+}
+//authorID
+if(cmd === `${prefix}authorid`){
+    message.channel.send(message.author.id)
+}
 //botinfo
 if(cmd === `${prefix}info`){
     let bicon = bot.user.displayAvatarURL;
