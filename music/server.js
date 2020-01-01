@@ -115,7 +115,7 @@ bot.on('message', async message =>{
             serverQueue.volume = args[1];
             serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 5);
             return message.reply("I set the volume to " + args[1])
-            return undefined;
+
         }else if(message.content.startsWith(`${prefix}queue`)){
             if(!serverQueue) return ("There is nothing currently playing.")
             return message.channel.send(`
@@ -140,11 +140,6 @@ ${serverQueue.songs.map(song => `> **-** ${song.title}`).join('\n')}
 //fin du bot
 });
 function play(guild, song){
-    var song = {
-        id: video.id,
-        title: Util.escapeMarkdown(video.title),
-        url: "https://www.youtube.com/watch?v=" + video.id
-    };
     var serverQueue = queue.get(guild.id)
     if(!song) {
         serverQueue.voiceChannel.leave();
