@@ -26,6 +26,7 @@ bot.on('message', async message =>{
     const serverQueue = queue.get(message.guild.id);
 
     if(message.content.startsWith(`${prefix}play`)) {
+        if(!args[1]) return message.reply("You must provide a youtube link.")
         var voiceChannel = message.member.voiceChannel;
         if(!voiceChannel) return message.reply('You must be in a voice channel.')
         var permission = voiceChannel.permissionsFor(message.client.user);
@@ -97,7 +98,7 @@ bot.on('message', async message =>{
             }
         }
         } else if(message.content.startsWith(`${prefix}skip`)){
-            if(!serverQueue) return message.reply('There is no mthing playing right now, so I cant skip anything except void! :thinking:')
+            if(!serverQueue) return message.reply('Im not playing anything right now, so I cant skip anything except void! :thinking:')
             serverQueue.connection.dispatcher.end();
             return undefined;
         } else if(message.content.startsWith(`${prefix}stop`)){
