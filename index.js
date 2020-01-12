@@ -84,12 +84,13 @@ bot.on('ready', () =>{
             }
         })
     } else {
+        require('./twitch.js');
         bot.user.setStatus('online');
         bot.user.setPresence({
             game: {
                 name: 'TRP | Mara Fox | SOB',
                 type: 'STREAMING',
-                url: 'https://www.twitch.tv/jacquirenee',
+                url: 'https://www.twitch.tv/',
                 smallImage: 'https://static-cdn.jtvnw.net/previews-ttv/live_user_jacquirenee-1280x720.jpg',
                 largeImageURL:"https://static-cdn.jtvnw.net/previews-ttv/live_user_jacquirenee-1280x720.jpg"
             }
