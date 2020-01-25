@@ -47,12 +47,7 @@ module.exports.run = async (bot, message, args) => {
         ctx.fillStyle = '#fff';
         ctx.fillText("Next Level in "+ xpleft + " xp", 280, 225);
         
-        var avatar = await Canvas.loadImage(message.author.displayAvatarURL);
-        ctx.beginPath();
-        ctx.arc(125, 140, 100, 0, Math.PI * 2);
-        ctx.closePath();
-        ctx.clip();
-        ctx.drawImage(avatar, 25, 40, 200, 200);
+        await GetAvatar(message, ctx);
         
         var lvlimg = new discord.Attachment(canvas.toBuffer(), 'lvlup-image.png');
         message.channel.send(lvlimg);
@@ -86,12 +81,7 @@ module.exports.run = async (bot, message, args) => {
     ctx.fillStyle = '#fff';
     ctx.fillText("Next Level in "+ xpleft + " xp", 280, 225);
     
-    var avatar = await Canvas.loadImage(message.author.displayAvatarURL);
-    ctx.beginPath();
-    ctx.arc(125, 125, 100, 0, Math.PI * 2);
-    ctx.closePath();
-    ctx.clip();
-    ctx.drawImage(avatar, 25, 25, 200, 200);
+    await GetAvatar(message, ctx);
     
     var lvlimg = new discord.Attachment(canvas.toBuffer(), 'lvlup-image.png');
     message.channel.send(lvlimg);
@@ -102,3 +92,12 @@ module.exports.help = {
     name: "rank",
     description: "Show... bot uptime? more or less."
 }
+async function GetAvatar(message, ctx) {
+    var avatar = await Canvas.loadImage(message.author.displayAvatarURL);
+    ctx.beginPath();
+    ctx.arc(125, 140, 100, 0, Math.PI * 2);
+    ctx.closePath();
+    ctx.clip();
+    ctx.drawImage(avatar, 25, 40, 200, 200);
+}
+
