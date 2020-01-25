@@ -19,7 +19,7 @@ module.exports.run = async (bot, message, args) => {
 
     //Get Background Image
     if(message.author.id == 186195458182479874){
-        var background = await Canvas.loadImage('https://cdn.asthriona.com/fdklgjdlfkjg.jpg'); //934x282
+        var background = await Canvas.loadImage('https://cdn.asthriona.com/fdklgjdlfkjg.jpg');
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
         ctx.beginPath();
         ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
