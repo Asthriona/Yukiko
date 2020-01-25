@@ -43,15 +43,23 @@ bot.on('reconnecting', () => console.log("\x1b[32mAsthriona Mod Bot\x1b[0m  is r
 bot.on('ready', () =>console.log(`\x1b[32mAsthriona Mod Bot\x1b[0m is now started and running in \x1b[31m${process.env.NODE_ENV} \x1b[0menvironement!`));
 
 bot.on ("guildMemberAdd", async member => {
-    const channel = member.guild.channels.find(channel => channel.name === "bienvenue");
-    if(!channel) return;
-    return await WelcomeCad(member, channel);
+    const channel = member.guild.channels.find(channel => channel.name === "welcome");
+    if(!channel){
+        const channel = member.guild.channels.find(channel => channel.name === "bienvenue");
+        return await WelcomeCad(member, channel);
+    } else {
+        return await WelcomeCad(member, channel);
+    }
 });
 
 bot.on ("guildMemberRemove", member => {
-    const channel = member.guild.channels.find(channel => channel.name === "bienvenue");
-    if(!channel) return;
-    channel.send(`${member} Viens de quitter le serveur! https://cdn.asthriona.com/sad.gif`);
+    const channel = member.guild.channels.find(channel => channel.name === "welcome");
+    if(!channel) if(!channel){
+        const channel = member.guild.channels.find(channel => channel.name === "bienvenue");
+        channel.send(`${member} Viens de quitter le serveur! https://cdn.asthriona.com/sad.gif`);
+    } else {
+        channel.send(`${member} Viens de quitter le serveur! https://cdn.asthriona.com/sad.gif`);
+    }
 });
 
 //commands Handler
