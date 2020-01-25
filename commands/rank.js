@@ -16,6 +16,7 @@ module.exports.run = async (bot, message, args) => {
     
     var canvas = Canvas.createCanvas(934, 282);
     var ctx = canvas.getContext('2d');
+
     //Get Background Image
     if(message.author.id == 186195458182479874){
         var background = await Canvas.loadImage('https://cdn.asthriona.com/fdklgjdlfkjg.jpg'); //934x282
@@ -48,10 +49,10 @@ module.exports.run = async (bot, message, args) => {
         
         var avatar = await Canvas.loadImage(message.author.displayAvatarURL);
         ctx.beginPath();
-        ctx.arc(125, 125, 100, 0, Math.PI * 2);
+        ctx.arc(125, 140, 100, 0, Math.PI * 2);
         ctx.closePath();
         ctx.clip();
-        ctx.drawImage(avatar, 25, 25, 200, 200);
+        ctx.drawImage(avatar, 25, 40, 200, 200);
         
         var lvlimg = new discord.Attachment(canvas.toBuffer(), 'lvlup-image.png');
         message.channel.send(lvlimg);
