@@ -96,7 +96,7 @@ bot.on('ready', () =>{
         bot.user.setStatus('online');
         bot.user.setPresence({
             game: {
-                name: 'TRP | Mara Fox | SOB',
+                name: 'Coding stuff...',
                 type: 'STREAMING',
                 url: 'https://www.twitch.tv/',
                 smallImage: 'https://static-cdn.jtvnw.net/previews-ttv/live_user_jacquirenee-1280x720.jpg',
