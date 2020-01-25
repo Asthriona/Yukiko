@@ -278,6 +278,5 @@ async function WelcomeCad(member, channel) {
     ctx.clip();
     ctx.drawImage(avatar, 25, 15, 256, 256);
     var attachment = new discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
-    channel.send(`bienvenue sur  le serveur ${member.guild.name}, ${member}! Pense a aller accepter le <#639155918696874004> pour avoirs acces au serveur complet!`);
     channel.send(attachment)
 }
