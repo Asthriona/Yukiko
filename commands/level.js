@@ -3,9 +3,7 @@ var mongoose = require("mongoose");
 var Canvas = require('canvas');
 var botConfig = require('../botconfig.json');
 
-let dbusername = botConfig.dbuser;
-let dbpasswd = botConfig.dbpass;
-mongoose.connect('mongodb+srv://' + dbusername + ':'+ dbpasswd +'@yukiko-pcvs8.mongodb.net/discordbot?retryWrites=true&w=majority', {
+    mongoose.connect(botConfig.dbLink, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });

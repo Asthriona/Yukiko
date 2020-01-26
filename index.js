@@ -12,14 +12,21 @@ var osu = require('os-utils')
 //Mongodb
 var mongoose = require("mongoose");
 
-let dbusername = botConfig.dbuser;
-let dbpasswd = botConfig.dbpass;
-mongoose.connect('mongodb+srv://' + dbusername + ':' + dbpasswd + '@yukiko-pcvs8.mongodb.net/discordbot?retryWrites=true&w=majority', {
+mongoose.connect(botConfig.dbLink, {
     useNewUrlParser: true,
     useUnifiedTopology: true
+}).catch(error => handleError(error));
+mongoose.connection.on('error', function(e) {
+    console.log('YukikoDB: Can not connect Error: ' + e);
+    var bot = new discord.Client({ disableEveryone: true });
+    bot.commands = new discord.Collection();
+    process.exit();
 });
+mongoose.connection.once('open', function(d) { 
+    console.log("Connected to " + mongoose.connection.host + " !");
+})
 var Users = require('./model/xp.js')
-console.log("Connected to YukikoDB!");
+
 
 var log_file = fs.createWriteStream(__dirname + '/debug.log', { flags: 'w' });
 var log_stdout = process.stdout;
