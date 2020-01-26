@@ -12,7 +12,6 @@ module.exports.run = async (bot, message, args) => {
     let uptime = `${days} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds`;
     message.channel.send(uptime)
     console.log(`${message.author.username} used uptime ${uptime}`)
-    console.log(process.uptime())
 }
 
 module.exports.help = {
