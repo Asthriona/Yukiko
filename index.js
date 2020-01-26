@@ -236,6 +236,7 @@ bot.on('message', async message => {
         //.setThumbnail(bicon);
         return message.channel.send(botembed)
     }
+
 });
 
 
@@ -266,7 +267,7 @@ async function lvlupimg(message, users) {
     ctx.closePath();
     ctx.stroke();
     //show Username
-    ctx.font = '60px sans-serif';
+    ctx.font = applyText(canvas, message.author.username);
     ctx.fillStyle = '#fff';
     ctx.fillText(message.author.username + " Level up!", 280, 136);
     //Show Level & XP
