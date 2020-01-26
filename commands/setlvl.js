@@ -21,7 +21,7 @@ module.exports.run = async (bot, message, args) => {
         users.xp = users.xp =+ args[1] * Math.pow(2, users.level);
         users.save().catch(error => console.log(error));
         console.log(args[1])
-        message.reply("<@"+lvlUser.id+"> level's setted to " + users.level)
+        message.channel.send("<@"+lvlUser.id+"> level's setted to " + users.level)
     });
 }
 
