@@ -285,6 +285,15 @@ async function lvlupimg(message, users) {
 }
 
 async function WelcomeCad(member, channel) {
+    const applyText = (canvas, text) => {
+        const ctx = canvas.getContext('2d');
+        let fontSize = 70;
+        do {
+            ctx.font = `${fontSize -= 10}px sans-serif`;
+        } while (ctx.measureText(text).width > canvas.width - 300);
+        return ctx.font;
+    };
+
     var canvas = Canvas.createCanvas(934, 282);
     var ctx = canvas.getContext('2d');
     var background = await Canvas.loadImage('https://cdn.asthriona.com/discordbotCard.jpg');
@@ -293,10 +302,10 @@ async function WelcomeCad(member, channel) {
     ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
     ctx.fillRect(260, 80, 650, 130);
     ctx.stroke();
-    ctx.font = '60px sans-serif';
+    ctx.font =  applyText(canvas, member.user.username);
     ctx.fillStyle = '#fff';
     ctx.fillText(member.user.username, 280, 141);
-    ctx.font = '50px sans-serif';
+    ctx.font = applyText(canvas, member.guild.name);
     ctx.fillStyle = '#fff';
     ctx.fillText("Welcome on " + member.guild.name, 280, 185);
     var avatar = await Canvas.loadImage(member.user.displayAvatarURL);

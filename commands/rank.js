@@ -13,6 +13,14 @@ var Users = require('../model/xp.js')
 
 module.exports.run = async (bot, message, args) => {
 
+    const applyText = (canvas, text) => {
+        const ctx = canvas.getContext('2d');
+        let fontSize = 70;
+        do {
+            ctx.font = `${fontSize -= 10}px sans-serif`;
+        } while (ctx.measureText(text).width > canvas.width - 300);
+        return ctx.font;
+    };
 
     var canvas = Canvas.createCanvas(934, 282);
     var ctx = canvas.getContext('2d');
