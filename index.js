@@ -181,7 +181,6 @@ bot.on('message', async message => {
         message.delete();
         message.author.send("You are muted on " + message.guild.name)
     };
-
     //Commands Handler
     //console.log("Reading Commands Handler...")
     let commandfile = bot.commands.get(messageArray[0].slice(prefix.length));
@@ -236,12 +235,6 @@ bot.on('message', async message => {
     //	if (!channel) return;
     //  await welcomeText(cmd, prefix, message);
     //});
-    //Console Chatter
-    let y = process.openStdin()
-    y.addListener("data", res => {
-        let x = res.toString().trim().split(/ +/g)
-        bot.channels.get("638455806144151562").send(x.join(" "));
-    });
 });
 
 
@@ -253,6 +246,14 @@ if (process.env.NODE_ENV === 'production') {
     console.log("login on discord...")
 };
 async function lvlupimg(message, users) {
+    const applyText = (canvas, text) => {
+        const ctx = canvas.getContext('2d');
+        let fontSize = 70;
+        do {
+            ctx.font = `${fontSize -= 10}px sans-serif`;
+        } while (ctx.measureText(text).width > canvas.width - 300);
+        return ctx.font;
+    };
     var canvas = Canvas.createCanvas(934, 282);
     var ctx = canvas.getContext('2d');
     var background = await Canvas.loadImage('https://cdn.asthriona.com/discordbotCard.jpg');
