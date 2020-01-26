@@ -34,7 +34,7 @@ module.exports.run = async (bot, message, args) => {
         ctx.closePath();
         ctx.stroke();
         //show Username
-        ctx.font = '60px sans-serif';
+        ctx.font = applyText(canvas, message.author.username);
         ctx.fillStyle = '#fff';
         ctx.fillText(message.author.username, 280, 136);
         //Get Database infos
