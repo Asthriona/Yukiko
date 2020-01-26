@@ -236,12 +236,6 @@ bot.on('message', async message => {
         //.setThumbnail(bicon);
         return message.channel.send(botembed)
     }
-    //Client join
-    //bot.on('guildMemberAdd', async member => {
-    //	let channel = message.guild.channels.find('name', "general");
-    //	if (!channel) return;
-    //  await welcomeText(cmd, prefix, message);
-    //});
 });
 
 
