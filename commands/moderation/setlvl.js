@@ -6,7 +6,7 @@ mongoose.connect(botConfig.dbLink, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
-var Users = require('../model/xp.js')
+var Users = require('../../model/xp.js')
 
 module.exports.run = async (bot, message, args) => {
     if(message.author.id != "186195458182479874") return message.channel.send("You cant change other ppl lvl!")

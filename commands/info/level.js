@@ -7,7 +7,7 @@ var botConfig = require('../botconfig.json');
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
-var Users = require('../model/xp.js')
+var Users = require('../../model/xp.js')
 
 module.exports.run = async (bot, message, args) => {
     Users.find({

@@ -27,6 +27,7 @@
   },
   "homepage": "https://sh.nishikino.me/2dfdb",
   "dependencies": {
+    "ascii-table": "0.0.9",
     "axios": "^0.19.1",
     "body-parser": "^1.19.0",
     "canvas": "^2.6.0",
