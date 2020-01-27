@@ -139,7 +139,6 @@ bot.on('message', async message => {
     //XP System
     //DA NEW XP SYSTEM 2.0
     let xpAdd = Math.floor(Math.random() * 7) + 8;
-    console.log(xpAdd)
     let messageAdd = +1
 
 
@@ -222,6 +221,7 @@ bot.on('message', async message => {
         let botembed = new discord.RichEmbed()
             .setThumbnail(bicon)
             .setTitle("A propos de ce bot")
+            .setAuthor(bot.user.username, bicon, 'http://yukiko.nishikino.me/')
             .setDescription("this bot can make your cat explode, Mount the DOGO, burn your egg and clean your house. (but not your room. we tested all of this.(RIP my cat...))")
             .setColor("#800080")
             .addField("Bot name:", bot.user.username, true)
@@ -233,12 +233,12 @@ bot.on('message', async message => {
             .addField("Git:", "https://github.com/Asthriona/AsthriModBot", true)
             .addField('Site: ', 'http://yukiko.nishikino.me/', true)
             .addField("Server Using this server: ", bot.guilds.size, true)
-        //.setThumbnail(bicon);
+            .setTimestamp()
+            .setFooter(bot.user.username,bicon)
         return message.channel.send(botembed)
     }
 
 });
-
 
 if (process.env.NODE_ENV === 'production') {
     bot.login(botConfig.token)
