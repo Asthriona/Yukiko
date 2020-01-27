@@ -1,8 +1,8 @@
 module.exports = {
-    name: " ",
-    category: "info",
+    name: "say",
+    category: "Moderation",
     description: " ",
-    run: async (bot, message, args) => {
+    run: async (bot, message, args, RichEmbed) => {
         if(message.deletable) message.delete();
         if(args.length < 1) 
             return message.reply("Nothing to say? Please TALK TO ME! 😢");
