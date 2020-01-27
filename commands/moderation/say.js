@@ -1,27 +1,23 @@
-var discord = require("discord.js");
+module.exports = {
+    name: " ",
+    category: "info",
+    description: " ",
+    run: async (bot, message, args) => {
+        if(message.deletable) message.delete();
+        if(args.length < 1) 
+            return message.reply("Nothing to say? Please TALK TO ME! 😢");
 
-
-module.exports.run = async (bot, message, args) => {
-    //say
-    message.channel.startTyping()
-    console.log(`${message.author.username} used !say`)
-    if(message.author.id === "186195458182479874"){ 
-    let botmessage = args.join(" ");
-    message.delete().catch();
-    console.log(`${message.author.username} -> ${botmessage}`)
-    setTimeout(function(){ 
-        message.channel.stopTyping();
-        message.channel.send(botmessage);
-    }, 3000);
-}else{
-    setTimeout(function(){ 
-        return message.reply("Oy! t'as pas le droit de me dire ce que je doit dire! :'c");
-    }, 4000);
+        const roleColor = message.guild.me.displayHexColor === "#000" ? "#fff" : message.guild.me.displayHexColor ;
+        if(args[0].toLowerCase() === "embed"){
+            var embed = new RichEmbed()
+            .setColor(roleColor)
+            .setAuthor(message.author.username, message.author.displayAvatarURL)
+            .setDescription(args.slice(1).join(" "))
+            .setTimestamp()
+            .setFooter(`Powered by: ${bot.user.username}`, bot.user.displayAvatarURL)
+            message.channel.send(embed)
+        }else{
+            message.channel.send(args.join(" "))
+        }
+    }
 }
-}
-
-module.exports.help = {
-    name: "say",
-    description: "THE WALL SAID SOMETHING! YOU BETTER LISTEN!"
-}
-

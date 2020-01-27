@@ -1,32 +1,42 @@
-var botConfig = require('./botconfig.json');
-var discord = require('discord.js');
+const { Client, RichEmbed, Collection } = require('discord.js');
+const botConfig = require('./botconfig.json')
 
-
-var bot = new discord.Client({
+const bot = new Client({
     disableEveryone: true
-})
-
-bot.on("ready", async () => {
-    console.log(`${bot.user.username} is online.`) 
-    bot.user.setPresence({
-        game: {
-            name: 'Asthriona.com',
-            type: "WATCHING",
-        }
-    }) 
 });
 
-bot.on("message", async message => {
-    if(message.author.bot) return;
-    if(message.channel.type === "dm") return
+bot.commands = new Collection();
+bot.aliases = new Collection();
 
-    let prefix = botConfig.prefix
-    let messageArray = message.content.split(" ");
-    let cmd = messageArray[0];
-    let args = messageArray.slice(1);
+["command"].forEach(handler => {
+    require(`./handler/${handler}`)(bot);
+})
 
-    if(cmd === `${prefix}hello`){
-        return message.channel.send("hello")
+bot.on("ready", () => {
+    console.log(`${bot.user.username} is online.`);
+    bot.user.setPresence({
+        game:{
+            name: "coding 2.0!",
+            type: "WATCHING"
+        }
+    })
+})
+
+bot.on("message", async message =>{
+    //Logging
+    console.log(`${message.guild.name} -> ${message.author.username}: ${message.content}`)
+    
+    let prefix = botConfig.prefix;
+    if (message.author.bot) return;
+    if (message.channel.type === "dm") return;
+    if (!message.content.startsWith(prefix)) return;
+
+    let args = message.content.slice(prefix.length).trim().split(/ +/g);
+    let cmd = args.shift().toLowerCase();
+
+
+    if(cmd === "say"){
+
     }
 })
 
