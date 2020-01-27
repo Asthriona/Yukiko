@@ -11,7 +11,7 @@ var bot = new discord.Client({disableEveryone: true});
 bot.commands = new discord.Collection();
 bot.on('disconnect', () => console.log("Musicbot is Disconected."));
 bot.on('reconnecting', () => console.log("Music Bot is reconnecting."))
-bot.on('ready', () => "Music bot is Ready!")
+bot.on('ready', () => `\x1b[32mMusic bot\x1b[0m is now started and running on \x1b[31m${bot.user.username} \x1b[0menvironement!`)
 var queue = new Map();
 
 bot.on('message', async message =>{
@@ -54,7 +54,7 @@ bot.on('message', async message =>{
                 var video = await youtube.getVideoByID(videos[0].id);
             } catch (err) {
                 console.log(err);
-                return message.channel.send("No video found :c" + err)
+                return message.channel.send("No video found :c ```" + err + "```")
             }
         }
         return handleVideo(video, message, voiceChannel, playlist = false);
@@ -162,4 +162,4 @@ if (process.env.NODE_ENV === 'production'){
 }else{
     bot.login(botConfig.tokenDev) 
 };
-console.log("MUSIC BOT IS RUNNING!")
+console.log(`\x1b[32mMusic bot \x1b[0m is now started and running`)
