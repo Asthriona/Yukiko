@@ -39,6 +39,7 @@
     "express-handlebars": "^3.1.0",
     "fast-sort": "^2.0.1",
     "follow-redirects": "^1.9.0",
+    "fs": "0.0.1-security",
     "mongodb": "^3.4.1",
     "mongoose": "^5.8.3",
     "ms": "^2.1.2",
