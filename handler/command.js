@@ -13,7 +13,7 @@ module.exports = (bot) => {
     
             if (pull.name) {
                 bot.commands.set(pull.name, pull);
-                table.addRow(file, '✔️ Ok！&');
+                table.addRow(file, '✔️ Ok！');
             } else {
                 table.addRow(file, `❌  -> missing a help.name, or help.name is not a string.`);
                 continue;
