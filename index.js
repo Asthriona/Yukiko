@@ -23,7 +23,7 @@ mongoose.connection.on('error', function(e) {
     process.exit();
 });
 mongoose.connection.once('open', function(d) { 
-    console.log("Connected to " + mongoose.connection.host + " !");
+    console.log("\x1b[32mYukikoDB:\x1b[0m connected to \x1b[31m" + mongoose.connection.host + " \x1b[0m");
 })
 var Users = require('./model/xp.js')
 
@@ -47,7 +47,7 @@ var bot = new discord.Client({ disableEveryone: true });
 bot.commands = new discord.Collection();
 bot.on('disconnect', () => console.log("\x1b[32mAsthriona Mod Bot\x1b[0m is Disconected... Waiting for reconnect"));
 bot.on('reconnecting', () => console.log("\x1b[32mAsthriona Mod Bot\x1b[0m  is reconnecting."))
-bot.on('ready', () => console.log(`\x1b[32mAsthriona Mod Bot\x1b[0m is now started and running in \x1b[31m${process.env.NODE_ENV} \x1b[0menvironement!`));
+bot.on('ready', () => console.log(`\x1b[32m${bot.user.username}\x1b[0m is now started and running in \x1b[31m${process.env.NODE_ENV} \x1b[0menvironement!`));
 
 bot.on("guildMemberAdd", async member => {
     const channel = member.guild.channels.find(channel => channel.name === "welcome");
@@ -82,7 +82,7 @@ fs.readdir("./commands", (err, files) => {
     console.log("Loadings files...");
     jsfile.forEach((f, i) => {
         let props = require(`./commands/${f}`);
-        console.log(`${f} Loaded!`);
+        console.log(`\x1b[35m${f} \x1b[0mLoaded!`);
         bot.commands.set(props.help.name, props);
     });
     console.log("Files Loaded, Moving on!")
