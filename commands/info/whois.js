@@ -6,6 +6,7 @@ module.exports = {
     name: "whois",
     aliases: ["who", "user", "info"],
     description: "Returns user information",
+    category: "info",
     usage: "[username | id | mention]",
     run: (bot, message, args) => {
         const member = getMember(message, args.join(" "));
