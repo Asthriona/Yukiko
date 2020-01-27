@@ -27,17 +27,19 @@ bot.on("message", async message =>{
     console.log(`${message.guild.name} -> ${message.author.username}: ${message.content}`)
     
     let prefix = botConfig.prefix;
-    if (message.author.bot) return;
-    if (message.channel.type === "dm") return;
-    if (!message.content.startsWith(prefix)) return;
+    if(message.author.bot) return;
+    if(message.channel.type === "dm") return;
+    if(!message.content.startsWith(prefix)) return;
+    if(!message.member) message.member = await message.guild.fetchMember(message)
 
     let args = message.content.slice(prefix.length).trim().split(/ +/g);
     let cmd = args.shift().toLowerCase();
+    if(cmd === 0) return;
+    let command = bot.commands.get(cmd);
+    if(!command) command = bot.commands.get(bot.aliases.get(cmd))
+    if(command)
+    command.run(bot, message, args, RichEmbed)
 
-
-    if(cmd === "say"){
-
-    }
 })
 
 bot.login(botConfig.tokenDev)
