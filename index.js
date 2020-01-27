@@ -61,7 +61,7 @@ bot.on("guildMemberAdd", async member => {
 
 bot.on("guildMemberRemove", member => {
     const channel = member.guild.channels.find(channel => channel.name === "welcome");
-    if (!channel) if (!channel) {
+    if (!channel) {
         const channel = member.guild.channels.find(channel => channel.name === "bienvenue");
         channel.send(`${member} Viens de quitter le serveur! https://cdn.asthriona.com/sad.gif`);
     } else {
