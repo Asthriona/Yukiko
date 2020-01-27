@@ -198,7 +198,10 @@ bot.on('message', async message => {
         return message.channel.send("Pong! ");
     }
     if (cmd === `${prefix}lb`) {
-        return message.channel.send(` Voici le liens du Leaderboard \n http://yukiko.nishikino.me/${message.guild.id}`)
+        return message.channel.send(` Voici le liens du Leaderboard \n http://yukiko.nishikino.me/lb?id=${message.guild.id}`)
+    }
+    if (cmd === `${prefix}levels`) {
+        return message.channel.send(` Voici le liens du Leaderboard \n http://yukiko.nishikino.me/lb?id=${message.guild.id}`)
     }
     if (cmd === `${prefix}Salut`) {
         return message.channel.send(`Hello ${message.author}!`)
