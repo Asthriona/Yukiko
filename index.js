@@ -86,6 +86,51 @@ bot.on("message", async message =>{
     if(command)
     command.run(bot, message, args, RichEmbed)
 
+
+        //XP System
+    //DA NEW XP SYSTEM 2.0
+    let xpAdd = Math.floor(Math.random() * 7) + 8;
+    let messageAdd = +1
+
+
+    Users.findOne({
+        did: message.author.id,
+        serverID: message.guild.id
+    }, (err, users) => {
+        if (err) console.log(err);
+        if (!users) {
+            var newUsers = new Users({
+                did: message.author.id,
+                username: message.author.username,
+                serverID: message.guild.id,
+                xp: xpAdd,
+                level: 0,
+                message: messageAdd,
+                avatarURL: message.author.displayAvatarURL
+            })
+
+            newUsers.save().catch(error => console.log(error));
+        } else {
+            users.xp = users.xp + xpAdd;
+            users.message = users.message + messageAdd
+            users.username = message.author.username
+            users.avatarURL = message.author.displayAvatarURL
+
+            let nxtlvl = 300 * Math.pow(2, users.level)
+            if (users.xp >= nxtlvl) {
+                users.level = users.level + 1
+
+                //lvl up image              
+                var sendimg = async function sendimg() {
+                    await lvlupimg(message, users);
+
+                }
+                return sendimg();
+            }
+            users.save().catch(error => console.log(error));
+        }
+    });
+
 })
 
 if (process.env.NODE_ENV === 'production') {
