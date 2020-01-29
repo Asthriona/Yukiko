@@ -1,7 +1,6 @@
 var { RichEmbed } = require("discord.js");
 var { stripIndents } = require("common-tags");
 var { promptMessage } = require("../../function")
-var { botConfig } = require("../../botconfig.json")
 module.exports = {
     name: "kick",
     category: "moderation",

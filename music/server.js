@@ -54,7 +54,7 @@ bot.on('message', async message =>{
                 var video = await youtube.getVideoByID(videos[0].id);
             } catch (err) {
                 console.log(err);
-                return message.channel.send("No video found :c ```" + err + "```")
+                return message.channel.send("No video found :c ```" + err.error + "```")
             }
         }
         return handleVideo(video, message, voiceChannel, playlist = false);
