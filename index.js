@@ -1,4 +1,4 @@
-var { Client, RichEmbed, Collection } = require('discord.js');
+var { Client, RichEmbed, Collection, Attachment } = require('discord.js');
 var botConfig = require('./botconfig.json');
 var fs = require("fs");
 var Canvas = require('canvas');
@@ -28,14 +28,14 @@ var Users = require('./model/xp.js')
 
 bot.commands = new Collection();
 bot.aliases = new Collection();
-bot.categories = fs.readdirSync("./commands/");categories = fs.readdirSync("./commands/");
+bot.categories = fs.readdirSync("./commands/");
 
 ["command"].forEach(handler => {
     require(`./handler/${handler}`)(bot);
 })
 
-bot.on('disconnect', () => console.log("\x1b[32mAsthriona Mod Bot\x1b[0m is Disconected... Waiting for reconnect"));
-bot.on('reconnecting', () => console.log("\x1b[32mAsthriona Mod Bot\x1b[0m  is reconnecting."))
+bot.on('disconnect', () => console.log("\x1b[32m${bot.user.username}\x1b[0m is Disconected... Waiting for reconnect"));
+bot.on('reconnecting', () => console.log("\x1b[32m${bot.user.username}\x1b[0m  is reconnecting."))
 
 bot.on("ready", () => {
     console.log(`\x1b[32m${bot.user.username}\x1b[0m is now started and running in \x1b[31m${process.env.NODE_ENV} \x1b[0menvironement!`);
@@ -67,27 +67,8 @@ bot.on("guildMemberRemove", member => {
         channel.send(`${member} Viens de quitter le serveur! https://cdn.asthriona.com/sad.gif`);
     }
 });
-
 bot.on("message", async message =>{
-    //Logging
-    console.log(`${message.guild.name} -> ${message.author.username}: ${message.content}`)
-    
-    let prefix = botConfig.prefix;
-    if(message.author.bot) return;
-    if(message.channel.type === "dm") return;
-    if(!message.content.startsWith(prefix)) return;
-    if(!message.member) message.member = await message.guild.fetchMember(message)
-
-    let args = message.content.slice(prefix.length).trim().split(/ +/g);
-    let cmd = args.shift().toLowerCase();
-    if(cmd === 0) return;
-    let command = bot.commands.get(cmd);
-    if(!command) command = bot.commands.get(bot.aliases.get(cmd))
-    if(command)
-    command.run(bot, message, args, RichEmbed)
-
-
-        //XP System
+            //XP System
     //DA NEW XP SYSTEM 2.0
     let xpAdd = Math.floor(Math.random() * 7) + 8;
     let messageAdd = +1
@@ -125,11 +106,29 @@ bot.on("message", async message =>{
                     await lvlupimg(message, users);
 
                 }
-                return sendimg();
             }
             users.save().catch(error => console.log(error));
         }
     });
+});
+
+bot.on("message", async message =>{
+    //Logging
+    console.log(`${message.guild.name} -> ${message.author.username}: ${message.content}`)
+    
+    let prefix = botConfig.prefix;
+    if(message.author.bot) return;
+    if(message.channel.type === "dm") return;
+    if(!message.content.startsWith(prefix)) return;
+    if(!message.member) message.member = await message.guild.fetchMember(message)
+
+    let args = message.content.slice(prefix.length).trim().split(/ +/g);
+    let cmd = args.shift().toLowerCase();
+    if(cmd === 0) return;
+    let command = bot.commands.get(cmd);
+    if(!command) command = bot.commands.get(bot.aliases.get(cmd))
+    if(command)
+    command.run(bot, message, args, RichEmbed)
 
 })
 
@@ -180,7 +179,7 @@ async function lvlupimg(message, users) {
     //Get avatar
     await GetAvatar(message, ctx);
     //put image together and send it
-    var lvlupimg = new discord.Attachment(canvas.toBuffer(), 'lvlup-image.png');
+    var lvlupimg = new Attachment(canvas.toBuffer(), 'lvlup-image.png');
     message.channel.send(lvlupimg);
 }
 
@@ -202,12 +201,15 @@ async function WelcomeCad(member, channel) {
     ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
     ctx.fillRect(260, 80, 650, 130);
     ctx.stroke();
+    //get username 
     ctx.font =  applyText(canvas, member.user.username);
     ctx.fillStyle = '#fff';
     ctx.fillText(member.user.username, 280, 141);
+    //Get guild name
     ctx.font = applyText(canvas, member.guild.name);
     ctx.fillStyle = '#fff';
     ctx.fillText("Welcome on " + member.guild.name, 280, 185);
+    //Get avatar
     var avatar = await Canvas.loadImage(member.user.displayAvatarURL);
     ctx.beginPath();
     ctx.arc(140, 128, 110, 0, Math.PI * 2);
