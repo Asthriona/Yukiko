@@ -49,6 +49,7 @@
     "simple-youtube-api": "^5.2.1",
     "superagent": "^5.1.0",
     "youtube-dl": "^2.3.0",
-    "ytdl-core": "^1.0.5"
+    "ytdl-core": "^1.0.5",
+    "ytdl-core-discord": "^1.0.3"
   }
 }
