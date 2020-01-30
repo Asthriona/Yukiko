@@ -113,30 +113,8 @@ bot.on('ready', () => {
     }
 });
 
-bot.on('message', async message => {
-    if (message.author.bot) return;
-    if (message.channel.type === "dm") return;
-
-    var date = new Date();
-    var dd = String(date.getDate()).padStart(2, '0');
-    var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = date.getFullYear();
-    var hs = date.getHours();
-    var min = date.getMinutes();
-    var sec = date.getSeconds();
-    var ms = date.getMilliseconds();
-    date = hs + ':' + min + ':' + sec + ':' + ms + ' -- ' + mm + '/' + dd + '/' + yyyy + ' ->';
-
-    //Log
-    console.log(`${date} ${message.guild.name} -> ${message.author.username}: ${message.content}`)
-
-
-    let prefix = botConfig.prefix;
-    let messageArray = message.content.split(" ");
-    let args = messageArray.slice(1);
-    let cmd = messageArray[0];
-
-    //XP System
+bot.on('message', async message =>{
+        //XP System
     //DA NEW XP SYSTEM 2.0
     let xpAdd = Math.floor(Math.random() * 7) + 8;
     let messageAdd = +1
@@ -179,9 +157,31 @@ bot.on('message', async message => {
             users.save().catch(error => console.log(error));
         }
     });
+})
 
-    //add Username
-    Users.aggregate([{ $addfields: { username: "" } }])
+bot.on('message', async message => {
+    if (message.author.bot) return;
+    if (message.channel.type === "dm") return;
+
+    var date = new Date();
+    var dd = String(date.getDate()).padStart(2, '0');
+    var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = date.getFullYear();
+    var hs = date.getHours();
+    var min = date.getMinutes();
+    var sec = date.getSeconds();
+    var ms = date.getMilliseconds();
+    date = hs + ':' + min + ':' + sec + ':' + ms + ' -- ' + mm + '/' + dd + '/' + yyyy + ' ->';
+
+    //Log
+    console.log(`${date} ${message.guild.name} -> ${message.author.username}: ${message.content}`)
+
+
+    let prefix = botConfig.prefix;
+    let messageArray = message.content.split(" ");
+    let args = messageArray.slice(1);
+    let cmd = messageArray[0];
+
     //Force mute.
     if (message.member.roles.find(r => r.name === "muted")) {
         message.delete();
