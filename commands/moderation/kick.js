@@ -9,30 +9,30 @@ module.exports = {
     run: async (bot, message, args) => {
         var logChannel = message.guild.channels.find(c => c.name === "incident") || message.channel;
         if(!args[0]){
-            return message.reply(" ❌ You forgot to tell me wich user you want to kick.")
+            return message.reply("❌ You forgot to tell me wich user you want to kick.")
         }
         if(!args[1]){
-            return message.reply(" ❌ Please provide a reason to kick someone.")
+            return message.reply("❌ Please provide a reason to kick someone.")
         }
         if(!message.member.hasPermission("KICK_MEMBERS")){
-            return message.reply(" ❌ You don't have the permission to kick somebody. Please use a!report.")
+            return message.reply("❌ You don't have the permission to kick somebody. Please use a!report.")
         }
         if(!message.guild.me.hasPermission("KICK_MEMBERS")){
-            return message.reply(" ❌ I don't have to permissions to Kick.")
+            return message.reply("❌ I don't have to permissions to Kick.")
         }
 
         var toKick = message.mentions.members.first() || message.guild.members.get(args[0]);
         if(!toKick){
-            return message.reply(" ❌ Cannot find that user :/")
+            return message.reply("❌ Cannot find that user :/")
         }
         if(toKick.id === "186195458182479874"){
-            return message.reply(" ❌ Dont you dare kick my dad?! D:<")
+            return message.reply("❌ Dont you dare kick my dad?! D:<")
         }
         if(message.author.id === toKick.id) {
-            return message.reply(" ❌ You can't kick yourself you smart ass... 🤷‍♀️🤷‍♂️");
+            return message.reply("❌ You can't kick yourself you smart ass... 🤷‍♀️🤷‍♂️");
         }
         if(bot.user.id === toKick.id){
-            return message.reply(" ❌ Dont you dare try to kick me?!")
+            return message.reply("❌ Dont you dare try to kick me?!")
         }
         if(!toKick.kickable){
             return message.reply("You can't kick this user because he/she is better than u **:)**")
