@@ -3,7 +3,7 @@ var superagent = require('superagent');
 var ms = require('ms');
 
 module.exports.run = async (bot, message, args) => {
-    let tomute = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+    let tomute = message.mentions.members.first() || message.guild.members.get(args[0]);
     if(!tomute) return message.reply("Erreur 10-Mun-f. Merci de spécifier un utilisateur.")
     if(message.member.hasPermission('KICK_MEMBERS', false, false)){
         let muterole = message.guild.roles.find('name', "muted");
