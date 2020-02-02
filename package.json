@@ -29,6 +29,7 @@
   "dependencies": {
     "ascii-table": "0.0.9",
     "axios": "^0.19.1",
+    "beautify": "0.0.8",
     "body-parser": "^1.19.0",
     "canvas": "^2.6.0",
     "common-tags": "^1.8.0",
