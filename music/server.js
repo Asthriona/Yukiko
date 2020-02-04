@@ -159,5 +159,5 @@ function play(guild, song){
 
     serverQueue.textChannel.send("Now Playing: **" + song.title + "**")
 }
-    bot.login(botConfig.tokenDev) 
+    bot.login(botConfig.token) 
 console.log(`\x1b[32mMusic bot \x1b[0m is now started and running`)
