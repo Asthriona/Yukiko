@@ -3,6 +3,8 @@ var botConfig = require('./botconfig.json');
 var fs = require("fs");
 var Canvas = require('canvas');
 var mongoose = require("mongoose");
+var ytdl = require("ytdl-core");
+var YouTube = require("simple-youtube-api");
 
 require('./music/server');
 
@@ -121,14 +123,19 @@ bot.on("message", async message =>{
     if(message.channel.type === "dm") return;
     if(!message.content.startsWith(prefix)) return;
     if(!message.member) message.member = await message.guild.fetchMember(message)
-
+    
     let args = message.content.slice(prefix.length).trim().split(/ +/g);
     let cmd = args.shift().toLowerCase();
     if(cmd === 0) return;
     let command = bot.commands.get(cmd);
     if(!command) command = bot.commands.get(bot.aliases.get(cmd))
-    if(command)
-    command.run(bot, message, args, RichEmbed)
+    if(command) command.run(bot, message, args, RichEmbed)
+    
+    
+    var queue = new Map()
+    var youtube = new YouTube(botConfig.YtKey);
+    var url = args[0] ? args[0].replace(/<(.+)>/g, '$0') : '';
+    var searchString = args.slice(0).join(' ');
 
 })
 
@@ -139,8 +146,6 @@ if (process.env.NODE_ENV === 'production') {
     bot.login(botConfig.tokenDev)
     console.log("login on discord...")
 };
-
-
 //Cards Generation
 
 async function lvlupimg(message, users) {
