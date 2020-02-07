@@ -1,5 +1,6 @@
 var ytdl = require("ytdl-core");
-var YouTube = require("simple-youtube-api");
+var queue = new Map();
+
 module.exports = {
     name: "play",
     category: "music",
@@ -11,25 +12,56 @@ module.exports = {
         var permissions = voiceChannel.permissionsFor(message.client.user);
         if(!permissions.has('CONNECT')) return message.channel.send("Please, check you permissions system, I can't join that VC.");
         if(!permissions.has('SPEAK')) return message.channel.send("I can't speak in that channel.");
-
-        try {
-            var connection = await voiceChannel.join();
-        } catch (error) {
-            message.channel.send("An error happened... ```" + error + "```")
-            console.log(error)
-            return            
+        var songInfo = await ytdl.getInfo(args[0])
+        var song = {
+            title: songInfo.title,
+            url: songInfo.video_url
+        }
+        var serverQueue = queue.get(message.guild.id)
+        if(!serverQueue){
+            var queueConstruct = {
+                textChannel: message.channel,
+                voiceChannel: voiceChannel,
+                connection: null,
+                songs: [],
+                volume: 0.5,
+                playing: true
+            };
+            queue.set(message.guild.id, queueConstruct);
+            queueConstruct.songs.push(song);
+            try {
+                var connection = await voiceChannel.join();
+                queueConstruct.connection = connection;
+                play(message.guild, queueConstruct.songs[0])
+            } catch (error) {
+                message.channel.send("An error happened... ```" + error + "```")
+                console.log(error)
+                queue.delete(message.guild.id)
+                return            
+            }
+        }else{
+            serverQueue.songs.push(song);
+            return message.channel.send(`**${song.title}** Has been added to the queue.`)
         }
 
-        //var dispatcher = connection.playStream("https://broadcaster.animefm.co/radio/8020/radio320.mp3")
-        var dispatcher = connection.playStream(ytdl(args[0]))
+        function play(guild, song){
+            var serverQueue = queue.get(guild.id);
+            console.log(serverQueue.songs)
+            if(!song){
+                serverQueue.voiceChannel.leave();
+                queue.delete(guild.id);
+                return
+            }
+            var dispatcher = serverQueue.connection.playStream(ytdl(song.url))
             .on('end', () =>{
                 console.log("Song ended.")
-                voiceChannel.leave();
+                serverQueue.songs.shift()
+                play(guild, serverQueue.songs[0]);
             })
-            .on('error', error =>{
-                console.log(error)
-            });
+            .on('error', error => console.log(error));
         dispatcher.setVolumeLogarithmic(5 / 5);
 
+        }
+        return
     }
 }
