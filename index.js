@@ -87,6 +87,7 @@ bot.on("message", async message =>{
                 xp: xpAdd,
                 level: 0,
                 message: messageAdd,
+                warns: 0,
                 avatarURL: message.author.displayAvatarURL
             })
 
