@@ -12,7 +12,7 @@ module.exports = {
 
         try {
             if(args.join(" ").toLowerCase().includes("token")){
-                return message.channel.send("No, you'r not gonna get my token! nt though!")
+                return message.channel.send("No, I'm not gonna give you my token! Nice try tho!")
             }
             var toEval = args.join(" ")
             var evaluated = eval(toEval);
