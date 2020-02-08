@@ -27,7 +27,7 @@ jobs:
             - v1-dependencies-
 
       - run: npm install
-      - run: npm i nodemon
+      - run: mv botconfig.json.exemple botconfig.json
 
       - save_cache:
           paths:
