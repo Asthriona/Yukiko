@@ -29,7 +29,7 @@
   "dependencies": {
     "axios": "^0.19.1",
     "body-parser": "^1.19.0",
-    "canvas": "^2.6.0",
+    "canvas": "^2.6.1",
     "discord.js": "^11.5.1",
     "dotenv": "^8.2.0",
     "exphbs": "^1.2.0",
@@ -46,6 +46,6 @@
     "simple-youtube-api": "^5.2.1",
     "superagent": "^5.1.0",
     "youtube-dl": "^2.3.0",
-    "ytdl-core": "^1.0.5"
+    "ytdl-core": "^1.0.6"
   }
 }
