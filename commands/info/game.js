@@ -8,13 +8,13 @@ module.exports = {
             bot.user.setStatus('')
             bot.user.setPresence({
                 game: {
-                    name: args.join(" "),
-                    type: "PLAYING",
+                    name: args.slice(1).join(" "),
+                    type: args[0],
                     url: "https://www.twitch.tv/Asthriona"
                 }
         });
         }else{
-            return message.reply("Oy! Tu peut pas changer le jeu au quelle je joue! c'est moi qui decide!");
+            return message.reply("Oy! You can't tell me what to do! ");
         }
         
     }

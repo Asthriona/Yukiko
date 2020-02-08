@@ -4,7 +4,7 @@ var {getMember, formatDate} = require("../../function")
 
 module.exports = {
     name: "whois",
-    aliases: ["who", "user", "info"],
+    aliases: ["who", "user", "info", "tamer"],
     description: "Returns user information",
     category: "info",
     usage: "[username | id | mention]",

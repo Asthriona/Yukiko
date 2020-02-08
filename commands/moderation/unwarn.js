@@ -18,9 +18,9 @@ module.exports = {
             message.reply("Wow! ta pas le droit de donner des avertissement!")
         }
         let wUser = message.mentions.members.first() || message.guild.members.get(args[0]);
-        if(!wUser) return message.reply(`j'ai pas trouver l'utilisateur ${args[0]}`)
-        if(wUser.hasPermission("BAN_MEMBERS")) return message.reply(`Tu ne peut pas donner d'arvertissement a ${wUser} Il est bien trop cool pour ça!`)
-        if(!args[1]) return message.reply("Merci de spécifier une raison.")
+        if(!wUser) return message.reply(`I can't find ${args[0]}`)
+        if(wUser.hasPermission("BAN_MEMBERS")) return message.reply(`You can't warn ${wUser} he/she is waaaaay too cool for that!`)
+        if(!args[1]) return message.reply("Please provide a reason.")
         Users.findOne({
             userID: wUser.id,
             serverID: message.guild.id
@@ -36,12 +36,12 @@ module.exports = {
             .setColor("PURPLE")
             .setTimestamp()
             .setFooter(bot.user.username, bot.user.displayAvatarURL)
-            .setDescription(`=> **Avertissement supprimé a: ** ${wUser} (${wUser.id})
-            => **Supprimé par:** ${message.author} (${message.author.id})
-            => **Nombre de warn:** ${users.warn}
-            => **Raison:** ${args.slice(1).join(" ")}`)
+            .setDescription(`=> **Warn deleted from user: ** ${wUser} (${wUser.id})
+            => **Deleted by:** ${message.author} (${message.author.id})
+            => **warn Number:** ${users.warn}
+            => **Reason:** ${args.slice(1).join(" ")}`)
             logChannel.send(embed)
-            message.channel.send(`L'avertissement donnée a ${wUser} a bien etait supprimé`)
+            message.channel.send(`${wUser}'warn has been deleted.`)
         })
     }
 }

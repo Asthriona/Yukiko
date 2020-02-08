@@ -5,7 +5,6 @@ module.exports = {
     name: "eval",
     category: "dev",
     description: "Run some code directly in discord! (developper only!)",
-    category: "info",
     run: async (bot, message, args) => {
         if(!message.author.id === "186195458182479874") return message.reply("You are not a developper! you can't run code just like that!")
         if(!args[0])message.channel.send("Please gimme some good code!")
