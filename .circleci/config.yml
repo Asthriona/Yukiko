@@ -27,7 +27,7 @@ jobs:
             - v1-dependencies-
 
       - run: npm install
-             npm i nodemon
+      - run: npm i nodemon
 
       - save_cache:
           paths:
