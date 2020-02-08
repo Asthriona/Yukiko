@@ -1,5 +1,3 @@
-var ytdl = require("ytdl-core");
-var YouTube = require("simple-youtube-api");
 module.exports = {
     name: "animefm",
     category: "music",
@@ -13,6 +11,7 @@ module.exports = {
 
         try {
             var connection = await voiceChannel.join();
+            message.channel.send("Now Playing **AnimeFM** https://AnimeFM.co")
         } catch (error) {
             message.channel.send("An error happened... ```" + error + "```")
             console.log(error)
