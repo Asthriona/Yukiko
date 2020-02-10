@@ -26,6 +26,8 @@ mongoose.connection.once('open', function(d) {
 })
 var Users = require('./model/xp.js')
 
+require('./TempMusic/music.js');
+
 bot.commands = new Collection();
 bot.aliases = new Collection();
 bot.categories = fs.readdirSync("./commands/");
