@@ -63,8 +63,10 @@ typings/
 botconfig.json
 .env
 ./node_modules
-yukiko1.0.js
-commandhandler file exemple.txt
 node_modules/
-./music
-.vscode/
+commands/botinfo.js
+warn.json.exemple
+music/server.js.old
+LOL.c
+xp.json
+

@@ -69,8 +69,53 @@ bot.on("guildMemberRemove", member => {
         channel.send(`${member} Viens de quitter le serveur! https://cdn.asthriona.com/sad.gif`);
     }
 });
-bot.on("message", async message =>{
-            //XP System
+//commands Handler
+console.log("Initializing commands handler");
+fs.readdir("./commands", (err, files) => {
+    if (err) console.log("Woops! Somthing wrong sucessfully happen! " + (err));
+
+    let jsfile = files.filter(f => f.split(".").pop() === "js")
+    if (jsfile.length <= 0) {
+        console.log("Woops! Error sucessfully Happen! Can't find commands files!");
+        return;
+    }
+    console.log("Loadings files...");
+    jsfile.forEach((f, i) => {
+        let props = require(`./commands/${f}`);
+        console.log(`\x1b[35m${f} \x1b[0mLoaded!`);
+        bot.commands.set(props.help.name, props);
+    });
+    console.log("Files Loaded, Moving on!")
+});
+console.log('Setting bot presence...')
+
+bot.on('ready', () => {
+    if (process.env.NODE_ENV == "production") {
+        bot.user.setStatus('online');
+        bot.user.setPresence({
+            game: {
+                name: 'Asthriona.com',
+                type: "WATCHING",
+            }
+        })
+    } else {
+        require('./twitch.js');
+        bot.user.setStatus('online');
+        bot.user.setPresence({
+            game: {
+                name: 'Coding stuff...',
+                type: 'STREAMING',
+                url: 'https://www.twitch.tv/',
+                smallImage: 'https://static-cdn.jtvnw.net/previews-ttv/live_user_jacquirenee-1280x720.jpg',
+                largeImageURL: "https://static-cdn.jtvnw.net/previews-ttv/live_user_jacquirenee-1280x720.jpg"
+            }
+        })
+    }
+});
+
+bot.on('message', async message =>{
+        //XP System
+
     //DA NEW XP SYSTEM 2.0
     let xpAdd = Math.floor(Math.random() * 7) + 8;
     let messageAdd = +1
@@ -113,24 +158,90 @@ bot.on("message", async message =>{
             users.save().catch(error => console.log(error));
         }
     });
-});
 
-bot.on("message", async message =>{
-    //Logging
-    console.log(`${message.guild.name} -> ${message.author.username}: ${message.content}`)
-    
+})
+
+bot.on('message', async message => {
+    if (message.author.bot) return;
+    if (message.channel.type === "dm") return;
+
+    var date = new Date();
+    var dd = String(date.getDate()).padStart(2, '0');
+    var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = date.getFullYear();
+    var hs = date.getHours();
+    var min = date.getMinutes();
+    var sec = date.getSeconds();
+    var ms = date.getMilliseconds();
+    date = hs + ':' + min + ':' + sec + ':' + ms + ' -- ' + mm + '/' + dd + '/' + yyyy + ' ->';
+
+    //Log
+    console.log(`${date} ${message.guild.name} -> ${message.author.username}: ${message.content}`)
+
+
     let prefix = botConfig.prefix;
-    if(message.author.bot) return;
-    if(message.channel.type === "dm") return;
-    if(!message.content.startsWith(prefix)) return;
-    if(!message.member) message.member = await message.guild.fetchMember(message)
-    
-    let args = message.content.slice(prefix.length).trim().split(/ +/g);
-    let cmd = args.shift().toLowerCase();
-    if(cmd === 0) return;
-    let command = bot.commands.get(cmd);
-    if(!command) command = bot.commands.get(bot.aliases.get(cmd))
-    if(command) command.run(bot, message, args, RichEmbed)
+    let messageArray = message.content.split(" ");
+    let args = messageArray.slice(1);
+    let cmd = messageArray[0];
+
+    //Force mute.
+    if (message.member.roles.find(r => r.name === "muted")) {
+        message.delete();
+        message.author.send("You are muted on " + message.guild.name)
+    };
+    //Commands Handler
+    //console.log("Reading Commands Handler...")
+    let commandfile = bot.commands.get(messageArray[0].slice(prefix.length));
+    if (commandfile) commandfile.run(bot, message, args);
+
+    //Commands
+    if (cmd === `${prefix}ping`) {
+        console.log(`${message.author.user} used !ping on ${message.guild.name}`)
+        return message.channel.send("Pong! ");
+    }
+    if (cmd === `${prefix}lb`) {
+        return message.channel.send(` Voici le liens du Leaderboard \n http://yukiko.nishikino.me/lb?id=${message.guild.id}`)
+    }
+    if (cmd === `${prefix}levels`) {
+        return message.channel.send(` Voici le liens du Leaderboard \n http://yukiko.nishikino.me/lb?id=${message.guild.id}`)
+    }
+    if (cmd === `${prefix}Salut`) {
+        return message.channel.send(`Hello ${message.author}!`)
+    }
+    if (cmd === `${prefix}DM`) {
+        return message.author.send('Pog U!')
+    }
+    if (cmd == `${prefix}leaderboard`) {
+        Users.find({
+            serverID: message.guild.id
+        }, function (err, docs) {
+            if (err) console.log(err);
+            message.reply(docs);
+        })
+            .sort([["xp", 1], ["xp", "descending"]]);
+    }
+    //botinfo
+    if (cmd === `${prefix}info`) {
+        let bicon = bot.user.displayAvatarURL;
+        let botembed = new discord.RichEmbed()
+            .setThumbnail(bicon)
+            .setTitle("A propos de ce bot")
+            .setAuthor(bot.user.username, bicon, 'http://yukiko.nishikino.me/')
+            .setDescription("this bot can make your cat explode, Mount the DOGO, burn your egg and clean your house. (but not your room. we tested all of this.(RIP my cat...))")
+            .setColor("#800080")
+            .addField("Bot name:", bot.user.username, true)
+            .addField("Version:", `${pjson.version} ${pjson.codeName}`, true)
+            .addField("Developped by:", "Asthriona", true)
+            .addField("Developper Website", "https://Asthriona.com", true)
+            .addField("Created on", bot.user.createdAt, true)
+            .addField("On the server since:", bot.user.joinedAt, true)
+            .addField("Git:", "https://github.com/Asthriona/AsthriModBot", true)
+            .addField('Site: ', 'http://yukiko.nishikino.me/', true)
+            .addField("Server Using this server: ", bot.guilds.size, true)
+            .setTimestamp()
+            .setFooter(bot.user.username,bicon)
+        return message.channel.send(botembed)
+    }
 
 })
 
