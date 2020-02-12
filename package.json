@@ -1,7 +1,7 @@
 {
-  "name": "asthrimodbot",
-  "version": "2.1.1",
-  "description": "A simple discord bot to do moderation stuff and few other function",
+  "name": "yukiko",
+  "version": "2.0",
+  "description": "A powerfull Discord bot.",
   "main": "index.js",
   "codeName": "I'm sad :c",
   "scripts": {
