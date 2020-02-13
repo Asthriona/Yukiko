@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "description": "A powerfull Discord bot.",
   "main": "index.js",
-  "codeName": "I'm sad :c",
+  "codeName": "I'm back to rules them all!",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon start"
