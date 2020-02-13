@@ -1,8 +1,8 @@
 # Change Logs
-Cette page me sert a noter l'avancement du bot au file des mise a jours, j'y note tout les ajout, les bug fix (réparation de bug), les supressions, et modification.
+Cette page me sert a noter l'avancement du bot au file des mise a jours, j'y note tout les Add, les bug fix (réparation de bug), les supressions, et modification.
 
 # 1.0
-## ***It's alive! (Le bot existe.)***  
+## ***It's alive!***  
 + Add ban
 + Add kick
 + Add Mute
@@ -18,51 +18,51 @@ Cette page me sert a noter l'avancement du bot au file des mise a jours, j'y not
   
 # 1.0.1
 ## ***[OwO]?***  
-+ Fix: permission warn/unwarn (la commande est maintenant restrainte au staff.)  
-+ Fix: Erreur Ban sans raison (une raison est maintenant obligatoire.)
-+ Fix: Erreur Kick sans raison (Une raison est maintenant Obligatoire.)
-+ Fix: Permission commande Watch, Play, stream (les membre n'y ont plus acces.)
-+ Edit: Changement de liens sur la commande a!help
++ Fix: permission warn/unwarn 
++ Fix: Erreur Ban sans raison
++ Fix: Erreur Kick sans raison
++ Fix: Permission command Watch, Play, stream
++ Edit: changed the link of a!help commands
 + Edit: Traduction francaise a!server-info
 + Edit: Traduction francaise a!info
 + Update: Change logs
-+ Suppressions: Weebness de Ash.  
++ Deleted: Weebness de Ash.  
 
 # 1.1.0
 ## ***[UwU Music? OwO]***  
-+ Ajout: Module de musique [BETA] utilisable via /play /skip /stop
-+ Edit: /play ne change plus la présence du bot, la commande est remplacer par /game
++ add: Music module [BETA] used with a!play a!skip a!stop
++ Edit: a!play has been changed to /game
 + Update: Change logs
-+ Suppressions: Weebness de Ash.  
++ deleted: Weebness de Ash.  
 ## 1.1.1
-+ Ajout: Queue system
++ Add: Queue system
 ## 1.1.2
-+ Ajout: Meilleur support de YouTube
-+ Ajout: Commande Playlist
++ Add: Better youtube support
 ## 1.1.3
-+ Ajout: System play/pause
-+ Ajout: Commande de volume
-+ Ajout: Affichage de la musique en cours sous a chaque changement
-+ Ajout: Commande Now Playing
++ Add: System play/pause
++ Add: volume commands
++ Add: Send music title when playing
++ Add: Now Playing command 
 ## 1.1.4
-+ Ajout: Support des playlists youtube
-+ Ajout: Support du recherche de video youtube
-+ Ajout: Server Info
-+ Ajout: User info
++ Add: a!play now support playlists
++ Add: a!play now support youtube search
++ Add: Server Info
++ Add: User info
 + Update: Change logs
-+ Suppressions: Weebness de Ash. 
++ Deleted: Weebness de Ash. 
+## 2.0.0 [i'm Back to rules them all!]
++ Bot completely rewrited.
++ deleted: Mute commands [Temp]
++ Add: better commands handler
++ Add: a!animeFM is now playing [AnimeFM](https://Animefm.co) Main station 
++ Update: Dynamic help commands
++ Update: a!help can now take argument like a command name to get more information on the commands.
 
 
 ### Bug
-+ Les raison des warn ne peuvent contenire qu'un mot.
-+ Uptime Non fonctionel
++ Warn reason can't contain only one word (fix in progress)
++ Uptime command is using his own time system.
 
-## Non-bug
-+ les commands a!help a!help-commands et a!help-game ne sont pas fonctionel pour le moment car non-terminer.
 
 ## Road-Map
-+ System d'XP ***[REPORTER] Prévue en 1.1)***
-+ System de monaie ***(Prévue en 1.2)***
-+ Leaderboard ***(Prévue en 1.2)***
-+ commande ranking via Image ***(A la mee6) (Prévue en 1.2)***
-+ Image Leaderboard ***(prévue en 1.2)***
++ Custom rank cards
