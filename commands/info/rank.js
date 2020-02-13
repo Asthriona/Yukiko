@@ -64,7 +64,7 @@ module.exports = {
             });
         } else {
             //get background
-            var background = await Canvas.loadImage('https://cdn.asthriona.com/discordbotCard.jpg');
+            var background = await Canvas.loadImage('https://cdn.asthriona.com/DefaultYukikocard.jpg');
             ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
             //Draw rectangle
             ctx.beginPath();
