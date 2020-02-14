@@ -161,9 +161,5 @@ function play(guild, song){
 
     serverQueue.textChannel.send("Now Playing: **" + song.title + "**")
 }
-if (process.env.NODE_ENV === 'production'){
-    bot.login(botConfig.token) 
-}else{
-    bot.login(botConfig.tokenDev) 
-};
+bot.login(botConfig.token) 
 console.log(`\x1b[32mMusic bot \x1b[0m is now started and running`)
