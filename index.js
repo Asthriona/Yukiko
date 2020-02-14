@@ -115,7 +115,8 @@ bot.on('ready', () => {
 
 bot.on('message', async message =>{
         //XP System
-
+        if (message.author.bot) return;
+        if (message.channel.type === "dm") return;
     //DA NEW XP SYSTEM 2.0
     let xpAdd = Math.floor(Math.random() * 7) + 8;
     let messageAdd = +1
@@ -190,36 +191,9 @@ bot.on('message', async message => {
         message.author.send("You are muted on " + message.guild.name)
     };
     //Commands Handler
-    //console.log("Reading Commands Handler...")
     let commandfile = bot.commands.get(messageArray[0].slice(prefix.length));
     if (commandfile) commandfile.run(bot, message, args);
 
-    //Commands
-    if (cmd === `${prefix}ping`) {
-        console.log(`${message.author.user} used !ping on ${message.guild.name}`)
-        return message.channel.send("Pong! ");
-    }
-    if (cmd === `${prefix}lb`) {
-        return message.channel.send(` Voici le liens du Leaderboard \n http://yukiko.nishikino.me/lb?id=${message.guild.id}`)
-    }
-    if (cmd === `${prefix}levels`) {
-        return message.channel.send(` Voici le liens du Leaderboard \n http://yukiko.nishikino.me/lb?id=${message.guild.id}`)
-    }
-    if (cmd === `${prefix}Salut`) {
-        return message.channel.send(`Hello ${message.author}!`)
-    }
-    if (cmd === `${prefix}DM`) {
-        return message.author.send('Pog U!')
-    }
-    if (cmd == `${prefix}leaderboard`) {
-        Users.find({
-            serverID: message.guild.id
-        }, function (err, docs) {
-            if (err) console.log(err);
-            message.reply(docs);
-        })
-            .sort([["xp", 1], ["xp", "descending"]]);
-    }
     //botinfo
     if (cmd === `${prefix}info`) {
         let bicon = bot.user.displayAvatarURL;
@@ -244,15 +218,7 @@ bot.on('message', async message => {
     }
 
 })
-
-if (process.env.NODE_ENV === 'production') {
-    bot.login(botConfig.token)
-    console.log("login on discord...")
-} else {
-    bot.login(botConfig.tokenDev)
-    console.log("login on discord...")
-};
-
+bot.login(botConfig.token)
 //Cards Generation
 
 async function lvlupimg(message, users) {
