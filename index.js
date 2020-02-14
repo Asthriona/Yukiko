@@ -105,9 +105,7 @@ bot.on('ready', () => {
             game: {
                 name: 'Coding stuff...',
                 type: 'STREAMING',
-                url: 'https://www.twitch.tv/',
-                smallImage: 'https://static-cdn.jtvnw.net/previews-ttv/live_user_jacquirenee-1280x720.jpg',
-                largeImageURL: "https://static-cdn.jtvnw.net/previews-ttv/live_user_jacquirenee-1280x720.jpg"
+                url: 'https://www.twitch.tv/Asthriona',
             }
         })
     }
