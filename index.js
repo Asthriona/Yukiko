@@ -1,4 +1,4 @@
-var { Client, RichEmbed, Collection, Attachment, Utils } = require('discord.js');
+var { Client, RichEmbed, Collection, Attachment, Utils, MessageCollector } = require('discord.js');
 var botConfig = require('./botconfig.json');
 var fs = require("fs");
 var Canvas = require('canvas');
@@ -182,6 +182,39 @@ bot.on('message', async message => {
     let messageArray = message.content.split(" ");
     let args = messageArray.slice(1);
     let cmd = messageArray[0];
+
+    let filter = m => !m.author.bot;
+
+    if(cmd === `${prefix}listen`){
+        let Collector = new MessageCollector(message.channel, filter )
+        message.channel.send("Listening...")
+        if(message.guild.id === "612216766680268811"){
+        let destination = bot.channels.get("678373707336515598")
+        Collector.on("collect", (message, col) => {
+            console.log(`Collected Message: ${message}`)
+            let multiEmbed1 = new RichEmbed()
+            .setTitle(`Message from ${message.guild.name}`)
+            .setAuthor(message.author.username, message.author.displayAvatarURL)
+            .setTimestamp()
+            .setDescription(message.content)
+            .setFooter(bot.user.username, bot.user.displayAvatarURL)
+            destination.send(multiEmbed1)
+        })
+    }
+    if(message.guild.id === "647689682381045772"){
+    let destination1 = bot.channels.get("678373638084493322")
+    Collector.on("collect", (message, col) => {
+        console.log(`Collected Message: ${message}`)
+        let multiEmbed1 = new RichEmbed()
+        .setTitle(`Message from ${message.guild.name}`)
+        .setAuthor(message.author.username, message.author.displayAvatarURL)
+        .setTimestamp()
+        .setDescription(message.content)
+        .setFooter(bot.user.username, bot.user.displayAvatarURL)
+        destination1.send(multiEmbed1)
+    })
+}
+    }
 
     //Force mute.
     if (message.member.roles.find(r => r.name === "muted")) {
