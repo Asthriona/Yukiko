@@ -41,8 +41,7 @@
     "express-handlebars": "^3.1.0",
     "fast-sort": "^2.0.1",
     "follow-redirects": "^1.9.0",
-    "fs": "0.0.1-security",
-    "mongodb": "^3.4.1",
+    "mongodb": "^3.5.1",
     "mongoose": "^5.8.7",
     "ms": "^2.1.2",
     "node-opus": "^0.3.3",
@@ -52,7 +51,6 @@
     "superagent": "^5.1.0",
     "uws": "^100.0.1",
     "youtube-dl": "^2.3.0",
-    "ytdl-core": "^1.0.7",
-    "ytdl-core-discord": "^1.0.3"
+    "ytdl-core": "^1.0.7"
   }
 }
