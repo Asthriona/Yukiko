@@ -263,7 +263,7 @@ async function lvlupimg(message, users) {
     };
     var canvas = Canvas.createCanvas(934, 282);
     var ctx = canvas.getContext('2d');
-    var background = await Canvas.loadImage('https://cdn.asthriona.com/discordbotCard.jpg');
+    var background = await Canvas.loadImage('https://cdn.asthriona.com/DefaultYukikocard.jpg');
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
     //Draw rectangle
     ctx.beginPath();
@@ -304,7 +304,7 @@ async function WelcomeCad(member, channel) {
 
     var canvas = Canvas.createCanvas(934, 282);
     var ctx = canvas.getContext('2d');
-    var background = await Canvas.loadImage('https://cdn.asthriona.com/discordbotCard.jpg');
+    var background = await Canvas.loadImage('https://cdn.asthriona.com/DefaultYukikocard.jpg');
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
     ctx.beginPath();
     ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
@@ -317,7 +317,7 @@ async function WelcomeCad(member, channel) {
     //Get guild name
     ctx.font = applyText(canvas, member.guild.name);
     ctx.fillStyle = '#fff';
-    ctx.fillText("Welcome on " + member.guild.name, 280, 185);
+    ctx.fillText("Joined the server! ", 280, 195);
     //Get avatar
     var avatar = await Canvas.loadImage(member.user.displayAvatarURL);
     ctx.beginPath();
@@ -325,7 +325,7 @@ async function WelcomeCad(member, channel) {
     ctx.closePath();
     ctx.clip();
     ctx.drawImage(avatar, 25, 15, 256, 256);
-    var attachment = new discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
+    var attachment = new Attachment(canvas.toBuffer(), 'welcome-image.png');
     channel.send(attachment)
 }
 async function GetAvatar(message, ctx) {
