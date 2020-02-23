@@ -52,7 +52,6 @@
     "superagent": "^5.1.0",
     "uws": "^100.0.1",
     "youtube-dl": "^2.3.0",
-    "ytdl-core": "^1.0.7",
-    "ytdl-core-discord": "^1.0.3"
+    "ytdl-core": "^1.0.7"
   }
 }
