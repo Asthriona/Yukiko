@@ -1,91 +1,19 @@
-# AsthriModBot
-A simple discord bot to do moderation stuff and few other function
+# Yukiko
+Yukiko is a pretty powerfull Discord bot that include XP system, Leaderboard, Music, Welcome and farewell message, Moderation, and much more!
 
-# Fonction actuel:
-## Developpeur only  
-+ Shutdown
-## Admin/Mod only
-+ ban (avec raison)
-+ kick (avec raison)
-+ Mute
-+ warn
-+ clear
+This bot is in developement state and actively updated, Feel free to come back take a look to our change logs!
 
-## Everyone
-+ report
-+ ping
-+ help
-+ help-commands
-+ help-game
-+ Music
-+ user info
-+ server info
+# Official Discord Server.
+For now Yukiko don't have any public place. Just a nice little home called "Dev Bot Zone." This is a private server dedicated to my developement bot.  
+If you want to contact me to get some help, or having an idea, please feel free to open an issue, or contact me on Twitter [@Asthriona](https://twitter.com/Asthriona)
+for bug report, please open an issue, and give me all the information you have!  
+(She have very quite room mate, one of them is a [wall](https://github.com/Asthriona/TheWallDiscordBot)!)  
+![](https://cdn.asthriona.com/Bot%20dev%20zone.jpg)  
 
-# utilisation:
-## ban :
-```a!ban [@Utilisateur] [Raison]```  
-(Note: Cette commande nessecite un channel #incident sur le serveur ou elle est taper.)
-## Kick
-```a!kick [@Utilisateur] [Raison]```  
-(Note: Cette commande nessecite un channel #incident sur le serveur ou elle est taper.)
-## Report
-```a!report [@Utilisateur] [Raison]```  
-(Note: Cette commande supprimeras le message de l'utilisateur l'ayant taper. pour garder l'anonymat de l'utilisateur ayant envoyer le rapport, cependent les admin peuvent savoirs qui a envoyer ce raport afin de vous contacter en DM pour avoirs plus d'infos sur l'incident. (contact valable sur le serveur de KIRA.))  
-
-(Note2: Cette commande nessecite un channel #report sur le serveur ou elle est taper.)
-
-## Mute 
-```a!mute [@Utilisateur] [Time] [Raison]```  
-Le temps s'éxprime en anglais par exemple pour mute pendent 10 secondes  
-"```a!mute @Everyone 10s booli!```"  
-Remplacez le "s" par "h" pour mute pendent 10 heures ou par "d" pour mute pendent 10 jours.
-
-## warn 
-```a!warn [@Utilisateur] [Raison]```  
-(Note: Cette commande nessecite un channel #incident sur le serveur ou elle est taper.)
-
-## Clear 
-```a!clear [1 - 100]```  
-Supprimer  un nombre de message (L'API de discord ne permet que de supprimer 100 message par commande au max. Si vous avez plus de message a supprimer, retapez la commande.)
-
-## ping
-``` a!ping ```  
-Heu... Pong?
-Commende de test pour verifier si le bot répond mais a etait tourner en un jeu.  
-## Info utilisateur
-```a!user-info [@user]```  
-Affiche les info de l'utilisateur mentionner  
-## Info serveur
-```a!server-info```  
-Affiche les info du serveur  
-## Arreter le bot
-```a!shutdown [RAISON]```  
-Arrete le bot en laissant un message avec la raison et le nom de la perssone qui l'as demander.
-
-## help, help-commands, help-game
+# Help me
+Hi, I'am [Asthriona](https://Asthriona.com) Full time WoW player, and some kind of developper. i'm doing stuff on internet for quite a long time... a decade now, and I love making stuff that can be usefull or help other.  
+But if you want to help me, Feel free to take a look at the code, Create issue for idea/bugs, or pull request.  
+  
+  As I said, i'm full time doing this, and now days, being indie developper don't really pay the bills (not even talking about server bill.), so if you really want to help, and have some bucks to spare, Feel free to pay me a ko-fi   
     
-```a!help```  
-affiche les catégorrie de commands disponible.  
-    
-```a!help-commands```  
-affiche les commands disponible.  
-    
-```a!help-game```  
-affiche les jeu disponible.  
-
-
-## Commandes Musique.
-Le bot musique est en beta et risque de ne pas fonctionner corectement, également il lui manque pas mal de fonctionalité important, tel que l'affichage de la playlist, le repeat mode et bien d'autres choses, ce seras ajouter dans le future.  
-```a!play [Liens YouTube]```  
-Peut également étre utiliser de facon differante:
-```a!play [Titre de la musique] ```
-```a!play [ID]```  
-Pour ce dernier vous pouvez simplement coller ce qu'il y a apres le watch?v=[ID] exemple: ```a!play [u8aiJnL8vCU]```  
-```a!stop```  
-Arrete la lecture en cours.  
-```a!skip```  
-passe a la musique suivante dans la playlist.  
-```a!queue```  
-affiche la playlist actuel  
-```a!np```  
-Affiche le titre en cours de lecture.  
+  [![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/C0C61FCVH)

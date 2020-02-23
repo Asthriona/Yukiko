@@ -1,0 +1,8 @@
+module.exports = {
+    name: " ",
+    category: "info",
+    description: " ",
+    run: async (bot, message, args) => {
+        message.channel.send(`POG`)
+    }
+}
