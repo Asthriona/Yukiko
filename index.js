@@ -94,12 +94,11 @@ bot.on('ready', () => {
         bot.user.setStatus('online');
         bot.user.setPresence({
             game: {
-                name: 'Asthriona.com',
+                name: 'Twitter @YukikoDiscord',
                 type: "WATCHING",
             }
         })
     } else {
-        require('./twitch.js');
         bot.user.setStatus('online');
         bot.user.setPresence({
             game: {
@@ -224,30 +223,6 @@ bot.on('message', async message => {
     //Commands Handler
     let commandfile = bot.commands.get(messageArray[0].slice(prefix.length));
     if (commandfile) commandfile.run(bot, message, args);
-
-    //botinfo
-    if (cmd === `${prefix}info`) {
-        let bicon = bot.user.displayAvatarURL;
-        let botembed = new discord.RichEmbed()
-            .setThumbnail(bicon)
-            .setTitle("A propos de ce bot")
-            .setAuthor(bot.user.username, bicon, 'http://yukiko.nishikino.me/')
-            .setDescription("this bot can make your cat explode, Mount the DOGO, burn your egg and clean your house. (but not your room. we tested all of this.(RIP my cat...))")
-            .setColor("#800080")
-            .addField("Bot name:", bot.user.username, true)
-            .addField("Version:", `${pjson.version} ${pjson.codeName}`, true)
-            .addField("Developped by:", "Asthriona", true)
-            .addField("Developper Website", "https://Asthriona.com", true)
-            .addField("Created on", bot.user.createdAt, true)
-            .addField("On the server since:", bot.user.joinedAt, true)
-            .addField("Git:", "https://github.com/Asthriona/AsthriModBot", true)
-            .addField('Site: ', 'http://yukiko.nishikino.me/', true)
-            .addField("Server Using this server: ", bot.guilds.size, true)
-            .setTimestamp()
-            .setFooter(bot.user.username,bicon)
-        return message.channel.send(botembed)
-    }
-
 })
 bot.login(botConfig.token)
 //Cards Generation
