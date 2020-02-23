@@ -1,24 +1,23 @@
+var { Client, RichEmbed, Collection, Attachment, Utils, MessageCollector } = require('discord.js');
 var botConfig = require('./botconfig.json');
-var discord = require("discord.js");
-var fs = require('fs');
-var util = require('util');
+var fs = require("fs");
 var Canvas = require('canvas');
-var pjson = require('./package.json');
-var util = require('util');
-var os = require('os');
-var osu = require('os-utils')
-
-
-//Mongodb
 var mongoose = require("mongoose");
+var ytdl = require("ytdl-core");
+var YouTube = require("simple-youtube-api");
 
+var bot = new Client({
+    disableEveryone: true
+});
+
+//YukikoDB
 mongoose.connect(botConfig.dbLink, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).catch(error => handleError(error));
 mongoose.connection.on('error', function(e) {
     console.log('YukikoDB: Can not connect Error: ' + e);
-    var bot = new discord.Client({ disableEveryone: true });
+    var {bot} = new discord.Client({ disableEveryone: true });
     bot.commands = new discord.Collection();
     process.exit();
 });
@@ -27,28 +26,30 @@ mongoose.connection.once('open', function(d) {
 })
 var Users = require('./model/xp.js')
 
+require('./TempMusic/music.js');
 
-var log_file = fs.createWriteStream(__dirname + '/debug.log', { flags: 'w' });
-var log_stdout = process.stdout;
-require('./music/server');
+bot.commands = new Collection();
+bot.aliases = new Collection();
+bot.categories = fs.readdirSync("./commands/");
 
-console.log = function (d) { //
-    log_file.write(util.format(d) + '\n');
-    log_stdout.write(util.format(d) + '\n');
-};
-console.log("Initializing bot...")
+["command"].forEach(handler => {
+    require(`./handler/${handler}`)(bot);
+})
 
-require('dotenv').config();
-console.log("Initializing bot in " + process.env.NODE_ENV + " Environement.")
+bot.on('disconnect', () => console.log("\x1b[32m${bot.user.username}\x1b[0m is Disconected... Waiting for reconnect"));
+bot.on('reconnecting', () => console.log("\x1b[32m${bot.user.username}\x1b[0m  is reconnecting."))
 
-//DiscordBot
-console.log('Initializing Discord API');
-var bot = new discord.Client({ disableEveryone: true });
-bot.commands = new discord.Collection();
-bot.on('disconnect', () => console.log("\x1b[32mAsthriona Mod Bot\x1b[0m is Disconected... Waiting for reconnect"));
-bot.on('reconnecting', () => console.log("\x1b[32mAsthriona Mod Bot\x1b[0m  is reconnecting."))
-bot.on('ready', () => console.log(`\x1b[32m${bot.user.username}\x1b[0m is now started and running in \x1b[31m${process.env.NODE_ENV} \x1b[0menvironement!`));
+bot.on("ready", () => {
+    console.log(`\x1b[32m${bot.user.username}\x1b[0m is now started and running in \x1b[31m${process.env.NODE_ENV} \x1b[0menvironement!`);
+    bot.user.setPresence({
+        game:{
+            name: "coding 2.0!",
+            type: "WATCHING"
+        }
+    })
+})
 
+// Welcome and stuff
 bot.on("guildMemberAdd", async member => {
     const channel = member.guild.channels.find(channel => channel.name === "welcome");
     if (!channel) {
@@ -68,7 +69,6 @@ bot.on("guildMemberRemove", member => {
         channel.send(`${member} Viens de quitter le serveur! https://cdn.asthriona.com/sad.gif`);
     }
 });
-
 //commands Handler
 console.log("Initializing commands handler");
 fs.readdir("./commands", (err, files) => {
@@ -105,9 +105,7 @@ bot.on('ready', () => {
             game: {
                 name: 'Coding stuff...',
                 type: 'STREAMING',
-                url: 'https://www.twitch.tv/',
-                smallImage: 'https://static-cdn.jtvnw.net/previews-ttv/live_user_jacquirenee-1280x720.jpg',
-                largeImageURL: "https://static-cdn.jtvnw.net/previews-ttv/live_user_jacquirenee-1280x720.jpg"
+                url: 'https://www.twitch.tv/Asthriona',
             }
         })
     }
@@ -115,6 +113,8 @@ bot.on('ready', () => {
 
 bot.on('message', async message =>{
         //XP System
+        if (message.author.bot) return;
+        if (message.channel.type === "dm") return;
     //DA NEW XP SYSTEM 2.0
     let xpAdd = Math.floor(Math.random() * 7) + 8;
     let messageAdd = +1
@@ -133,6 +133,7 @@ bot.on('message', async message =>{
                 xp: xpAdd,
                 level: 0,
                 message: messageAdd,
+                warns: 0,
                 avatarURL: message.author.displayAvatarURL
             })
 
@@ -156,6 +157,7 @@ bot.on('message', async message =>{
             users.save().catch(error => console.log(error));
         }
     });
+
 })
 
 bot.on('message', async message => {
@@ -181,42 +183,48 @@ bot.on('message', async message => {
     let args = messageArray.slice(1);
     let cmd = messageArray[0];
 
+    let filter = m => !m.author.bot;
+
+    if(cmd === `${prefix}listen`){
+        let Collector = new MessageCollector(message.channel, filter )
+        message.channel.send("Listening...")
+        if(message.guild.id === "612216766680268811"){
+        let destination = bot.channels.get("678373707336515598")
+        Collector.on("collect", (message, col) => {
+            console.log(`Collected Message: ${message}`)
+            let multiEmbed1 = new RichEmbed()
+            .setTitle(`Message from ${message.guild.name}`)
+            .setAuthor(message.author.username, message.author.displayAvatarURL)
+            .setTimestamp()
+            .setDescription(message.content)
+            .setFooter(bot.user.username, bot.user.displayAvatarURL)
+            destination.send(multiEmbed1)
+        })
+    }
+    if(message.guild.id === "647689682381045772"){
+    let destination1 = bot.channels.get("678373638084493322")
+    Collector.on("collect", (message, col) => {
+        console.log(`Collected Message: ${message}`)
+        let multiEmbed1 = new RichEmbed()
+        .setTitle(`Message from ${message.guild.name}`)
+        .setAuthor(message.author.username, message.author.displayAvatarURL)
+        .setTimestamp()
+        .setDescription(message.content)
+        .setFooter(bot.user.username, bot.user.displayAvatarURL)
+        destination1.send(multiEmbed1)
+    })
+}
+    }
+
     //Force mute.
     if (message.member.roles.find(r => r.name === "muted")) {
         message.delete();
         message.author.send("You are muted on " + message.guild.name)
     };
     //Commands Handler
-    //console.log("Reading Commands Handler...")
     let commandfile = bot.commands.get(messageArray[0].slice(prefix.length));
     if (commandfile) commandfile.run(bot, message, args);
 
-    //Commands
-    if (cmd === `${prefix}ping`) {
-        console.log(`${message.author.user} used !ping on ${message.guild.name}`)
-        return message.channel.send("Pong! ");
-    }
-    if (cmd === `${prefix}lb`) {
-        return message.channel.send(` Voici le liens du Leaderboard \n http://yukiko.nishikino.me/lb?id=${message.guild.id}`)
-    }
-    if (cmd === `${prefix}levels`) {
-        return message.channel.send(` Voici le liens du Leaderboard \n http://yukiko.nishikino.me/lb?id=${message.guild.id}`)
-    }
-    if (cmd === `${prefix}Salut`) {
-        return message.channel.send(`Hello ${message.author}!`)
-    }
-    if (cmd === `${prefix}DM`) {
-        return message.author.send('Pog U!')
-    }
-    if (cmd == `${prefix}leaderboard`) {
-        Users.find({
-            serverID: message.guild.id
-        }, function (err, docs) {
-            if (err) console.log(err);
-            message.reply(docs);
-        })
-            .sort([["xp", 1], ["xp", "descending"]]);
-    }
     //botinfo
     if (cmd === `${prefix}info`) {
         let bicon = bot.user.displayAvatarURL;
@@ -240,15 +248,10 @@ bot.on('message', async message => {
         return message.channel.send(botembed)
     }
 
-});
+})
+bot.login(botConfig.token)
+//Cards Generation
 
-if (process.env.NODE_ENV === 'production') {
-    bot.login(botConfig.token)
-    console.log("login on discord...")
-} else {
-    bot.login(botConfig.tokenDev)
-    console.log("login on discord...")
-};
 async function lvlupimg(message, users) {
     const applyText = (canvas, text) => {
         const ctx = canvas.getContext('2d');
@@ -260,7 +263,7 @@ async function lvlupimg(message, users) {
     };
     var canvas = Canvas.createCanvas(934, 282);
     var ctx = canvas.getContext('2d');
-    var background = await Canvas.loadImage('https://cdn.asthriona.com/discordbotCard.jpg');
+    var background = await Canvas.loadImage('https://cdn.asthriona.com/DefaultYukikocard.jpg');
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
     //Draw rectangle
     ctx.beginPath();
@@ -285,7 +288,7 @@ async function lvlupimg(message, users) {
     //Get avatar
     await GetAvatar(message, ctx);
     //put image together and send it
-    var lvlupimg = new discord.Attachment(canvas.toBuffer(), 'lvlup-image.png');
+    var lvlupimg = new Attachment(canvas.toBuffer(), 'lvlup-image.png');
     message.channel.send(lvlupimg);
 }
 
@@ -301,25 +304,28 @@ async function WelcomeCad(member, channel) {
 
     var canvas = Canvas.createCanvas(934, 282);
     var ctx = canvas.getContext('2d');
-    var background = await Canvas.loadImage('https://cdn.asthriona.com/discordbotCard.jpg');
+    var background = await Canvas.loadImage('https://cdn.asthriona.com/DefaultYukikocard.jpg');
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
     ctx.beginPath();
     ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
     ctx.fillRect(260, 80, 650, 130);
     ctx.stroke();
+    //get username 
     ctx.font =  applyText(canvas, member.user.username);
     ctx.fillStyle = '#fff';
     ctx.fillText(member.user.username, 280, 141);
+    //Get guild name
     ctx.font = applyText(canvas, member.guild.name);
     ctx.fillStyle = '#fff';
-    ctx.fillText("Welcome on " + member.guild.name, 280, 185);
+    ctx.fillText("Joined the server! ", 280, 195);
+    //Get avatar
     var avatar = await Canvas.loadImage(member.user.displayAvatarURL);
     ctx.beginPath();
     ctx.arc(140, 128, 110, 0, Math.PI * 2);
     ctx.closePath();
     ctx.clip();
     ctx.drawImage(avatar, 25, 15, 256, 256);
-    var attachment = new discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
+    var attachment = new Attachment(canvas.toBuffer(), 'welcome-image.png');
     channel.send(attachment)
 }
 async function GetAvatar(message, ctx) {

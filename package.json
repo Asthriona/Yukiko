@@ -1,9 +1,9 @@
 {
-  "name": "asthrimodbot",
-  "version": "2.1.1",
-  "description": "A simple discord bot to do moderation stuff and few other function",
+  "name": "yukiko",
+  "version": "2.0.0",
+  "description": "A powerfull Discord bot.",
   "main": "index.js",
-  "codeName": "I'm sad :c",
+  "codeName": "I'm back to rules them all!",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon start"
@@ -27,9 +27,13 @@
   },
   "homepage": "https://sh.nishikino.me/2dfdb",
   "dependencies": {
+    "@discordjs/uws": "^10.149.0",
+    "ascii-table": "0.0.9",
     "axios": "^0.19.1",
+    "beautify": "0.0.8",
     "body-parser": "^1.19.0",
     "canvas": "^2.6.1",
+    "common-tags": "^1.8.0",
     "discord.js": "^11.5.1",
     "dotenv": "^8.2.0",
     "exphbs": "^1.2.0",
@@ -37,15 +41,16 @@
     "express-handlebars": "^3.1.0",
     "fast-sort": "^2.0.1",
     "follow-redirects": "^1.9.0",
-    "mongodb": "^3.4.1",
-    "mongoose": "^5.8.9",
+    "mongodb": "^3.5.1",
+    "mongoose": "^5.8.7",
     "ms": "^2.1.2",
     "node-opus": "^0.3.3",
     "nodegit": "^0.26.4",
     "os-utils": "0.0.14",
     "simple-youtube-api": "^5.2.1",
-    "superagent": "^5.2.1",
+    "superagent": "^5.1.0",
+    "uws": "^100.0.1",
     "youtube-dl": "^2.3.0",
-    "ytdl-core": "^1.0.6"
+    "ytdl-core": "^1.0.7"
   }
 }
