@@ -63,10 +63,5 @@ typings/
 botconfig.json
 .env
 ./node_modules
-node_modules/
-commands/botinfo.js
-warn.json.exemple
-music/server.js.old
-LOL.c
-xp.json
 
+package-lock.json
