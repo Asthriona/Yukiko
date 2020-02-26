@@ -3,8 +3,6 @@ var botConfig = require('./botconfig.json');
 var fs = require("fs");
 var Canvas = require('canvas');
 var mongoose = require("mongoose");
-var ytdl = require("ytdl-core");
-var YouTube = require("simple-youtube-api");
 
 var bot = new Client({
     disableEveryone: true
@@ -60,13 +58,14 @@ bot.on("guildMemberAdd", async member => {
     }
 });
 
-bot.on("guildMemberRemove", member => {
+bot.on("guildMemberRemove", async member => {
     const channel = member.guild.channels.find(channel => channel.name === "welcome");
     if (!channel) {
         const channel = member.guild.channels.find(channel => channel.name === "bienvenue");
-        channel.send(`${member} Viens de quitter le serveur! https://cdn.asthriona.com/sad.gif`);
+        return await farewell(member, channel);
     } else {
-        channel.send(`${member} Viens de quitter le serveur! https://cdn.asthriona.com/sad.gif`);
+        return await farewell(member, channel);
+        //channel.send(`${member} Viens de quitter le serveur! https://cdn.asthriona.com/sad.gif`);
     }
 });
 //commands Handler
@@ -225,6 +224,7 @@ bot.on('message', async message => {
     if (commandfile) commandfile.run(bot, message, args);
 })
 bot.login(botConfig.token)
+
 //Cards Generation
 
 async function lvlupimg(message, users) {
@@ -301,6 +301,43 @@ async function WelcomeCad(member, channel) {
     ctx.clip();
     ctx.drawImage(avatar, 25, 15, 256, 256);
     var attachment = new Attachment(canvas.toBuffer(), 'welcome-image.png');
+    channel.send(attachment)
+}
+
+async function farewell(member, channel) {
+    const applyText = (canvas, text) => {
+        const ctx = canvas.getContext('2d');
+        let fontSize = 70;
+        do {
+            ctx.font = `${fontSize -= 10}px sans-serif`;
+        } while (ctx.measureText(text).width > canvas.width - 300);
+        return ctx.font;
+    };
+
+    var canvas = Canvas.createCanvas(934, 282);
+    var ctx = canvas.getContext('2d');
+    var background = await Canvas.loadImage('https://cdn.asthriona.com/YukikoLeft.jpg');
+    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+    ctx.fillRect(260, 80, 650, 130);
+    ctx.stroke();
+    //get username 
+    ctx.font =  applyText(canvas, member.user.username);
+    ctx.fillStyle = '#fff';
+    ctx.fillText(member.user.username, 280, 141);
+    //Get guild name
+    ctx.font = applyText(canvas, member.guild.name);
+    ctx.fillStyle = '#fff';
+    ctx.fillText("Left the server! ", 280, 195);
+    //Get avatar
+    var avatar = await Canvas.loadImage(member.user.displayAvatarURL);
+    ctx.beginPath();
+    ctx.arc(140, 128, 110, 0, Math.PI * 2);
+    ctx.closePath();
+    ctx.clip();
+    ctx.drawImage(avatar, 25, 15, 256, 256);
+    var attachment = new Attachment(canvas.toBuffer(), 'farewell-image.png');
     channel.send(attachment)
 }
 async function GetAvatar(message, ctx) {
