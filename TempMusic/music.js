@@ -65,6 +65,7 @@ bot.on('message', async message =>{
             var serverQueue = queue.get(message.guild.id)
             var song = {
                 id: video.id,
+                thumb: video.thumbnails.maxres.url,
                 title: Util.escapeMarkdown(video.title),
                 url: "https://www.youtube.com/watch?v=" + video.id
             };
@@ -94,7 +95,14 @@ bot.on('message', async message =>{
                 serverQueue.songs.push(song);
                 console.log("MUSIC BOT: Server Queue: " + serverQueue.songs)
                 if(playlist)return undefined;
-                message.channel.send(`** ${song.title} ** has been addded to the queue`);
+                let embed = new discord.RichEmbed()
+                .setColor("PURPLE")
+                .setAuthor(bot.user.username, bot.user.displayAvatarURL)
+                .setDescription("✅ "+song.title + "\n has been added to the queue!")
+                .setImage(song.thumb)
+                .setTimestamp()
+                .setFooter(bot.user.username, bot.user.displayAvatarURL);
+                message.channel.send(embed);
             }
         }
         } else if(message.content.startsWith(`${prefix}skip`)){
@@ -112,7 +120,7 @@ bot.on('message', async message =>{
             return undefined;
         } else if(message.content.startsWith(`${prefix}np`)){
             if(!serverQueue) return message.reply("Nothing is currectly playing.");
-            return message.channel.send("Now Playing: ***" +serverQueue.songs[0].title + "***")
+            return message.channel.send("Now Playing: ***" +serverQueue.songs[0].title + "*** \n ")
         } else if(message.content.startsWith(`${prefix}volume`)){
             if(!message.member.voiceChannel) return message.reply("You are not in the voice channel!")
             if(!serverQueue) return message.reply('There is nothing currently playing.');
@@ -158,8 +166,14 @@ function play(guild, song){
     })
     .on('error', error => console.log(error));
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-
-    serverQueue.textChannel.send("Now Playing: **" + song.title + "**")
+    let embed = new discord.RichEmbed()
+    .setColor("PURPLE")
+    .setAuthor(bot.user.username, bot.user.displayAvatarURL)
+    .setDescription("Now Playing: \n" + song.title)
+    .setImage(song.thumb)
+    .setTimestamp()
+    .setFooter(bot.user.username, bot.user.displayAvatarURL);
+    serverQueue.textChannel.send(embed)
 }
 bot.login(botConfig.token) 
 console.log(`\x1b[32mMusic bot \x1b[0m is now started and running`)
