@@ -1,8 +1,6 @@
 {
-    "token": "Prod bot key",
-    "tokenDev": "dev bot key",
-    "prefix": "a!"
-    "devPrefix": ";",
-    "channelprod": "ChannelID",
-    "YtKey": "YOUTUBE API KEY"
+    "token": "Bot tokken",
+    "prefix": "a!",
+    "YtKey": "Youtube API KEY",
+    "dbLink": "mongodb://yukiko:127.0.0.1",
 }
