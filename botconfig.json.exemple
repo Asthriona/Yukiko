@@ -1,5 +1,6 @@
 {
     "token": "Prod bot key",
+    "tokenDev": "dev bot key",
     "prefix": "a!"
     "devPrefix": ";",
     "channelprod": "ChannelID",
