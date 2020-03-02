@@ -36,6 +36,8 @@ bot.on('message', async message =>{
         if(!permission.has('SPEAK')){
             return message.reply("I cannot speak in this VC please check I have the permission or change VC.");
         }
+        //search by Link
+            //Playlist (Non functional)
         if(url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)){
             var playlist = await youtube.getPlaylist(url);
             var videos = await playlist.getVideos();
@@ -45,10 +47,12 @@ bot.on('message', async message =>{
             }
             message.channel.send(`**${playlist.title}** Has been added to the queue.`);
         }else{
+            //Video by Link
         try {
             var video = await youtube.getVideo(url);
         } catch (error) {
             try {
+                //get video by search (youtube API)
                 var videos = await youtube.searchVideos(searchString, 1);
                 console.log("Searching: " + searchString + " Requested by " + message.author.username)
                 var video = await youtube.getVideoByID(videos[0].id);
@@ -59,13 +63,13 @@ bot.on('message', async message =>{
         }
         return handleVideo(video, message, voiceChannel, playlist = false);
     }
-        //console.log(video)
+        //Searching by ID
         async function handleVideo(video, message, voiceChannel){
             var video = await youtube.getVideoByID(videos[0].id);
             var serverQueue = queue.get(message.guild.id)
             var song = {
                 id: video.id,
-                thumb: video.thumbnails.maxres.url,
+                thumb: video.thumbnails.high.url,
                 title: Util.escapeMarkdown(video.title),
                 url: "https://www.youtube.com/watch?v=" + video.id
             };
