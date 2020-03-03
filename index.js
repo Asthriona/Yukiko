@@ -93,8 +93,8 @@ bot.on('ready', () => {
         bot.user.setStatus('online');
         bot.user.setPresence({
             game: {
-                name: 'Twitter @YukikoDiscord',
-                type: "WATCHING",
+                name: 'Persona 4 Golden',
+                type: "PLAYING",
             }
         })
     } else {
