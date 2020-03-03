@@ -22,12 +22,31 @@ module.exports = {
         }
 
         var toKick = message.mentions.members.first() || message.guild.members.get(args[0]);
+
+        var embed = new RichEmbed()
+        .setColor("PURPLE")
+        .setThumbnail(toKick.user.displayAvatarURL)
+        .setFooter(bot.user.username, bot.user.displayAvatarURL)
+        .setTimestamp()
+        .setDescription(`**=> Kicked member:** ${toKick} (${toKick.id})
+        **=> Kicked by: ** ${message.author} (${message.author.id})
+        **=> Reason:** ${args.slice(1).join(" ")}`, true);
+
+        var publicEmbed = new RichEmbed()
+        .setColor("PURPLE")
+        .setFooter("This kick was brought to you by Asthriona ltd!", bot.user.displayAvatarURL)
+        .setDescription(`${toKick} just got Kicked by ${message.author}!`)
+        .setImage("https://cdn.asthriona.com/kick.gif")
+
         if(!toKick){
             return message.reply("❌ Cannot find that user :/")
         }
         if(toKick.id === "186195458182479874"){
             return message.reply("❌ Dont you dare kick my dad?! D:<")
         }
+        //if(toKick.id === "635422418424299521"){
+        //    return message.reply("❌ Dont you dare kick my mom?! D:<")
+        //}
         if(message.author.id === toKick.id) {
             return message.reply("❌ You can't kick yourself you smart ass... 🤷‍♀️🤷‍♂️");
         }
@@ -36,45 +55,49 @@ module.exports = {
         }
         if(!toKick.kickable){
             return message.reply("You can't kick this user because he/she is better than u **:)**")
-        }
-
-        var embed = new RichEmbed()
-        .setColor("#FF0000")
-        .setThumbnail(toKick.user.displayAvatarURL)
-        .setFooter(bot.user.username, bot.user.displayAvatarURL)
-        .setTimestamp()
-        .setDescription(stripIndents`**=> Kicked Member:** ${toKick} (${toKick.id})
-        ***=> Kicked by:*** ${message.author} (${message.author.id})
-        ***=> Reason:*** ${args.slice(1).join(" ")}`, true)
-
-        var promptEmbed = new RichEmbed()
-        .setColor("GREEN")
-        .setAuthor("This verification becomes invalid after 30s.")
-        .setDescription(`Do you want to kick ${toKick}?`)
-        .setTimestamp()
-
-        var publicEmbed = new RichEmbed()
-        .setColor("PURLPLE")
-        .setAuthor(bot.user.username, bot.user.displayAvatarURL)
-        .setDescription(`${toKick} Just got kicked by ${message.author}!`)
-        .setImage("https://cdn.asthriona.com/kick.gif")
-        .setTimestamp()
-        .setFooter("Kick Sponsored by Asthriona LLC!", bot.user.displayAvatarURL)
-
-        await message.channel.send(promptEmbed).then(async msg =>{
-            var emoji = await promptMessage(msg, message.author, 30, ["✔️", "❌"]);
-            if(emoji === "✔️"){
-                msg.delete();
+        }else{
                 logChannel.send(embed)
                 message.channel.send(publicEmbed)
                 toKick.kick(args.slice(1).join(" "))
-                    .catch(err => {
-                        if(err) return message.channel.send("Error: \n ```"+err+"```")
-                    });
-            }else if (emoji === "❌"){
-                msg.delete()
-                message.reply(`Kick cancelled. \n You got lucky this time ${toKick}!`)
-            }
-        })
+        }
+
+        //var embed = new RichEmbed()
+        //.setColor("#FF0000")
+        //.setThumbnail(toKick.user.displayAvatarURL)
+        //.setFooter(bot.user.username, bot.user.displayAvatarURL)
+        //.setTimestamp()
+        //.setDescription(stripIndents`**=> Kicked Member:** ${toKick} (${toKick.id})
+        //***=> Kicked by:*** ${message.author} (${message.author.id})
+        //***=> Reason:*** ${args.slice(1).join(" ")}`, true)
+
+        //var promptEmbed = new RichEmbed()
+        //.setColor("GREEN")
+        //.setAuthor("This verification becomes invalid after 30s.")
+        //.setDescription(`Do you want to kick ${toKick}?`)
+        //.setTimestamp()
+
+        //var publicEmbed = new RichEmbed()
+        //.setColor("PURLPLE")
+        //.setAuthor(bot.user.username, bot.user.displayAvatarURL)
+        //.setDescription(`${toKick} Just got kicked by ${message.author}!`)
+        //.setImage("https://cdn.asthriona.com/kick.gif")
+        //.setTimestamp()
+        //.setFooter("Kick Sponsored by Asthriona LLC!", bot.user.displayAvatarURL)
+
+        //await message.channel.send(promptEmbed).then(async msg =>{
+        //    var emoji = await promptMessage(msg, message.author, 30, ["✔️", "❌"]);
+        //    if(emoji === "✔️"){
+        //        msg.delete();
+        //        logChannel.send(embed)
+        //        message.channel.send(publicEmbed)
+        //        toKick.kick(args.slice(1).join(" "))
+        //            .catch(err => {
+        //                if(err) return message.channel.send("Error: \n ```"+err+"```")
+        //            });
+        //    }else if (emoji === "❌"){
+        //        msg.delete()
+        //        message.reply(`Kick cancelled. \n You got lucky this time ${toKick}!`)
+        //    }
+        //})
     }
 }
