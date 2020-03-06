@@ -4,7 +4,7 @@ module.exports = {
     description: "change what bot is actually playing.",
     aliases: ["setgame"],
     run: async (bot, message, args) => {
-        if(message.author.id === "186195458182479874"){
+        if(message.member.hasPermission("BAN_MEMBERS")){
             bot.user.setStatus('')
             bot.user.setPresence({
                 game: {
