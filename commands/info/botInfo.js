@@ -8,7 +8,7 @@ module.exports = {
     run: async (bot, message, args) => {
         let botembed = new RichEmbed()
     .setThumbnail(bot.user.displayAvatarURL)
-    .setTitle("A propos de ce bot")
+    .setTitle("About this bot:")
     .setAuthor(bot.user.username, bot.user.displayAvatarURL, 'http://yukiko.nishikino.me/')
     .setDescription("this bot can make your cat explode, Mount the DOGO, burn your egg and clean your house. (but not your room. we tested all of this.(RIP my cat...))")
     .setColor("#800080")
