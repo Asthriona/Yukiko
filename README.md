@@ -43,7 +43,7 @@ For Linux you should install "screen" package to be able to keep the bot running
 Yukiko's configuration is pretty simple.  
 You need a MongoDB database, and a Discord bot  
 [Discord Developper portal](https://discordapp.com/developers/applications/)  
-[Free mongoDB Database Culsters](https://discordapp.com/developers/applications/)
+[Free mongoDB Database Culsters](https://www.mongodb.com/cloud/atlas)
 
 copy the exemple file
 ```
