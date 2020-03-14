@@ -66,3 +66,8 @@ botconfig.json
 
 package-lock.json
 
+test.js
+IbeatYou.js
+createinvite.js
+commands/dev/fetch.js
+commands/dev/create.js

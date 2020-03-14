@@ -46,7 +46,6 @@ bot.on("ready", () => {
         }
     })
 })
-
 // Welcome and stuff
 bot.on("guildMemberAdd", async member => {
     const channel = member.guild.channels.find(channel => channel.name === "welcome");
