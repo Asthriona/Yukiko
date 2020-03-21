@@ -1,3 +1,4 @@
+var Discord = require("discord.js")
 module.exports = {
     name: "say",
     category: "Moderation",
@@ -9,7 +10,7 @@ module.exports = {
 
         const roleColor = message.guild.me.displayHexColor === "#000" ? "#fff" : message.guild.me.displayHexColor ;
         if(args[0].toLowerCase() === "embed"){
-            var embed = new RichEmbed()
+            var embed = new Discord.RichEmbed()
             .setColor(roleColor)
             .setAuthor(message.author.username, message.author.displayAvatarURL)
             .setDescription(args.slice(1).join(" "))
