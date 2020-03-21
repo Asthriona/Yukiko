@@ -87,26 +87,46 @@ fs.readdir("./commands", (err, files) => {
 });
 console.log('Setting bot presence...')
 
+//bot.on('ready', () => {
+//    if (process.env.NODE_ENV == "production") {
+//        bot.user.setStatus('online');
+//        bot.user.setPresence({
+//            game: {
+//                name: 'Persona 4 Golden',
+//                type: "PLAYING",
+//            }
+//        })
+//    } else {
+//        bot.user.setStatus('online');
+//        bot.user.setPresence({
+//            game: {
+//                name: 'Coding stuff...',
+//                type: 'STREAMING',
+//                url: 'https://www.twitch.tv/Asthriona',
+//            }
+//        })
+//    }
+//});
 bot.on('ready', () => {
-    if (process.env.NODE_ENV == "production") {
-        bot.user.setStatus('online');
-        bot.user.setPresence({
-            game: {
-                name: 'Persona 4 Golden',
-                type: "PLAYING",
-            }
-        })
-    } else {
-        bot.user.setStatus('online');
-        bot.user.setPresence({
-            game: {
-                name: 'Coding stuff...',
-                type: 'STREAMING',
-                url: 'https://www.twitch.tv/Asthriona',
-            }
-        })
-    }
-});
+            var timerStart = new Date('2020/03/16 19:00:00');
+            var timer = setInterval(function () {
+            var timerEnd = new Date();
+            var longTime = timerEnd - timerStart;
+            var days = parseInt(longTime / 1000 / 60 / 60 / 24, 10);
+            var hours = parseInt(longTime / 1000 / 60 / 60 % 24, 10);
+            var minutes = parseInt(longTime / 1000 / 60 % 60, 10);
+            var seconds = parseInt(longTime / 1000 % 60, 10);
+            var longTime = `${('0'+days).slice(-2)}:${('0'+hours).slice(-2)}:${('0'+minutes).slice(-2)}:${('0'+seconds).slice(-2)}`
+    bot.user.setStatus('online');
+       bot.user.setPresence({
+           game: {
+               name: `Lockdown: ${longTime}`,
+               type: 'Playing',
+               url: 'https://www.twitch.tv/Asthriona',
+           }
+       })
+    }, 10000);
+})
 
 bot.on('message', async message =>{
         //XP System
