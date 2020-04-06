@@ -170,6 +170,7 @@ bot.on('message', async message =>{
                     await lvlupimg(message, users);
 
                 }
+                sendimg()
             }
             users.save().catch(error => console.log(error));
         }
