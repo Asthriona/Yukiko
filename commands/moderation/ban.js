@@ -21,33 +21,16 @@ module.exports = {
         if(!message.guild.me.hasPermission("BAN_MEMBERS")){
             return message.reply(" ❌ I don't have to permissions to ban.")
         }
-        
-        var toban = message.mentions.members.first() || message.guild.members.get(args[0]);
 
-        var embed = new RichEmbed()
-        .setColor("#FF0000")
-        .setThumbnail(toban.user.displayAvatarURL)
-        .setFooter(bot.user.username, bot.user.displayAvatarURL)
-        .setTimestamp()
-        .setDescription(stripIndents`**=> baned Member:** ${toban} (${toban.id})
-        ***=> baned by:*** ${message.author} (${message.author.id})
-        ***=> Reason:*** ${args.slice(1).join(" ")}`, true);
-        var publicEmbed = new RichEmbed()
-        .setColor("PURLPLE")
-        .setAuthor(bot.user.username, bot.user.displayAvatarURL)
-        .setDescription(`${toban} Just got baned by ${message.author}!`)
-        .setImage("https://media.giphy.com/media/xUO4t2gkWBxDi/giphy.gif")
-        .setTimestamp()
-        .setFooter("This ban was brought to you by Asthriona ltd!", bot.user.displayAvatarURL);
-        
+        var toban = message.mentions.members.first() || message.guild.members.get(args[0]);
         if(!toban){
             return message.reply(" ❌ Cannot find that user :/")
         }
         if(toban.id === "186195458182479874"){
             return message.reply(" ❌ Dont you dare ban my dad?! D:<")
-        }        
+        }
         if(toban.id === "635422418424299521"){
-            return message.reply(" ❌ Dont you dare ban my mom?! D:<")
+            return message.reply(" ❌ Dont you dare ban my mum?! D:<")
         }
         if(message.author.id === toban.id) {
             return message.reply(" ❌ You can't ban yourself you smart ass... 🤷‍♀️🤷‍♂️");
@@ -57,36 +40,45 @@ module.exports = {
         }
         if(!toban.bannable){
             return message.reply("You can't ban this user because he/she is better than u **:)**")
-        }else{
-            toban.ban(args.slice(1).join(" ")+" by " + message.author.username)
-            logChannel.send(embed)
-            message.channel.send(publicEmbed)
         }
 
-//
-    //    var promptEmbed = new RichEmbed()
-    //    .setColor("GREEN")
-    //    .setAuthor("This verification becomes invalid after 30s.")
-    //    .setDescription(`Do you want to ban ${toban}?`)
-    //    .setTimestamp()
-//
+        var embed = new RichEmbed()
+        .setColor("#FF0000")
+        .setThumbnail(toban.user.displayAvatarURL)
+        .setFooter(bot.user.username, bot.user.displayAvatarURL)
+        .setTimestamp()
+        .setDescription(stripIndents`**=> baned Member:** ${toban} (${toban.id})
+        ***=> baned by:*** ${message.author} (${message.author.id})
+        ***=> Reason:*** ${args.slice(1).join(" ")}`, true)
 
+        var promptEmbed = new RichEmbed()
+        .setColor("GREEN")
+        .setAuthor("This verification becomes invalid after 30s.")
+        .setDescription(`Do you want to ban ${toban}?`)
+        .setTimestamp()
 
-    //    await message.channel.send(promptEmbed).then(async msg =>{
-    //        var emoji = await promptMessage(msg, message.author, 30, ["✔️", "❌"]);
-    //        if(emoji === "✔️"){
-    //            msg.delete();
-    //            logChannel.send(embed)
-    //            message.channel.send(publicEmbed)
-    //            toban.ban(args.slice(1).join(" ")+" by " + message.author.username)
-    //                .catch(err => {
-    //                    if(err) return message.channel.send("Error: \n ```"+err+"```")
-    //                });
-    //        }else if (emoji === "❌"){
-    //            msg.delete()
-    //            message.reply(`ban cancelled. \n You got lucky this time ${toban}!`)
-    //        }
-    //    })
+        var publicEmbed = new RichEmbed()
+        .setColor("PURLPLE")
+        .setAuthor(bot.user.username, bot.user.displayAvatarURL)
+        .setDescription(`${toban} Just got baned by ${message.author}!`)
+        .setImage("https://media.giphy.com/media/xUO4t2gkWBxDi/giphy.gif")
+        .setTimestamp()
+        .setFooter("Ban Sponsored by Asthriona LLC!", bot.user.displayAvatarURL)
 
+        await message.channel.send(promptEmbed).then(async msg =>{
+            var emoji = await promptMessage(msg, message.author, 30, ["✔️", "❌"]);
+            if(emoji === "✔️"){
+                msg.delete();
+                logChannel.send(embed)
+                message.channel.send(publicEmbed)
+                toban.ban(args.slice(1).join(" ")+" by " + message.author.username)
+                    .catch(err => {
+                        if(err) return message.channel.send("Error: \n ```"+err+"```")
+                    });
+            }else if (emoji === "❌"){
+                msg.delete()
+                message.reply(`ban cancelled. \n You got lucky this time ${toban}!`)
+            }
+        })
     }
-}
+} 
