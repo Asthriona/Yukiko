@@ -203,6 +203,10 @@ bot.on('message', async message => {
 
     let filter = m => !m.author.bot;
 
+    if(cmd === `${prefix}leave`){
+        message.channel.send("i'm out :)")
+        return message.guild.leave();
+    }
     if(cmd === `${prefix}listen`){
         let Collector = new MessageCollector(message.channel, filter )
         message.channel.send("Listening...")
