@@ -7,7 +7,7 @@ module.exports = {
     description: "Run some code directly in discord! (developper only!)",
     run: async (bot, message, args) => {
         if(!message.author.id === "186195458182479874") return message.reply("You are not a developper! you can't run code just like that!")
-        if(!args[0])message.channel.send("Please gimme some good code!")
+        if(!args[0]) return message.channel.send("Please gimme some good code!")
 
         try {
             if(args.join(" ").toLowerCase().includes("token")){
