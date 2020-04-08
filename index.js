@@ -13,13 +13,13 @@ mongoose.connect(botConfig.dbLink, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).catch(error => handleError(error));
-mongoose.connection.on('error', function(e) {
+mongoose.connection.on('error', function (e) {
     console.log('YukikoDB: Can not connect Error: ' + e);
-    var {bot} = new discord.Client({ disableEveryone: true });
+    var { bot } = new discord.Client({ disableEveryone: true });
     bot.commands = new discord.Collection();
     process.exit();
 });
-mongoose.connection.once('open', function(d) { 
+mongoose.connection.once('open', function (d) {
     console.log("\x1b[32mYukikoDB:\x1b[0m connected to \x1b[31m" + mongoose.connection.host + " \x1b[0m");
 })
 var Users = require('./model/xp.js')
@@ -40,7 +40,7 @@ bot.on('reconnecting', () => console.log("\x1b[32m${bot.user.username}\x1b[0m  i
 bot.on("ready", () => {
     console.log(`\x1b[32m${bot.user.username}\x1b[0m is now started and running in \x1b[31m${process.env.NODE_ENV} \x1b[0menvironement!`);
     bot.user.setPresence({
-        game:{
+        game: {
             name: "coding 2.0!",
             type: "WATCHING"
         }
@@ -108,30 +108,30 @@ console.log('Setting bot presence...')
 //    }
 //});
 bot.on('ready', () => {
-            var timerStart = new Date('2020/03/16 19:00:00');
-            var timer = setInterval(function () {
-            var timerEnd = new Date();
-            var longTime = timerEnd - timerStart;
-            var days = parseInt(longTime / 1000 / 60 / 60 / 24, 10);
-            var hours = parseInt(longTime / 1000 / 60 / 60 % 24, 10);
-            var minutes = parseInt(longTime / 1000 / 60 % 60, 10);
-            var seconds = parseInt(longTime / 1000 % 60, 10);
-            var longTime = `${('0'+days).slice(-2)}:${('0'+hours).slice(-2)}:${('0'+minutes).slice(-2)}:${('0'+seconds).slice(-2)}`
-    bot.user.setStatus('online');
-       bot.user.setPresence({
-           game: {
-               name: `Lockdown: ${longTime}`,
-               type: 'Playing',
-               url: 'https://www.twitch.tv/Asthriona',
-           }
-       })
+    var timerStart = new Date('2020/03/16 19:00:00');
+    var timer = setInterval(function () {
+        var timerEnd = new Date();
+        var longTime = timerEnd - timerStart;
+        var days = parseInt(longTime / 1000 / 60 / 60 / 24, 10);
+        var hours = parseInt(longTime / 1000 / 60 / 60 % 24, 10);
+        var minutes = parseInt(longTime / 1000 / 60 % 60, 10);
+        var seconds = parseInt(longTime / 1000 % 60, 10);
+        var longTime = `${('0' + days).slice(-2)}:${('0' + hours).slice(-2)}:${('0' + minutes).slice(-2)}:${('0' + seconds).slice(-2)}`
+        bot.user.setStatus('online');
+        bot.user.setPresence({
+            game: {
+                name: `Lockdown: ${longTime}`,
+                type: 'Playing',
+                url: 'https://www.twitch.tv/Asthriona',
+            }
+        })
     }, 10000);
 })
 
-bot.on('message', async message =>{
-        //XP System
-        if (message.author.bot) return;
-        if (message.channel.type === "dm") return;
+bot.on('message', async message => {
+    //XP System
+    if (message.author.bot) return;
+    if (message.channel.type === "dm") return;
     //DA NEW XP SYSTEM 2.0
     let xpAdd = Math.floor(Math.random() * 7) + 8;
     let messageAdd = +1
@@ -203,39 +203,41 @@ bot.on('message', async message => {
 
     let filter = m => !m.author.bot;
 
-    if(cmd === `${prefix}leave`){
-        message.channel.send("i'm out :)")
-        return message.guild.leave();
+    if (message.author.id === "186195458182479874") {
+        if (cmd === `${prefix}leave`) {
+            message.channel.send("i'm out :)")
+            return message.guild.leave();
+        }
     }
-    if(cmd === `${prefix}listen`){
-        let Collector = new MessageCollector(message.channel, filter )
+    if (cmd === `${prefix}listen`) {
+        let Collector = new MessageCollector(message.channel, filter)
         message.channel.send("Listening...")
-        if(message.guild.id === "612216766680268811"){
-        let destination = bot.channels.get("678373707336515598")
-        Collector.on("collect", (message, col) => {
-            console.log(`Collected Message: ${message}`)
-            let multiEmbed1 = new RichEmbed()
-            .setTitle(`Message from ${message.guild.name}`)
-            .setAuthor(message.author.username, message.author.displayAvatarURL)
-            .setTimestamp()
-            .setDescription(message.content)
-            .setFooter(bot.user.username, bot.user.displayAvatarURL)
-            destination.send(multiEmbed1)
-        })
-    }
-    if(message.guild.id === "647689682381045772"){
-    let destination1 = bot.channels.get("678373638084493322")
-    Collector.on("collect", (message, col) => {
-        console.log(`Collected Message: ${message}`)
-        let multiEmbed1 = new RichEmbed()
-        .setTitle(`Message from ${message.guild.name}`)
-        .setAuthor(message.author.username, message.author.displayAvatarURL)
-        .setTimestamp()
-        .setDescription(message.content)
-        .setFooter(bot.user.username, bot.user.displayAvatarURL)
-        destination1.send(multiEmbed1)
-    })
-}
+        if (message.guild.id === "612216766680268811") {
+            let destination = bot.channels.get("678373707336515598")
+            Collector.on("collect", (message, col) => {
+                console.log(`Collected Message: ${message}`)
+                let multiEmbed1 = new RichEmbed()
+                    .setTitle(`Message from ${message.guild.name}`)
+                    .setAuthor(message.author.username, message.author.displayAvatarURL)
+                    .setTimestamp()
+                    .setDescription(message.content)
+                    .setFooter(bot.user.username, bot.user.displayAvatarURL)
+                destination.send(multiEmbed1)
+            })
+        }
+        if (message.guild.id === "647689682381045772") {
+            let destination1 = bot.channels.get("678373638084493322")
+            Collector.on("collect", (message, col) => {
+                console.log(`Collected Message: ${message}`)
+                let multiEmbed1 = new RichEmbed()
+                    .setTitle(`Message from ${message.guild.name}`)
+                    .setAuthor(message.author.username, message.author.displayAvatarURL)
+                    .setTimestamp()
+                    .setDescription(message.content)
+                    .setFooter(bot.user.username, bot.user.displayAvatarURL)
+                destination1.send(multiEmbed1)
+            })
+        }
     }
 
     //Force mute.
@@ -310,7 +312,7 @@ async function WelcomeCad(member, channel) {
     ctx.fillRect(260, 80, 650, 130);
     ctx.stroke();
     //get username 
-    ctx.font =  applyText(canvas, member.user.username);
+    ctx.font = applyText(canvas, member.user.username);
     ctx.fillStyle = '#fff';
     ctx.fillText(member.user.username, 280, 141);
     //Get guild name
@@ -347,7 +349,7 @@ async function farewell(member, channel) {
     ctx.fillRect(260, 80, 650, 130);
     ctx.stroke();
     //get username 
-    ctx.font =  applyText(canvas, member.user.username);
+    ctx.font = applyText(canvas, member.user.username);
     ctx.fillStyle = '#fff';
     ctx.fillText(member.user.username, 280, 141);
     //Get guild name
