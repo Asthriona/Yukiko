@@ -190,7 +190,6 @@ bot.on('message', async message => {
                 link: "https://cdn.asthriona.com/DefaultYukikocard.jpg"
             })
             newCards.save().catch(error => console.log(error));
-            message.reply("Your card has been saved!")
         }
     })
 
