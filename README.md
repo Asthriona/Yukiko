@@ -53,6 +53,10 @@ cp botconfig.json.exemple botconfig.json
 `prefix` a! by default you can change it for whatever you want.  
 `YtKey` your [youtube API](https://developers.google.com/) key  
 `dbLink` The login link of your database. 
+  
+# Tutorial  
+I made a video to explain how to install Yukiko on your server:  
+[![Alt text](https://img.youtube.com/vi/pmllAGcrlgw/0.jpg)](https://youtu.be/pmllAGcrlgw)
 
 # Official Discord Server.
 For now Yukiko don't have any public place. Just a nice little home called "Dev Bot Zone." This is a private server dedicated to my developement bot.  
