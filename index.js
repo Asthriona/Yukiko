@@ -23,6 +23,7 @@ mongoose.connection.once('open', function (d) {
     console.log("\x1b[32mYukikoDB:\x1b[0m connected to \x1b[31m" + mongoose.connection.host + " \x1b[0m");
 })
 var Users = require('./model/xp.js')
+var Cards = require('./model/card.js')
 
 require('./TempMusic/music.js');
 
@@ -132,6 +133,8 @@ bot.on('message', async message => {
     //XP System
     if (message.author.bot) return;
     if (message.channel.type === "dm") return;
+    let messageArray = message.content.split(" ");
+    let args = messageArray.slice(1);
     //DA NEW XP SYSTEM 2.0
     let xpAdd = Math.floor(Math.random() * 7) + 8;
     let messageAdd = +1
@@ -175,6 +178,22 @@ bot.on('message', async message => {
             users.save().catch(error => console.log(error));
         }
     });
+
+    //Add default cards to new users
+    Cards.findOne({
+        did: message.author.id
+    }, (err, cards)=>{
+        if(err) console.log(err)
+        if (!cards) {
+            var newCards = new Cards({
+                did: message.author.id,
+                link: "https://cdn.asthriona.com/DefaultYukikocard.jpg"
+            })
+            newCards.save().catch(error => console.log(error));
+            message.reply("Your card has been saved!")
+        }
+    })
+
 
 })
 
