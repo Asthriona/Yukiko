@@ -8,6 +8,8 @@ var bot = new Client({
     disableEveryone: true
 });
 
+var active = new Map();
+
 //YukikoDB
 mongoose.connect(botConfig.dbLink, {
     useNewUrlParser: true,
@@ -24,8 +26,6 @@ mongoose.connection.once('open', function (d) {
 })
 var Users = require('./model/xp.js')
 var Cards = require('./model/card.js')
-
-require('./TempMusic/music.js');
 
 bot.commands = new Collection();
 bot.aliases = new Collection();
@@ -71,8 +71,7 @@ bot.on("guildMemberRemove", async member => {
 //commands Handler
 console.log("Initializing commands handler");
 fs.readdir("./commands", (err, files) => {
-    if (err) console.log("Woops! Somthing wrong sucessfully happen! " + (err));
-
+    if(err) console.log("Woops! Somthing wrong sucessfully happen! " + (err));
     let jsfile = files.filter(f => f.split(".").pop() === "js")
     if (jsfile.length <= 0) {
         console.log("Woops! Error sucessfully Happen! Can't find commands files!");
@@ -167,7 +166,6 @@ bot.on('message', async message => {
 
 bot.on('message', async message => {
     if (message.author.bot) return;
-    if (message.channel.type === "dm") return;
 
     var date = new Date();
     var dd = String(date.getDate()).padStart(2, '0');
@@ -180,6 +178,7 @@ bot.on('message', async message => {
     date = hs + ':' + min + ':' + sec + ':' + ms + ' -- ' + mm + '/' + dd + '/' + yyyy + ' ->';
 
     //Log
+    if (message.channel.type === "dm") return console.log(`${date} DM from -> ${message.author.username}: ${message.content}`);
     console.log(`${date} ${message.guild.name} -> ${message.author.username}: ${message.content}`)
 
 
@@ -190,40 +189,15 @@ bot.on('message', async message => {
 
     let filter = m => !m.author.bot;
 
-    if (message.author.id === "186195458182479874") {
+    //thinggy for music bot
+    var options = {
+        active: active
+    }
+
+    if (message.author.id === "186195458182479874" || "635422418424299521") {
         if (cmd === `${prefix}leave`) {
             message.channel.send("i'm out :)")
             return message.guild.leave();
-        }
-    }
-    if (cmd === `${prefix}listen`) {
-        let Collector = new MessageCollector(message.channel, filter)
-        message.channel.send("Listening...")
-        if (message.guild.id === "612216766680268811") {
-            let destination = bot.channels.get("678373707336515598")
-            Collector.on("collect", (message, col) => {
-                console.log(`Collected Message: ${message}`)
-                let multiEmbed1 = new RichEmbed()
-                    .setTitle(`Message from ${message.guild.name}`)
-                    .setAuthor(message.author.username, message.author.displayAvatarURL)
-                    .setTimestamp()
-                    .setDescription(message.content)
-                    .setFooter(bot.user.username, bot.user.displayAvatarURL)
-                destination.send(multiEmbed1)
-            })
-        }
-        if (message.guild.id === "647689682381045772") {
-            let destination1 = bot.channels.get("678373638084493322")
-            Collector.on("collect", (message, col) => {
-                console.log(`Collected Message: ${message}`)
-                let multiEmbed1 = new RichEmbed()
-                    .setTitle(`Message from ${message.guild.name}`)
-                    .setAuthor(message.author.username, message.author.displayAvatarURL)
-                    .setTimestamp()
-                    .setDescription(message.content)
-                    .setFooter(bot.user.username, bot.user.displayAvatarURL)
-                destination1.send(multiEmbed1)
-            })
         }
     }
 
@@ -234,7 +208,7 @@ bot.on('message', async message => {
     };
     //Commands Handler
     let commandfile = bot.commands.get(messageArray[0].slice(prefix.length));
-    if (commandfile) commandfile.run(bot, message, args);
+    if (commandfile) commandfile.run(bot, message, args, options);
 })
 bot.login(botConfig.token)
 
@@ -314,7 +288,7 @@ async function WelcomeCad(member, channel) {
     ctx.clip();
     ctx.drawImage(avatar, 25, 15, 256, 256);
     var attachment = new Attachment(canvas.toBuffer(), 'welcome-image.png');
-    channel.send(attachment)
+    channel.send(`Welcome ${member.user}`, attachment)
 }
 
 async function farewell(member, channel) {
