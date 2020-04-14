@@ -5,7 +5,7 @@ module.exports = {
     category: "music",
     description: "change the volume of the video.",
     run: async (bot, message, args, ops) => {
-        if (message.member.voiceChannel !== message.guild.me.voiceChannel) return message.reply("Hey, i'm busy in another channel right now. sorry!");
+        //if (message.member.voiceChannel !== message.guild.me.voiceChannel) return message.reply("Hey, i'm busy in another channel right now. sorry!");
         var guildIDData = ops.active.get(message.guild.id)
         search(args.join(" "), function (err, res) {
             if (err) return message.reply("an error happened :/ ```" + err + "```");
