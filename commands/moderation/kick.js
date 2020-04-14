@@ -43,6 +43,7 @@ module.exports = {
         }
 
         var embed = new RichEmbed()
+        .setAuthor("~Kick!~")
         .setColor("#FF0000")
         .setThumbnail(toKick.user.displayAvatarURL)
         .setFooter(bot.user.username, bot.user.displayAvatarURL)

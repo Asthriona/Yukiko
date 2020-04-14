@@ -43,6 +43,7 @@ module.exports = {
         }
 
         var embed = new RichEmbed()
+        .setAuthor("~Ban!~")
         .setColor("#FF0000")
         .setThumbnail(toban.user.displayAvatarURL)
         .setFooter(bot.user.username, bot.user.displayAvatarURL)

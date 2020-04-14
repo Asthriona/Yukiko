@@ -11,9 +11,9 @@ module.exports = {
     run: async (bot, message, args) => {
         let tomute = message.mentions.members.first() || message.guild.members.get(args[0]);
         if (!tomute) return message.reply("Erreur 10-Mun-f. Merci de spécifier un utilisateur.")
-        if (!message.member.hasPermission('KICK_MEMBERS', false, false)) {
+        if (message.member.hasPermission('KICK_MEMBERS')) {
             let muterole = message.guild.roles.find('name', "muted");
-            //Create muted roll and overwrite permissions
+            //Create muted role and overwrite permissions
             if (!muterole) {
                 try {
                     muterole = await message.guild.createRole({
@@ -31,22 +31,25 @@ module.exports = {
                     console.log(e.stack)
                 }
             }
-            //Donezo role creation LOL x) xDDDDDDD JPP DE MWA MDR!
+
             let mutetime = args[1];
             if (!mutetime) return message.reply("Error: 10-MtU Merci de definire un temps de mute.");
             let muteReason = args.slice(2).join(" ")
             if (!muteReason) muteReason = "Parce que les admins sont méchant!"
-            //if(muteReason == "Raison Personel") return ("Error: 10-Ta pas mieux?")
+            if(muteReason == "Raison Personel") return ("Error: 10-Ta pas mieux?")
 
             let iEmbed = new RichEmbed()
-                .setDescription("~Mute!~")
+                .setAuthor("~Mute!~")
+                .setThumbnail(tomute.user.displayAvatarURL)
+                .setDescription(`**=> Muted user:** ${tomute} with ID ${tomute.id}
+                **=> Muted by:** ${message.author} with ID: ${message.author.id}
+                **=> Muted in:** ${message.channel} (${message.channel.id})
+                **=> at:** ${message.createdAt}
+                **=> Reason:** ${muteReason}
+                **=> Time:** ${mutetime}` )
                 .setColor("#800080")
-                .addField("muted user: ", `${tomute} with ID ${tomute.id}`)
-                .addField("muted by: ", `<@${message.author.id}> with ID ${message.author.id}`)
-                .addField("muted in", message.channel)
-                .addField("Time", message.createdAt)
-                .addField("Reason:", muteReason)
-                .addField("Time: ", mutetime)
+                .setFooter(bot.user.username, bot.user.displayAvatarURL)
+                .setTimestamp()
             let incidentChannel = message.guild.channels.find('name', "incident");
             if (!incidentChannel) return message.channel.send("Oops Erreur 10-Kick :/ <@186195458182479874> ");
             incidentChannel.send(iEmbed)
