@@ -18,7 +18,7 @@ module.exports = {
             return            
         }
 
-        var dispatcher = connection.playStream("https://broadcaster.animefm.co/radio/8020/radio320.mp3")
+        var dispatcher = connection.playStream("https://maki.animefm.co/radio/8000/radio320.mp3")
             .on('end', () =>{
                 console.log("Song ended.")
                 voiceChannel.leave();
