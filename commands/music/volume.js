@@ -1,6 +1,6 @@
 var ytdl = require("ytdl-core")
 module.exports = {
-    name: "testvolume",
+    name: "volume",
     category: "music",
     description: "change the volume of the video.",
     run: async (bot, message, args, ops) => {

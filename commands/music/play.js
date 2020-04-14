@@ -3,7 +3,7 @@ var ytdl = require("ytdl-core");
 var YouTube = require('simple-youtube-api');
 var botConfig = require('../../botconfig.json');
 module.exports = {
-    name: "testplay",
+    name: "play",
     category: "music",
     description: "Play music from youtube",
     run: async (bot, message, args, ops) => {

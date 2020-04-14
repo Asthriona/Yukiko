@@ -1,6 +1,6 @@
 var ytdl = require("ytdl-core")
 module.exports = {
-    name: "testpause",
+    name: "pause",
     category: "music",
     description: "Pause the current video.",
     run: async (bot, message, args, ops) => {

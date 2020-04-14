@@ -1,6 +1,6 @@
 var ytdl = require("ytdl-core")
 module.exports = {
-    name: "testforceskip",
+    name: "forceskip",
     category: "music",
     description: "Skip the current video.",
     run: async (bot, message, args, ops) => {

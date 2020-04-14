@@ -1,7 +1,7 @@
 var ytdl = require("ytdl-core");
 var search = require("yt-search");
 module.exports = {
-    name: "testsearch",
+    name: "search",
     category: "music",
     description: "change the volume of the video.",
     run: async (bot, message, args, ops) => {
