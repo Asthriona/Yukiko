@@ -4,6 +4,7 @@ module.exports = {
     category: "Moderation",
     description: " ",
     run: async (bot, message, args, RichEmbed) => {
+        if(!message.member.hasPermission("BAN_MEMBERS")) return message.reply("Oy! dont tell me what to say!")
         if(message.deletable) message.delete();
         if(args.length < 1) 
             return message.reply("Nothing to say? Please TALK TO ME! 😢");
