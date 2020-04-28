@@ -14,13 +14,11 @@ module.exports = {
     usage: "<link> | <info>",
     run: async (bot, message, args) => {
         if(args[0] === "info"){
-            message.reply("You can send a custom image to use as a rank card.")
-            message.channel.send("Your image must be in **934x282**. if it's not it will be stretched to this resolution.")
-            return message.channel.send("you must send a link to an image in ***.jpg*** or ***.png***. Any other link will be refused.")
+            message.reply("You can send a custom image to use as a rank card.\n Your image must be in **934x282**. if it's not it will be stretched to this resolution. \n you must send a link to an image in ***.jpg*** or ***.png***. Any other link will be refused.")
         }
         if(!args[0]) return message.reply("Please send a link to your image!");
         if(!args[0].startsWith("http" || "https")) return message.reply("please send a valid link.");
-        if(!args[0].endsWith(".jpg" || ".png")) return message.reply("please send a link to an image in jpg or png.")
+        if(!args[0].endsWith(".png" || ".jpg")) return message.reply("please send a link to an image in jpg or png.")
         Cards.findOne({
             did: message.author.id
         }, (err, cards)=>{
