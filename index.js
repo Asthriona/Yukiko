@@ -73,7 +73,7 @@ console.log("Initializing commands handler");
 fs.readdir("./commands", (err, files) => {
     if(err) console.log("Woops! Somthing wrong sucessfully happen! " + (err));
     let jsfile = files.filter(f => f.split(".").pop() === "js")
-    if (jsfile.length <= 0) {
+    if (jsfile.length < 0) {
         console.log("Woops! Error sucessfully Happen! Can't find commands files!");
         return;
     }
