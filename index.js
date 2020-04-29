@@ -225,7 +225,11 @@ async function lvlupimg(message, users) {
     };
     var canvas = Canvas.createCanvas(934, 282);
     var ctx = canvas.getContext('2d');
-    var background = await Canvas.loadImage('https://cdn.asthriona.com/DefaultYukikocard.jpg');
+    Cards.findOne({
+        did: message.author.id
+    }, async (err, cards)=>{
+        var cardbg = cards.link
+    var background = await Canvas.loadImage(cardbg);
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
     //Draw rectangle
     ctx.beginPath();
@@ -252,6 +256,7 @@ async function lvlupimg(message, users) {
     //put image together and send it
     var lvlupimg = new Attachment(canvas.toBuffer(), 'lvlup-image.png');
     message.channel.send(lvlupimg);
+})
 }
 
 async function WelcomeCad(member, channel) {
@@ -263,10 +268,13 @@ async function WelcomeCad(member, channel) {
         } while (ctx.measureText(text).width > canvas.width - 300);
         return ctx.font;
     };
-
+Cards.findOne({
+    did: member.user.id
+}, async (err, cards)=>{
     var canvas = Canvas.createCanvas(934, 282);
     var ctx = canvas.getContext('2d');
-    var background = await Canvas.loadImage('https://cdn.asthriona.com/DefaultYukikocard.jpg');
+    var cardbg = cards.link
+    var background = await Canvas.loadImage(cardbg);
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
     ctx.beginPath();
     ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
@@ -289,6 +297,7 @@ async function WelcomeCad(member, channel) {
     ctx.drawImage(avatar, 25, 15, 256, 256);
     var attachment = new Attachment(canvas.toBuffer(), 'welcome-image.png');
     channel.send(`Welcome ${member.user}`, attachment)
+});
 }
 
 async function farewell(member, channel) {
@@ -300,10 +309,15 @@ async function farewell(member, channel) {
         } while (ctx.measureText(text).width > canvas.width - 300);
         return ctx.font;
     };
-
+    Cards.findOne({
+        did: member.user.id
+    }, async (err, cards) =>{
+    var cardbg = cards.link
+    var background = await Canvas.loadImage(cardbg);
     var canvas = Canvas.createCanvas(934, 282);
     var ctx = canvas.getContext('2d');
-    var background = await Canvas.loadImage('https://cdn.asthriona.com/YukikoLeft.jpg');
+    var cardsbg = cards.link
+    var background = await Canvas.loadImage(cardsbg);
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
     ctx.beginPath();
     ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
@@ -326,7 +340,9 @@ async function farewell(member, channel) {
     ctx.drawImage(avatar, 25, 15, 256, 256);
     var attachment = new Attachment(canvas.toBuffer(), 'farewell-image.png');
     channel.send(attachment)
-}
+})
+};
+
 async function GetAvatar(message, ctx) {
     var avatar = await Canvas.loadImage(message.author.displayAvatarURL);
     ctx.beginPath();
