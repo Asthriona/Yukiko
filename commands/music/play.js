@@ -46,7 +46,7 @@ async function play(bot, ops, data) {
     **Requested by:** ${data.queue[0].requester}`)
     .setImage(data.queue[0].thumb)
     bot.channels.get(data.queue[0].announceChannel).send(npEmbed);
-    var options = {seek:0, volume: 5, bitrate: 96000};
+    var options = {seek:0, volume: 0.01, bitrate: 96000};
     data.dispatcher = await data.connection.playStream(ytdl(data.queue[0].url, {filter: "audioonly"}), options);
     data.dispatcher.guildID = data.guildID;
     data.dispatcher.once('end', function() {
