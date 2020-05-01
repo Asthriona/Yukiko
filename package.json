@@ -6,7 +6,9 @@
   "codeName": "I'm back to rules them all!",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon start"
+    "dev": "nodemon start",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -49,6 +51,8 @@
     "superagent": "^5.2.2",
     "youtube-dl": "^2.3.0",
     "yt-search": "^1.1.2",
-    "ytdl-core": "^1.0.9"
-  }
+    "ytdl-core": "^1.0.9",
+    "snyk": "^1.316.1"
+  },
+  "snyk": true
 }
