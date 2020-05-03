@@ -104,7 +104,7 @@ bot.on('message', async message => {
     let messageArray = message.content.split(" ");
     let args = messageArray.slice(1);
     //DA NEW XP SYSTEM 2.0
-    let xpAdd = Math.floor(Math.random() * 7) + 8;
+    let xpAdd = Math.ceil(Math.random() * 15);
     let messageAdd = +1
 
 
