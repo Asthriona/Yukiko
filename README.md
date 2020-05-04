@@ -7,7 +7,7 @@ This bot is in developement state and actively updated, Feel free to come back t
 # I want to use it!
 Nice! Let me help you!  
 ### I don't want / don't know how to host it. 
-In that case feel free to add the Official Yukiko bot to your Discord server via this [Check on our website to invit Yukiko](http://yukiko.nishikino.me/) to your server!  
+In that case feel free to add the Official Yukiko bot to your Discord server via this [Check on our website to invite Yukiko](http://yukiko.nishikino.me/) to your server!  
 you can also DM me on discord (Asthriona#0001) or on Twitter @Asthriona I'll make sure the bot works perfectly fine on your server and i'll be more reactive if I can see any problem :) (Invit me is totaly optional!)  
 
 ### I want to host it myself!
