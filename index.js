@@ -68,23 +68,6 @@ bot.on("guildMemberRemove", async member => {
         //channel.send(`${member} Viens de quitter le serveur! https://cdn.asthriona.com/sad.gif`);
     }
 });
-//commands Handler
-console.log("Initializing commands handler");
-fs.readdir("./commands", (err, files) => {
-    if(err) console.log("Woops! Somthing wrong sucessfully happen! " + (err));
-    let jsfile = files.filter(f => f.split(".").pop() === "js")
-    if (jsfile.length < 0) {
-        console.log("Woops! Error sucessfully Happen! Can't find commands files!");
-        return;
-    }
-    console.log("Loadings files...");
-    jsfile.forEach((f, i) => {
-        let props = require(`./commands/${f}`);
-        console.log(`\x1b[35m${f} \x1b[0mLoaded!`);
-        bot.commands.set(props.help.name, props);
-    });
-    console.log("Files Loaded, Moving on!")
-});
 console.log('Setting bot presence...')
 
 bot.on('ready', () => {
