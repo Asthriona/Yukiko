@@ -1,7 +1,9 @@
 var discord = require("discord.js");
 var mongoose = require("mongoose");
 var Canvas = require('canvas');
+
 var botConfig = require('../../botconfig.json');
+var {getMember} = require("../../function")
 
 mongoose.connect(botConfig.dbLink, {
     useNewUrlParser: true,
@@ -36,6 +38,8 @@ module.exports = {
                     console.log(err)
                     return message.reply("An error happened. ```" + err + "```")
                 }
+                console.log(message.author)
+                var member = getMember(message, args.join(" "));
                 var background = await Canvas.loadImage(cardBg);
                 ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
                 //Draw rectangle
@@ -47,7 +51,7 @@ module.exports = {
                 //Get Username
                 ctx.font = '60px sans-serif';
                 ctx.fillStyle = '#fff';
-                ctx.fillText(message.author.username, 280, 136);
+                ctx.fillText(member.displayName, 280, 136);
                 //Show XP and levels
                 let nxtlvl = 300 * Math.pow(2, users.level);
                 ctx.font = '40px sans-serif';

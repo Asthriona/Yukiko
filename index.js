@@ -3,6 +3,7 @@ var botConfig = require('./botconfig.json');
 var fs = require("fs");
 var Canvas = require('canvas');
 var mongoose = require("mongoose");
+var {getMember} = require("./function")
 
 var bot = new Client({
     disableEveryone: true
@@ -212,6 +213,7 @@ async function lvlupimg(message, users) {
         did: message.author.id
     }, async (err, cards)=>{
         var cardbg = cards.link
+    var member = getMember(message);
     var background = await Canvas.loadImage(cardbg);
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
     //Draw rectangle
@@ -221,9 +223,9 @@ async function lvlupimg(message, users) {
     ctx.closePath();
     ctx.stroke();
     //show Username
-    ctx.font = applyText(canvas, message.author.username);
+    ctx.font = applyText(canvas, member.displayName);
     ctx.fillStyle = '#fff';
-    ctx.fillText(message.author.username + " Level up!", 280, 136);
+    ctx.fillText(member.displayName + " Level up!", 280, 136);
     //Show Level & XP
     let nxtlvl = 300 * Math.pow(2, users.level);
     var xpleft = nxtlvl - users.xp;
