@@ -149,16 +149,16 @@ bot.on('message', async message => {
 })
 
 bot.on('message', async message => {
-    if (message.author.bot) return;
+    if(message.author.bot) return;
 
     var date = new Date();
     var dd = String(date.getDate()).padStart(2, '0');
     var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = date.getFullYear();
-    var hs = date.getHours();
-    var min = date.getMinutes();
-    var sec = date.getSeconds();
-    var ms = date.getMilliseconds();
+    var hs = String(date.getHours()).padStart(2, '0');
+    var min = String(date.getMinutes()).padStart(2, '0');
+    var sec = String(date.getSeconds()).padStart(2, '0');
+    var ms = String(date.getMilliseconds()).padStart(2);
     date = hs + ':' + min + ':' + sec + ':' + ms + ' -- ' + mm + '/' + dd + '/' + yyyy + ' ->';
 
     //Log
@@ -172,7 +172,7 @@ bot.on('message', async message => {
     let cmd = messageArray[0];
 
     let filter = m => !m.author.bot;
-
+    if(!prefix) return
     //thinggy for music bot
     var options = {
         active: active
