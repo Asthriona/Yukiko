@@ -38,7 +38,6 @@ module.exports = {
                     console.log(err)
                     return message.reply("An error happened. ```" + err + "```")
                 }
-                console.log(message.author)
                 var member = getMember(message, args.join(" "));
                 var background = await Canvas.loadImage(cardBg);
                 ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
@@ -73,6 +72,30 @@ module.exports = {
 }
 
 async function GetAvatar(message, ctx) {
+    Users.findOne({
+        did: message.author.id
+    }, async (err, users)=>{
+        let nxtlvl = 300 * Math.pow(2, users.level);
+        console.log(`n = ${((users.xp - nxtlvl) / nxtlvl) * -100}`)
+        var n = ((users.xp - nxtlvl) / nxtlvl) * -100;
+        var member = getMember(message);
+        console.log(100-n)
+        //ctx.strokeStyle = "#777";
+        ctx.strokeStyle = member.displayHexColor;
+        ctx.beginPath();
+        ctx.lineWidth = 15;
+        var arc = (100-n)/2/50*Math.PI;
+        ctx.arc(125, 140, 102, Math.PI*1.5,arc);
+        console.log(`arc = ${arc}`)
+        ctx.stroke();
+    })
+    //lvlbar background
+            ctx.strokeStyle = "rgba(0, 0, 0, 0.8)";
+            ctx.beginPath();
+            ctx.lineWidth = 20;
+            ctx.arc(125, 140, 102, 0,Math.PI * 2);
+            ctx.stroke();
+    //pfp
     var avatar = await Canvas.loadImage(message.author.displayAvatarURL);
     ctx.beginPath();
     ctx.arc(125, 140, 100, 0, Math.PI * 2);
