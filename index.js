@@ -72,7 +72,6 @@ bot.on("guildMemberRemove", async member => {
 console.log('Setting bot presence...')
 
 bot.on('ready', () => {
-    console.log('    ██╗   ██╗██╗   ██╗██╗  ██╗██╗██╗  ██╗ ██████╗ \n    ╚██╗ ██╔╝██║   ██║██║ ██╔╝██║██║ ██╔╝██╔═══██╗\n     ╚████╔╝ ██║   ██║█████╔╝ ██║█████╔╝ ██║   ██║\n      ╚██╔╝  ██║   ██║██╔═██╗ ██║██╔═██╗ ██║   ██║\n       ██║   ╚██████╔╝██║  ██╗██║██║  ██╗╚██████╔╝\n       ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝╚═╝  ╚═╝ ╚═════╝ ')
     bot.user.setStatus('online');
     bot.user.setPresence({
         game: {
