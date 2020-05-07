@@ -12,9 +12,11 @@ var Users = require("../../model/xp")
 module.exports = {
     name: "warn",
     category: "moderation",
-    description: "Warn a user that break the law!",
+    description:"This commands has been disabled by the developper.",
+    //description: "Warn a user that break the law!",
     usage: "$warn <mention | id> [Raison]",
     run: async (bot, message, args) =>{
+        message.reply("This commands has been disabled for the moment.")
         if(!message.member.hasPermission("BAN_MEMBERS")){
             message.reply("Wow! You can't give wanrn! You dont have the right to do it!")
         }
@@ -27,12 +29,12 @@ module.exports = {
             serverID: message.guild.id
         }, async (err, users) => {
             if(err) console.log(err);
-            users.warn = users.warn +1
+            users.warns = users.warns +1
             users.save()
 
             //Auto mute
             let MuteRole = message.guild.roles.find('name', 'Muted');
-            if(users.warn = 2){
+            if(users.warns = 2){
                 let muteTime = "10m"
                 await(wUser.addRole(MuteRole.id));
                 message.channel.send(`${wUser} has been mute for ${muteTime} (Second Warn.)`)
@@ -40,7 +42,7 @@ module.exports = {
                     wUser.removeRole(muteRole.id);
                     message.channel.send(`${wUser} has been un-mute`);
                 },ms(muteTime))
-            }else if(users.warn = 5){
+            }else if(users.warns = 5){
                 let muteTime = "1h"
                 await(wUser.addRole(MuteRole.id));
                 message.channel.send(`${wUser} has been mute for ${muteTime} (5 Warn.)`)
@@ -59,7 +61,7 @@ module.exports = {
             .setFooter(bot.user.username, bot.user.displayAvatarURL)
             .setDescription(`=> **Warned user: ** ${wUser} (${wUser.id})
             => **Warned by:** ${message.author} (${message.author.id})
-            => **Warn number:** ${users.warn}
+            => **Warn number:** ${users.warns}
             => **Reason:** ${args.slice(1).join(" ")}`)
             logChannel.send(embed)
             message.channel.send(`${wUser} has been warned for the following reason: ${args.slice(1).join(" ")}`)
