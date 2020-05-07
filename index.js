@@ -38,16 +38,6 @@ bot.categories = fs.readdirSync("./commands/");
 
 bot.on('disconnect', () => console.log("\x1b[32m${bot.user.username}\x1b[0m is Disconected... Waiting for reconnect"));
 bot.on('reconnecting', () => console.log("\x1b[32m${bot.user.username}\x1b[0m  is reconnecting."))
-
-bot.on("ready", () => {
-    console.log(`\x1b[32m${bot.user.username}\x1b[0m is now started and running in \x1b[31m${process.env.NODE_ENV} \x1b[0menvironement!`);
-    bot.user.setPresence({
-        game: {
-            name: "coding 2.0!",
-            type: "WATCHING"
-        }
-    })
-})
 // Welcome and stuff
 bot.on("guildMemberAdd", async member => {
     const channel = member.guild.channels.find(channel => channel.name === "welcome");
@@ -72,6 +62,7 @@ bot.on("guildMemberRemove", async member => {
 console.log('Setting bot presence...')
 
 bot.on('ready', () => {
+    console.log(`\x1b[32m${bot.user.username}\x1b[0m is now started and running in \x1b[31m${process.env.NODE_ENV} \x1b[0menvironement!`);
     bot.user.setStatus('online');
     bot.user.setPresence({
         game: {
