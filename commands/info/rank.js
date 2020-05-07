@@ -75,18 +75,16 @@ async function GetAvatar(message, ctx) {
     Users.findOne({
         did: message.author.id
     }, async (err, users)=>{
+        //calculus
         let nxtlvl = 300 * Math.pow(2, users.level);
-        console.log(`n = ${((users.xp - nxtlvl) / nxtlvl) * -100}`)
         var n = ((users.xp - nxtlvl) / nxtlvl) * -100;
         var member = getMember(message);
-        console.log(100-n)
-        //ctx.strokeStyle = "#777";
+        var arc = (100-n)/100*Math.PI;
+        //Image arc draw
         ctx.strokeStyle = member.displayHexColor;
         ctx.beginPath();
         ctx.lineWidth = 15;
-        var arc = (100-n)/2/50*Math.PI;
         ctx.arc(125, 140, 102, Math.PI*1.5,arc);
-        console.log(`arc = ${arc}`)
         ctx.stroke();
     })
     //lvlbar background
