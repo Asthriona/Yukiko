@@ -67,7 +67,7 @@ bot.on('ready', () => {
         bot.user.setStatus('dnd');
         bot.user.setPresence({game: { name: status, type: "PLAYING"}
     })
-}, 10000)
+}, 600000)
 console.log(`\x1b[32m${bot.user.username}\x1b[0m is now started and running in \x1b[31m${process.env.NODE_ENV} \x1b[0menvironement!`);
 });
 
