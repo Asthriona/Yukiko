@@ -72,15 +72,21 @@ module.exports = {
 }
 
 async function GetAvatar(message, ctx) {
+    //I HATE this part. I think here at the Yukiko Dev Team Incorporation ltd llc Group we all hate this part.
+    // If Anyone know how to use canvas and this part better than us, please feel free to PR :) 
+    // (or if you are a dev of node-canvas please contact me on Twitter/Github @Asthriona )
+
+    //Avatar function
+    //get user in the database.
     Users.findOne({
         did: message.author.id
     }, async (err, users)=>{
-        //calculus
+        //XP bar calculus. (Help)
         let nxtlvl = 300 * Math.pow(2, users.level);
         var n = ((users.xp - nxtlvl) / nxtlvl) * -100;
         var member = getMember(message);
         var arc = (100-n)/100*Math.PI;
-        //Image arc draw
+        //Image arc draw (Cry in js)
         ctx.strokeStyle = member.displayHexColor;
         ctx.beginPath();
         ctx.lineWidth = 15;
@@ -93,7 +99,7 @@ async function GetAvatar(message, ctx) {
             ctx.lineWidth = 20;
             ctx.arc(125, 140, 102, 0,Math.PI * 2);
             ctx.stroke();
-    //pfp
+    //Print the profile picture.
     var avatar = await Canvas.loadImage(message.author.displayAvatarURL);
     ctx.beginPath();
     ctx.arc(125, 140, 100, 0, Math.PI * 2);
