@@ -34,16 +34,16 @@ module.exports = {
 
             //Auto mute
             let MuteRole = message.guild.roles.find('name', 'Muted');
-            if(users.warns = 2){
-                let muteTime = "10m"
+            if(users.warns == 2){
+                let muteTime == "10m"
                 await(wUser.addRole(MuteRole.id));
                 message.channel.send(`${wUser} has been mute for ${muteTime} (Second Warn.)`)
                 setTimeout(function(){
                     wUser.removeRole(muteRole.id);
                     message.channel.send(`${wUser} has been un-mute`);
                 },ms(muteTime))
-            }else if(users.warns = 5){
-                let muteTime = "1h"
+            }else if(users.warns == 5){
+                let muteTime == "1h"
                 await(wUser.addRole(MuteRole.id));
                 message.channel.send(`${wUser} has been mute for ${muteTime} (5 Warn.)`)
                 setTimeout(function(){
