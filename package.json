@@ -40,7 +40,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "fast-sort": "^2.2.0",
-    "follow-redirects": "^1.11.0",
+    "follow-redirects": "^1.12.1",
     "mongodb": "^3.5.8",
     "mongoose": "^5.9.18",
     "ms": "^2.1.2",
