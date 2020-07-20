@@ -48,7 +48,7 @@
     "nodegit": "^0.26.5",
     "os-utils": "0.0.14",
     "simple-youtube-api": "^5.2.1",
-    "superagent": "^5.2.2",
+    "superagent": "^5.3.1",
     "youtube-dl": "^2.3.0",
     "yt-search": "^1.1.2",
     "ytdl-core": "^1.0.9",
