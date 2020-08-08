@@ -42,7 +42,7 @@
     "fast-sort": "^2.2.0",
     "follow-redirects": "^1.12.1",
     "mongodb": "^3.5.9",
-    "mongoose": "^5.9.24",
+    "mongoose": "^5.9.25",
     "ms": "^2.1.2",
     "node-opus": "^0.3.3",
     "nodegit": "^0.26.5",
