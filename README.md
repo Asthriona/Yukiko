@@ -1,5 +1,7 @@
 # REBUILD IN PROGRESS! 
-## This versions is now outdated. The [Yukiko Dev Team](https://team.yukiko.app) is actively working on a new version.
+## This versions is now outdated. The [Yukiko Dev Team](https://team.yukiko.app) is actively working on a new version.  
+  
+ [![Discord Bots](https://top.gg/api/widget/status/641626560457342987.svg)](https://top.gg/bot/641626560457342987)
   
 # Yukiko
 Yukiko is a pretty powerfull Discord bot that include XP system, Leaderboard, Music, Welcome and farewell message, Moderation, and much more!
