@@ -52,7 +52,7 @@
     "youtube-dl": "^2.3.0",
     "yt-search": "^1.1.2",
     "ytdl-core": "^1.0.9",
-    "snyk": "^1.431.1"
+    "snyk": "^1.431.2"
   },
   "snyk": true
 }
