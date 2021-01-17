@@ -31,7 +31,7 @@
   "dependencies": {
     "@discordjs/uws": "^10.149.0",
     "ascii-table": "0.0.9",
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "beautify": "0.0.8",
     "body-parser": "^1.19.0",
     "canvas": "^2.6.1",
