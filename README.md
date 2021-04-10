@@ -1,12 +1,5 @@
-# REBUILD IN PROGRESS! 
-## This versions is now outdated. The [Yukiko Dev Team](https://team.yukiko.app) is actively working on a new version.  
-
-## Project now unsupported from the 25/10/20 until release of Yukiko Open-Sources 2.0. There is no use to open new ticket.  
-Please use [Yukiko App](https://Yukiko.app)  
-for more information: [Dropping  Yukiko Open sources support.](https://gist.github.com/Asthriona/660cc6635409f1e9bf3294c38561f91c)
-
-# UPDATE: PROJECT NO LONGER SUPPORTED!
-As Yukiko 2.0 (Closed sources) grow I don't have much time to work and update this version. if you need a great bot to help with your Discord guilds please use [Yukiko.app](https://Yukiko.app)
+# PROJECT NO LONGER SUPPORTED!
+As Yukiko 2.0 (Closed sources) grow I don't have much time to work and update this version. if you need a great bot to help with your Discord guilds please use [Yukiko.app](https://Yukiko.app)  
 
  [![Discord Bots](https://top.gg/api/widget/status/641626560457342987.svg)](https://top.gg/bot/641626560457342987)
   
