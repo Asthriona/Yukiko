@@ -1,4 +1,4 @@
-var { RichEmbed } = require("discord.js");
+var { MessageEmbed } = require("discord.js");
 module.exports = {
     name: "server",
     aliases: ["server-info", "serverinfo"],
@@ -6,8 +6,8 @@ module.exports = {
     description: "Return server infos.",
     run: async (bot, message, args) => {
         message.channel.startTyping()
-        let sicon = message.guild.iconURL;
-        let serverembed = new RichEmbed()
+        let sicon = message.guild.iconURL();
+        let serverembed = new MessageEmbed()
         .setDescription("Server Information")
         .setColor("#800080")
         .setThumbnail(sicon)

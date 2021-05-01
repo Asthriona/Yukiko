@@ -1,4 +1,4 @@
-var { RichEmbed } = require("discord.js");
+var { MessageEmbed } = require("discord.js");
 var mongoose = require("mongoose");
 var botConfig = require('../../botconfig.json');
 
@@ -19,11 +19,11 @@ module.exports = {
             ['xp', 'descending']
         ]).exec((err, res) => {
         if(err) console.log(err);
-        let embed = new RichEmbed()
+        let embed = new MessageEmbed()
         .setTitle("Yukiko's Leaderboard!")
-        .setThumbnail(bot.user.displayAvatarURL)
+        .setThumbnail(bot.user.displayAvatarURL())
         .setDescription("Here is our top10!")
-        .setFooter('Powered by Yukiko', bot.user.displayAvatarURL, "http://yukiko.nishikino.me/")
+        .setFooter(`Powered by ${bot.user.username}`, bot.user.displayAvatarURL())
         if(res.length === 0){
             //if no result
             embed.setColor("red")
@@ -32,7 +32,7 @@ module.exports = {
             //if less than 10
             embed.setColor("#351B96")
             for(i = 0; i < res.length; i++){
-                let member = message.guild.members.get(res[i].did) || "User is gone :/"
+                let member = message.guild.members.cache.get(res[i].did) || "User is gone :/"
                 if(member === "User is gone :/"){
                     embed.addField(`${i+1}. ${member}`, `**Level**: ${res[i].level} || **XP**: ${res[i].xp}`)
     

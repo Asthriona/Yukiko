@@ -12,7 +12,7 @@ module.exports = (bot) => {
             let pull = require(`../commands/${dir}/${file}`);
     
             if (pull.name) {
-                bot.commands.set(pull.name, pull);
+                bot.Commands.set(pull.name, pull);
                 table.addRow(file, '✔️ Ok！');
             } else {
                 table.addRow(file, `❌  -> missing a help.name, or help.name is not a string.`);
@@ -20,7 +20,7 @@ module.exports = (bot) => {
             }
     
             // If there's an aliases key, read the aliases.
-            if (pull.aliases && Array.isArray(pull.aliases)) pull.aliases.forEach(alias => bot.aliases.set(alias, pull.name));
+            if (pull.aliases && Array.isArray(pull.aliases)) pull.aliases.forEach(alias => bot.Aliases.set(alias, pull.name));
         }
     });
     // Log the table

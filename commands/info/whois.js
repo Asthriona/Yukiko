@@ -1,4 +1,4 @@
-const { RichEmbed } = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 const { stripIndents } = require("common-tags");
 var {getMember, formatDate} = require("../../function")
 
@@ -13,18 +13,18 @@ module.exports = {
 
         // Member variables
         const joined = formatDate(member.joinedAt);
-        const roles = member.roles
+        const roles = member.roles.cache
             .filter(r => r.id !== message.guild.id)
             .map(r => r).join(", ") || 'none';
 
         // User variables
         const created = formatDate(member.user.createdAt);
 
-        const embed = new RichEmbed()
-            .setFooter(bot.user.username, bot.user.displayAvatarURL)
-            .setThumbnail(member.user.displayAvatarURL)
+        const embed = new MessageEmbed()
+            .setFooter(bot.user.username, bot.user.displayAvatarURL())
+            .setThumbnail(member.user.displayAvatarURL({dynamic: true}))
             .setColor(member.displayHexColor === '#000000' ? '#ffffff' : member.displayHexColor)
-            .setAuthor(message.author.username, message.author.displayAvatarURL)
+            .setAuthor(message.author.username, message.author.displayAvatarURL())
 
             .addField('Member information:', stripIndents`**=> Display name:** ${member.displayName}
             **=> Joined at:** ${joined}

@@ -1,4 +1,4 @@
-var { RichEmbed } = require("discord.js");
+var { MessageEmbed } = require("discord.js");
 var { stripIndents } = require("common-tags");
 var { promptMessage } = require("../../function")
 var { botConfig } = require("../../botconfig.json")
@@ -42,29 +42,29 @@ module.exports = {
             return message.reply("You can't kick this user because he/she is better than u **:)**")
         }
 
-        var embed = new RichEmbed()
+        var embed = new MessageEmbed()()
         .setAuthor("~Kick!~")
         .setColor("#FF0000")
-        .setThumbnail(toKick.user.displayAvatarURL)
-        .setFooter(bot.user.username, bot.user.displayAvatarURL)
+        .setThumbnail(toKick.user.displayAvatarURL())
+        .setFooter(bot.user.username, bot.user.displayAvatarURL())
         .setTimestamp()
         .setDescription(stripIndents`**=> Kicked Member:** ${toKick} (${toKick.id})
         ***=> Kicked by:*** ${message.author} (${message.author.id})
         ***=> Reason:*** ${args.slice(1).join(" ")}`, true)
 
-        var promptEmbed = new RichEmbed()
+        var promptEmbed = new MessageEmbed()()
         .setColor("GREEN")
         .setAuthor("This verification becomes invalid after 30s.")
         .setDescription(`Do you want to kick ${toKick}?`)
         .setTimestamp()
 
-        var publicEmbed = new RichEmbed()
+        var publicEmbed = new MessageEmbed()()
         .setColor("PURLPLE")
-        .setAuthor(bot.user.username, bot.user.displayAvatarURL)
+        .setAuthor(bot.user.username, bot.user.displayAvatarURL())
         .setDescription(`${toKick} Just got kicked by ${message.author}!`)
         .setImage("https://cdn.asthriona.com/kick.gif")
         .setTimestamp()
-        .setFooter("Kick Sponsored by Asthriona LLC!", bot.user.displayAvatarURL)
+        .setFooter("Kick Sponsored by Asthriona LLC!", bot.user.displayAvatarURL())
 
         await message.channel.send(promptEmbed).then(async msg =>{
             var emoji = await promptMessage(msg, message.author, 30, ["✔️", "❌"]);

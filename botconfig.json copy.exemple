@@ -1,0 +1,8 @@
+{
+    "token": "Bot tokken",
+    "prefix": "a!",
+    "dbLink": "mongodb://yukiko:127.0.0.1",
+    "lavaHost": "localhost",
+    "lavaPort": "2333",
+    "lavaPasswd": "youshallnotpass"
+}

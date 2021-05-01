@@ -1,18 +1,26 @@
-var { Client, RichEmbed, Collection, Attachment, Utils, MessageCollector } = require('discord.js');
-var botConfig = require('./botconfig.json');
+/*  
+/   Even if Updated this code is still very old, and use some old Yukiko 1.0 code, I didnt really knew what I was doing back then.
+/   expect a lot of changement whenever I found the will to update it, for now its more a practical update to get it to work with Djs 12. 
+/   I also added Erela for Youtube so you have something better to work with. but you need an external server (Lavalink) to get it to work.
+/   I may switch to a dockerized version when i've learned it so one command install with mongo and Lavalink.
+/   You can find Lavalink here: https://github.com/freyacodes/Lavalink-Client
+/   -Asthriona
+*/
+
+var { Client, MessageEmbed, Collection, Attachment, Utils, MessageCollector } = require('discord.js');
+var Config = require('./botconfig.json');
 var fs = require("fs");
 var Canvas = require('canvas');
 var mongoose = require("mongoose");
 var {getMember} = require("./function")
+const { Manager } = require("erela.js");
 
 var bot = new Client({
     disableEveryone: true
 });
 
-var active = new Map();
-
 //YukikoDB
-mongoose.connect(botConfig.dbLink, {
+mongoose.connect(Config.dbLink, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).catch(error => handleError(error));
@@ -26,19 +34,60 @@ mongoose.connection.once('open', function (d) {
     console.log("\x1b[32mYukikoDB:\x1b[0m connected to \x1b[31m" + mongoose.connection.host + " \x1b[0m");
 })
 var Users = require('./model/xp.js')
-var Cards = require('./model/card.js')
+var Cards = require('./model/card.js');
 
-bot.commands = new Collection();
-bot.aliases = new Collection();
-bot.categories = fs.readdirSync("./commands/");
-
+// Command Handler
+bot.Commands = new Collection();
+bot.Aliases = new Collection();
+bot.Categories = fs.readdirSync("./commands/");
 ["command"].forEach(handler => {
     require(`./handler/${handler}`)(bot);
 })
 
+// Config Music bot
+bot.manager = new Manager({
+	nodes: [{
+		host: Config.lavaHost,
+		port: 2333,
+		password: Config.lavaPasswd,
+		secure: false,
+	} ],
+	autoPlay: true,
+	send(id, payload) {
+		const guild = bot.guilds.cache.get(id);
+		if (guild) guild.shard.send(payload);
+	},
+})
+	.on('nodeConnect', () => console.log('Connected to Lavalink'))
+	.on('nodeError', (node, error) => console.log(`Node error: ${error.message}`))
+	.on('trackStart', (player, track) => {
+		if (!player.voiceChannel) {
+			bot.channels.cache.get(player.textChannel).send('Seems like I\'ve been disconnected from the voice channel. I\'m destroying the player now.');
+			return player.destroy();
+		}
+		const nowPlayingEmbed = new MessageEmbed()()
+			.setAuthor('Now playing', bot.user.displayAvatarURL())
+			.setDescription(`Now playing 『${track.title}』 requested by ${track.requester}`)
+			.setImage(track.displayThumbnail('mqdefault'))
+			.setTimestamp()
+			.setFooter(bot.user.username, bot.user.displayAvatarURL());
+		bot.channels.cache.get(player.textChannel).send(nowPlayingEmbed);
+		// this.client.dogstats.increment("Yukiko.Voice", 1)
+	})
+	.on('queueEnd', (player) => {
+		client.dogstats.increment('Yukiko.stream', -1);
+		client.channels.cache.get(player.textChannel).send('Queue has ended.');
+		this.client.dogstats.decrements('Yukiko.Voice', 1);
+		player.destroy();
+	});
+
+
+// Event
+// Disconnecting/reconnecting discord gateway
 bot.on('disconnect', () => console.log("\x1b[32m${bot.user.username}\x1b[0m is Disconected... Waiting for reconnect"));
 bot.on('reconnecting', () => console.log("\x1b[32m${bot.user.username}\x1b[0m  is reconnecting."))
-// Welcome and stuff
+
+// New member event
 bot.on("guildMemberAdd", async member => {
     const channel = member.guild.channels.find(channel => channel.name === "welcome");
     if (!channel) {
@@ -49,6 +98,7 @@ bot.on("guildMemberAdd", async member => {
     }
 });
 
+// Member leave event
 bot.on("guildMemberRemove", async member => {
     const channel = member.guild.channels.find(channel => channel.name === "welcome");
     if (!channel) {
@@ -56,11 +106,12 @@ bot.on("guildMemberRemove", async member => {
         return await farewell(member, channel);
     } else {
         return await farewell(member, channel);
-        //channel.send(`${member} Viens de quitter le serveur! https://cdn.asthriona.com/sad.gif`);
     }
 });
+
+// Presence settings
 console.log('Setting bot presence...')
-let statues = ["Persona 4 Golden", "Twitter: @YukikoDiscord", "W/ @Asthriona's Feelings", "w/ Rise", "in her castle", "Bummer! an error happened!"]
+let statues = ["Persona 4 Golden", "Twitter: @YukikoApp", "W/ @Asthriona's Feelings", "w/ Rise", "in my castle", "Bummer! an error happened!"]
 bot.on('ready', () => {
     setInterval(function() {
         let status = statues[Math.floor(Math.random()*statues.length)];
@@ -68,8 +119,18 @@ bot.on('ready', () => {
         bot.user.setPresence({game: { name: status, type: "PLAYING"}
     })
 }, 600000)
+console.log('waiting for ready event...')
 console.log(`\x1b[32m${bot.user.username}\x1b[0m is now started and running in \x1b[31m${process.env.NODE_ENV} \x1b[0menvironement!`);
 });
+bot.once('ready', ()=>{
+    console.log('Init Player manager...')
+    bot.manager.init(bot.user.id);
+})
+//RAW (for erela.js)
+
+bot.on("raw", (d) => bot.manager.updateVoiceState(d));
+
+//XP On message
 
 bot.on('message', async message => {
     //XP System
@@ -96,7 +157,7 @@ bot.on('message', async message => {
                 level: 0,
                 message: messageAdd,
                 warns: 0,
-                avatarURL: message.author.displayAvatarURL
+                avatarURL: message.author.displayAvatarURL()
             })
 
             newUsers.save().catch(error => console.log(error));
@@ -104,7 +165,7 @@ bot.on('message', async message => {
             users.xp = users.xp + xpAdd;
             users.message = users.message + messageAdd
             users.username = message.author.username
-            users.avatarURL = message.author.displayAvatarURL
+            users.avatarURL = message.author.displayAvatarURL()
 
             let nxtlvl = 300 * Math.pow(2, users.level)
             if (users.xp >= nxtlvl) {
@@ -129,7 +190,7 @@ bot.on('message', async message => {
         if (!cards) {
             var newCards = new Cards({
                 did: message.author.id,
-                link: "https://cdn.asthriona.com/DefaultYukikocard.jpg"
+                link: "https://cdn.yukiko.app/Cards/DefaultYukikocard.jpg"
             })
             newCards.save().catch(error => console.log(error));
         }
@@ -138,9 +199,12 @@ bot.on('message', async message => {
 
 })
 
+//Message Event
+
 bot.on('message', async message => {
     if(message.author.bot) return;
 
+    //Todo Replace with MS or smth
     var date = new Date();
     var dd = String(date.getDate()).padStart(2, '0');
     var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -155,39 +219,29 @@ bot.on('message', async message => {
     if (message.channel.type === "dm") return console.log(`${date} DM from -> ${message.author.username}: ${message.content}`);
     console.log(`${date} ${message.guild.name} -> ${message.author.username}: ${message.content}`)
 
-
-    let prefix = botConfig.prefix;
+    //Setup Prefix and args
+    let prefix = Config.prefix;
     let messageArray = message.content.split(" ");
     let args = messageArray.slice(1);
     let cmd = messageArray[0];
 
     let filter = m => !m.author.bot;
     if(!prefix) return
-    //thinggy for music bot
-    var options = {
-        active: active
-    }
-
-    if (message.author.id === "186195458182479874" || "635422418424299521") {
-        if (cmd === `${prefix}leave`) {
-            message.channel.send("i'm out :)")
-            return message.guild.leave();
-        }
-    }
 
     //Force mute.
-    if (message.member.roles.find(r => r.name === "muted")) {
+    if (message.member.roles.cache.find(r => r.name === "muted")) {
         message.delete();
         message.author.send("You are muted on " + message.guild.name)
     };
     //Commands Handler
-    let commandfile = bot.commands.get(messageArray[0].slice(prefix.length));
-    if (commandfile) commandfile.run(bot, message, args, options);
+    let commandfile = bot.Commands.get(messageArray[0].slice(prefix.length));
+    if (commandfile) commandfile.run(bot, message, args, cmd);
 })
-bot.login(botConfig.token)
+bot.login(Config.token)
 
 //Cards Generation
 
+// Level Up card
 async function lvlupimg(message, users) {
     const applyText = (canvas, text) => {
         const ctx = canvas.getContext('2d');
@@ -234,6 +288,7 @@ async function lvlupimg(message, users) {
 })
 }
 
+// Welcome Card
 async function WelcomeCad(member, channel) {
     const applyText = (canvas, text) => {
         const ctx = canvas.getContext('2d');
@@ -264,7 +319,7 @@ Cards.findOne({
     ctx.fillStyle = '#fff';
     ctx.fillText("Joined the server! ", 280, 195);
     //Get avatar
-    var avatar = await Canvas.loadImage(member.user.displayAvatarURL);
+    var avatar = await Canvas.loadImage(member.user.displayAvatarURL({format: "jpg"}));
     ctx.beginPath();
     ctx.arc(140, 128, 110, 0, Math.PI * 2);
     ctx.closePath();
@@ -274,7 +329,7 @@ Cards.findOne({
     channel.send(`Welcome ${member.user}`, attachment)
 });
 }
-
+// Farewell card
 async function farewell(member, channel) {
     const applyText = (canvas, text) => {
         const ctx = canvas.getContext('2d');
@@ -307,7 +362,7 @@ async function farewell(member, channel) {
     ctx.fillStyle = '#fff';
     ctx.fillText("Left the server! ", 280, 195);
     //Get avatar
-    var avatar = await Canvas.loadImage(member.user.displayAvatarURL);
+    var avatar = await Canvas.loadImage(member.user.displayAvatarURL({format: "jpg"}));
     ctx.beginPath();
     ctx.arc(140, 128, 110, 0, Math.PI * 2);
     ctx.closePath();
@@ -317,9 +372,9 @@ async function farewell(member, channel) {
     channel.send(attachment)
 })
 };
-
+// Get Avatar
 async function GetAvatar(message, ctx) {
-    var avatar = await Canvas.loadImage(message.author.displayAvatarURL);
+    var avatar = await Canvas.loadImage(message.author.displayAvatarURL({format: "jpg"}));
     ctx.beginPath();
     ctx.arc(125, 140, 100, 0, Math.PI * 2);
     ctx.closePath();

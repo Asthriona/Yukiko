@@ -1,6 +1,0 @@
-{
-    "token": "Bot tokken",
-    "prefix": "a!",
-    "YtKey": "Youtube API KEY",
-    "dbLink": "mongodb://yukiko:127.0.0.1"
-}

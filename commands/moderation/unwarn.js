@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 var botConfig = require("../../botconfig.json");
-var { RichEmbed } = require("discord.js")
+var { MessageEmbed } = require("discord.js")
 
 mongoose.connect(botConfig.dbLink, {
     useNewUrlParser: true,
@@ -31,11 +31,11 @@ module.exports = {
             
 
             let logChannel = message.guild.channels.find(c => c.name === "incident")
-            var embed = new RichEmbed()
-            .setAuthor(`~Warn~ ${wUser}`, wUser.user.displayAvatarURL)
+            var embed = new MessageEmbed()()
+            .setAuthor(`~Warn~ ${wUser}`, wUser.user.displayAvatarURL())
             .setColor("PURPLE")
             .setTimestamp()
-            .setFooter(bot.user.username, bot.user.displayAvatarURL)
+            .setFooter(bot.user.username, bot.user.displayAvatarURL())
             .setDescription(`=> **Warn deleted from user: ** ${wUser} (${wUser.id})
             => **Deleted by:** ${message.author} (${message.author.id})
             => **warn Number:** ${users.warn}

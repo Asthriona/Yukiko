@@ -1,4 +1,4 @@
-var { RichEmbed } = require("discord.js");
+var { MessageEmbed } = require("discord.js");
 var beautify = require("beautify")
 var pjson = require('../../package.json');
 module.exports = {
@@ -6,7 +6,7 @@ module.exports = {
     category: "dev",
     description: "Run some code directly in discord! (developper only!)",
     run: async (bot, message, args) => {
-        if(!message.author.id === "186195458182479874") return message.reply("You are not a developper! you can't run code just like that!")
+        //if(!message.author.id === "186195458182479874") return message.reply("You are not a developper! you can't run code just like that!")
         if(!args[0]) return message.channel.send("Please gimme some good code!")
 
         try {
@@ -16,10 +16,10 @@ module.exports = {
             var toEval = args.join(" ")
             var evaluated = eval(toEval);
 
-            let embed = new RichEmbed()
+            let embed = new MessageEmbed()
             .setColor("PURPLE")
             .setTimestamp()
-            .setFooter(bot.user.username, bot.user.displayAvatarURL)
+            .setFooter(bot.user.username, bot.user.displayAvatarURL())
             .setTitle("Elva")
             .addField("To Evaluate:", `\`\`\`js\n${beautify(args.join(" "), {format: "js"})}\n\`\`\``)
             .addField("Evaluated:", evaluated)

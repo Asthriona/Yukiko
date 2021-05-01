@@ -5,15 +5,11 @@ module.exports = {
     aliases: ["setgame"],
     run: async (bot, message, args) => {
         if(message.member.hasPermission("BAN_MEMBERS")){
-            bot.user.setStatus('')
-            bot.user.setPresence({
-                game: {
-                    name: args.slice(1).join(" "),
-                    type: args[0],
-                    url: "https://www.twitch.tv/Asthriona"
-                }
-        });
+            console.log(args[0])
+            bot.user.setStatus('pog')
+            bot.user.setPresence({ activity: { name: args.join(" ")} })
         }else{
+            console.log("Nope")
             return message.reply("Oy! You can't tell me what to do! ");
         }
         

@@ -1,25 +1,19 @@
-var ytdl = require("ytdl-core")
+
 module.exports = {
     name: "skip",
     category: "music",
     description: "Skip the current video.",
     run: async (bot, message, args, ops) => {
-        var guildIDData = ops.active.get(message.guild.id)
-        if(!guildIDData) return message.reply("Nothing in the queue for now.");
-        if(message.member.voiceChannel !== message.guild.me.voiceChannel) return message.reply("Hey, i'm busy in another channel right now. sorry!");
-
-        var amountUsers = message.member.voiceChannel.members.size;
-        var amountSkip = Math.ceil(amountUsers / 2);
-        if(!guildIDData.queue[0].voteSkips) guildIDData.queue[0].voteSkips = [];
-        if(guildIDData.queue[0].voteSkips.includes(message.member.id)) return message.reply(`you can only vote once per song. ${guildIDData.queue[0].voteSkips.length}/${amountSkip}`);
-        guildIDData.queue[0].voteSkips.push(message.member.id);
-
-        ops.active.set(message.guild.id, guildIDData);
-
-        if(guildIDData.queue[0].voteSkips.length >= amountSkip){
-            message.channel.send(`Vote skip passed! ${guildIDData.queue[0].voteSkips.length}/${amountSkip}`)
-            return guildIDData.dispatcher.emit("end")
-        }
-        message.channel.send(`A vote skip has been started! ${guildIDData.queue[0].voteSkips.length}/${amountSkip}`)
+        const player = bot.manager.get(message.guild.id)
+        if(!player || player.playing == false) return message.reply('Nothing is playing at the moment');
+        if(player.trackRepeat == true) {
+			player.setTrackRepeat(false);
+			await player.stop();
+			message.channel.send(`${player.queue.current.title} has been skiped, repeat is disabled. \`${this.client.prefix}repeat\` to re-enable `);
+		}
+		else{
+			player.stop();
+			message.channel.send(`${player.queue.current.title} has been skiped.`);
+		}
     }
 }

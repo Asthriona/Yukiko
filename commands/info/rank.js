@@ -62,9 +62,10 @@ module.exports = {
                 ctx.fillStyle = '#fff';
                 ctx.fillText(`next level in ${xpLeft} XP`, 280, 225);
                 //Get avatar
+                console.log('pog')
                 await GetAvatar(message, ctx);
                 //Put all the things together and send it in a nice package.
-                var lvlimg = new discord.Attachment(canvas.toBuffer(), 'rank-cards.png');
+                var lvlimg = new discord.MessageAttachment(canvas.toBuffer(), 'rank-cards.png');
                 message.reply(lvlimg)
             });
         })
@@ -75,6 +76,8 @@ async function GetAvatar(message, ctx) {
     //I HATE this part. I think here at the Yukiko Dev Team Incorporation ltd llc Group we all hate this part.
     // If Anyone know how to use canvas and this part better than us, please feel free to PR :) 
     // (or if you are a dev of node-canvas please contact me on Twitter/Github @Asthriona )
+
+    //EDIT: We did it better on Yukiko :) (https://Yukiko.app) - Asthriona.
 
     //Avatar function
     //get user in the database.
@@ -100,7 +103,7 @@ async function GetAvatar(message, ctx) {
             ctx.arc(125, 140, 102, 0,Math.PI * 2);
             ctx.stroke();
     //Print the profile picture.
-    var avatar = await Canvas.loadImage(message.author.displayAvatarURL);
+    var avatar = await Canvas.loadImage(message.author.displayAvatarURL({ format: 'jpg' }));
     ctx.beginPath();
     ctx.arc(125, 140, 100, 0, Math.PI * 2);
     ctx.closePath();

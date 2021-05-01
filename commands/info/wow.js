@@ -1,4 +1,6 @@
-var { RichEmbed } = require('discord.js');
+// Well... I got this commands working on another bot (private commission) but I think i never finished it here. 
+// Naw worries, its on my todo list :)
+var { MessageEmbed } = require('discord.js');
 var superagent = require('superagent');
 var axios = require('axios');
 var botConfig = require('../../botconfig.json')
@@ -18,7 +20,7 @@ module.exports = {
         
           if(message.author.id === "186195458182479874"){
           if(res.data.faction === 0){
-            var wowembed = new RichEmbed()
+            var wowembed = new MessageEmbed()()
             .setTitle("Infos for: " + args)
             .addField("Name:", res.data.name, true)
             .addField("Realm", res.data.realm, true)
@@ -34,7 +36,7 @@ module.exports = {
             .addField("ID", res.data.id, true)
             message.channel.send(wowembed)
           }else{
-            var wowembed = new RichEmbed()
+            var wowembed = new MessageEmbed()()
             .setTitle("Infos for: " + args)
             .addField("Name:", res.data.name, true)
             .addField("Realm", res.data.realm, true)

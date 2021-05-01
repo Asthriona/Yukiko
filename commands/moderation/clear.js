@@ -4,7 +4,7 @@ module.exports = {
     aliases: ["delete", "suppr", "remove"],
     description: "delete a lot of message :O",
     usage: "!clear [1 - 100]",
-    run: async (bot, message, args, RichEmbed) => {
+    run: async (bot, message, args) => {
             if(message.deletable){
                 message.delete();
             }
@@ -24,7 +24,7 @@ module.exports = {
                 deleteAmount = parseInt(args[0]);
             }
             message.channel.bulkDelete(deleteAmount, true)
-                .then(deleted => message.channel.send(`I deleted ${deleted.size} messages.`)).then(m => m.delete(1000))
-                .catch(err => message.reply("Woops! An error sucessfully happened! " + err))
+                .then(deleted => message.channel.send(`I deleted ${deleted.size} messages.`)).then(m => m.delete({ timeout: 20000}))
+                .catch(err => message.reply("Yikes! An error sucessfully happened! " + err))
     }
 }

@@ -1,5 +1,5 @@
 var superagent = require("superagent");
-var { RichEmbed } = require("discord.js");
+var { MessageEmbed } = require("discord.js");
 module.exports = {
     name: "wink",
     category: "info",
@@ -7,7 +7,7 @@ module.exports = {
     run: async (bot, message, args) => {
         let {body} = await superagent
         .get(`https://some-random-api.ml/animu/wink`);
-        let winkembed = new RichEmbed()
+        let winkembed = new MessageEmbed()
         .setColor("#800080")
         .setTitle("winky Face! ;)")
         .setImage(body.link);
