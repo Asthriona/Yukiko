@@ -31,8 +31,8 @@ module.exports = {
                         break
                     case 'SEARCH_RESULT':
                         let index = 1;
-                        const tracks = res.track.slice(0,5);
-                        const embed = new MessageEmbed()()
+                        const tracks = res.tracks.slice(0,5);
+                        const embed = new MessageEmbed()
                         .setAuthor('Song Selection', bot.user.displayAvatarURL())
                         .setDescription(tracks.map(video => `**${index++} - ** ${video.title}`))
                         .setFooter('Your response time close within 30 seconds.')
