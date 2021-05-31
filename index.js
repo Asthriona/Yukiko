@@ -60,12 +60,9 @@ bot.manager = new Manager({
 			.setTimestamp()
 			.setFooter(bot.user.username, bot.user.displayAvatarURL());
 		bot.channels.cache.get(player.textChannel).send(nowPlayingEmbed);
-		// this.client.dogstats.increment("Yukiko.Voice", 1)
 	})
 	.on('queueEnd', (player) => {
-		client.dogstats.increment('Yukiko.stream', -1);
-		client.channels.cache.get(player.textChannel).send('Queue has ended.');
-		this.client.dogstats.decrements('Yukiko.Voice', 1);
+		bot.channels.cache.get(player.textChannel).send('Queue has ended.');
 		player.destroy();
 	});
     bot.on("raw", (d) => bot.manager.updateVoiceState(d));
