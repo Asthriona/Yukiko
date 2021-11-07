@@ -1,5 +1,5 @@
 module.exports = {
-	name: "invit",
+	name: "invite",
 	category: "info",
 	description: "Create an invitation to this server",
 	run: async (bot, message) => {
