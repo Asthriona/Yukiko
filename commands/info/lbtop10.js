@@ -21,7 +21,7 @@ module.exports = {
 			if(err) console.log(err);
 			const embed = new MessageEmbed()
 				.setTitle("Yukiko's Leaderboard!")
-				.setThumbnail(bot.user.displayAvatarURL())
+				.setThumbnail(message.guild.iconURL())
 				.setDescription("Here is our top10!")
 				.setFooter(`Powered by ${bot.user.username}`, bot.user.displayAvatarURL());
 			if(res.length === 0) {
@@ -59,7 +59,7 @@ module.exports = {
 					}
 				}
 			}
-			message.channel.send(embed);
+			message.reply({ embeds: [embed] });
 		});
 
 	},
