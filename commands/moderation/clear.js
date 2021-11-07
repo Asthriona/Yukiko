@@ -8,13 +8,13 @@ module.exports = {
 		if(message.deletable) {
 			message.delete();
 		}
-		if (!message.member.hasPermission("MANAGE_MESSAGES")) {
+		if (!message.member.permissions.has("MANAGE_MESSAGES")) {
 			return message.reply("you dont have the permissions to delete those message!");
 		}
 		if (isNaN(args[0]) || parseInt(args[0]) <= 0) {
 			return message.reply("Oh my... Is this even a number?! Please use a number between 0 and 100 in numeric value.");
 		}
-		if(!message.guild.me.hasPermission("MANAGE_MESSAGES")) {
+		if(!message.guild.me.permissions.has("MANAGE_MESSAGES")) {
 			return message.reply("I dont have the permissions to do that. Please add 'MANAGE_MESSAGES' to my permissions.");
 		}
 		let deleteAmount;

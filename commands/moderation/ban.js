@@ -14,10 +14,10 @@ module.exports = {
 		if(!args[1]) {
 			return message.reply(" ❌ Please provide a reason to ban someone.");
 		}
-		if(!message.member.hasPermission("BAN_MEMBERS")) {
+		if(!message.member.permissions.has("BAN_MEMBERS")) {
 			return message.reply(" ❌ You don't have the permission to ban somebody. Please use a!report.");
 		}
-		if(!message.guild.me.hasPermission("BAN_MEMBERS")) {
+		if(!message.guild.me.permissions.has("BAN_MEMBERS")) {
 			return message.reply(" ❌ I don't have to permissions to ban.");
 		}
 
@@ -65,12 +65,12 @@ module.exports = {
 			.setTimestamp()
 			.setFooter(bot.user.username, bot.user.displayAvatarURL());
 
-		await message.channel.send(promptEmbed).then(async msg =>{
+		await message.channel.send({ embeds: [promptEmbed] }).then(async msg =>{
 			const emoji = await promptMessage(msg, message.author, 30, ["✔️", "❌"]);
 			if(emoji === "✔️") {
 				msg.delete();
-				logChannel.send(embed);
-				message.channel.send(publicEmbed);
+				logChannel.send({ embeds: [embed] });
+				message.channel.send({ embeds: [publicEmbed] });
 				toban.ban(args.slice(1).join(" ") + " by " + message.author.username)
 					.catch(err => {
 						if(err) return message.channel.send("Error: \n ```" + err + "```");

@@ -14,10 +14,10 @@ module.exports = {
 		if(!args[1]) {
 			return message.reply(" ❌ Please provide a reason to kick someone.");
 		}
-		if(!message.member.hasPermission("KICK_MEMBERS")) {
+		if(!message.member.permissions.has("KICK_MEMBERS")) {
 			return message.reply(" ❌ You don't have the permission to kick somebody. Please use a!report.");
 		}
-		if(!message.guild.me.hasPermission("KICK_MEMBERS")) {
+		if(!message.guild.me.permissions.has("KICK_MEMBERS")) {
 			return message.reply(" ❌ I don't have to permissions to Kick.");
 		}
 
