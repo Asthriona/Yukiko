@@ -39,5 +39,8 @@
   "bugs": {
     "url": "https://github.com/Asthriona/Yukiko/issues"
   },
-  "homepage": "https://github.com/Asthriona/Yukiko#readme"
+  "homepage": "https://github.com/Asthriona/Yukiko#readme",
+  "devDependencies": {
+    "eslint": "^8.2.0"
+  }
 }
