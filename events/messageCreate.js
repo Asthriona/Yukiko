@@ -7,6 +7,8 @@ module.exports = {
 	name: "messageCreate",
 	once: false,
 	async execute(message, bot) {
+		// ignore types of messages or without prefix.
+		if (message.channel.type === "dm") return;
 		if(message.author.bot) return;
 		// DA NEW XP SYSTEM 2.0
 		const xpAdd = Math.ceil(Math.random() * 15);
@@ -67,17 +69,13 @@ module.exports = {
 			}
 		});
 
-		// ignore types of messages or without prefix.
-		if (message.channel.type === "dm") return;
-		if(message.author.bot) return;
-		if(!prefix) return;
-
 		// Setup Prefix and args
 		const prefix = Config.prefix;
 		const messageArray = message.content.split(" ");
 		const args = messageArray.slice(1);
 		const cmd = messageArray[0];
 
+		if(!prefix) return;
 		// Commands Handler
 		const commandfile = bot.Commands.get(messageArray[0].slice(prefix.length));
 		if (commandfile) commandfile.run(bot, message, args, cmd);
