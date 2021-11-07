@@ -1,0 +1,48 @@
+{
+	"extends": "eslint:recommended",
+	"env": {
+		"node": true,
+		"es6": true
+	},
+	"parserOptions": {
+		"ecmaVersion": 2019
+	},
+	"rules": {
+		"brace-style": ["warn", "stroustrup", { "allowSingleLine": true }],
+		"comma-dangle": ["warn", "always-multiline"],
+		"comma-spacing": "warn",
+		"comma-style": "warn",
+		"curly": ["warn", "multi-line", "consistent"],
+		"dot-location": ["warn", "property"],
+		"handle-callback-err": "off",
+		"indent": ["warn", "tab"],
+		"max-nested-callbacks": ["warn", { "max": 4 }],
+		"max-statements-per-line": ["warn", { "max": 2 }],
+		"no-console": "off",
+		"no-empty-function": "warn",
+		"no-floating-decimal": "warn",
+		"no-inline-comments": "warn",
+		"no-inner-declarations": "off",
+		"no-lonely-if": "warn",
+		"no-multi-spaces": "warn",
+		"no-multiple-empty-lines": ["warn", { "max": 2, "maxEOF": 1, "maxBOF": 0 }],
+		"no-shadow": ["warn", { "allow": ["err", "resolve", "reject"] }],
+		"no-trailing-spaces": ["warn"],
+		"no-var": "warn",
+		"object-curly-spacing": ["warn", "always"],
+		"prefer-const": "warn",
+		"quotes": ["warn", "double"],
+		"semi": ["warn", "always"],
+		"space-before-blocks": "warn",
+		"space-before-function-paren": ["warn", {
+			"anonymous": "never",
+			"named": "never",
+			"asyncArrow": "always"
+		}],
+		"space-in-parens": "warn",
+		"space-infix-ops": "warn",
+		"space-unary-ops": "warn",
+		"spaced-comment": "warn",
+		"yoda": "warn"
+	}
+}
