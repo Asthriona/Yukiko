@@ -33,7 +33,7 @@ module.exports = {
 						.addField("faction", "Alliance", true)
 						.addField("Total Honorable Kills", res.data.totalHonorableKills, true)
 						.addField("ID", res.data.id, true);
-					message.channel.send(wowembed);
+					message.channel.send({ embeds: [wowembed] });
 				}
 				else{
 					const wowembed = new MessageEmbed()()
@@ -50,7 +50,7 @@ module.exports = {
 						.addField("faction", "Horde", true)
 						.addField("Total Honorable Kills", res.data.totalHonorableKills, true)
 						.addField("ID", res.data.id, true);
-					message.channel.send(wowembed);
+					message.channel.send({ embeds: [wowembed] });
 				}
 			}
 		}).catch(err => message.channel.send("WAW! an error sucessfully happened! ```" + err + "```"));

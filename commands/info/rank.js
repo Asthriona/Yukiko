@@ -66,7 +66,7 @@ module.exports = {
 				await GetAvatar(message, ctx);
 				// Put all the things together and send it in a nice package.
 				const lvlimg = new discord.MessageAttachment(canvas.toBuffer(), "rank-cards.png");
-				message.reply(lvlimg);
+				message.reply({ files: [lvlimg] });
 			});
 		});
 	},

@@ -23,6 +23,6 @@ module.exports = {
 			.setURL("https://reddit.com" + allowed[randomNumber].data.permalink)
 			.setTimestamp()
 			.setFooter(bot.user.username, bot.user.displayAvatarURL());
-		return message.channel.send(embed);
+		return message.channel.send({ embeds: [embed] });
 	},
 };

@@ -12,6 +12,6 @@ module.exports = {
 			.setTitle("winky Face! ;)")
 			.setImage(body.link);
 
-		message.channel.send(winkembed);
+		message.channel.send({ embeds: [winkembed]});
 	},
 };
