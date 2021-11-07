@@ -1,33 +1,37 @@
 /*  
-/   Even if Updated this code is still very old, and use some old Yukiko 1.0 code, I didnt really knew what I was doing back then.
-/   expect a lot of changement whenever I found the will to update it, for now its more a practical update to get it to work with Djs 12. 
-/   I also added Erela for Youtube so you have something better to work with. but you need an external server (Lavalink) to get it to work.
-/   I may switch to a dockerized version when i've learned it so one command install with mongo and Lavalink.
-/   You can find Lavalink here: https://github.com/freyacodes/Lavalink-Client
-/   -Asthriona
+/   Morning! Time to get Dirty again. I dont have to will to create a whole new client for this, but as you are still starring the project I will update it
+/ 	for Discord.js v13.
+/ 	I mean so it start. Might add slash commands support later.
+/	if any of you wanna help update it, feel free to open a PR :)
+/	Rise (https://github.com/Heazher) or myself will be more than happy to review it!
+/	- Asthriona
 */
 
-var { Client, MessageEmbed, Collection } = require('discord.js');
-var Config = require('./botconfig.json');
-var fs = require("fs");
-var mongoose = require("mongoose");
+const { Client, MessageEmbed, Collection } = require('discord.js');
+const Config = require('./botconfig.json');
+const fs = require("fs");
+const mongoose = require("mongoose");
 const { Manager } = require("erela.js");
 
-var bot = new Client({
-    disableEveryone: true
+const bot = new Client({ 
+	disableMentions: "everyone",
+	partials: ["USER", "MESSAGE", "CHANNEL", "REACTION"],
+	intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_VOICE_STATES", "GUILD_MESSAGE_REACTIONS"],
 });
 
-//YukikoDB
+// Connection to mongoDB
 mongoose.connect(Config.dbLink, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).catch(error => handleError(error));
+
 mongoose.connection.on('error', function (e) {
     console.log('YukikoDB: Can not connect Error: ' + e);
     var { bot } = new discord.Client({ disableMentions: 'everyone' });
     bot.commands = new discord.Collection();
     process.exit();
 });
+
 mongoose.connection.once('open', function (d) {
     console.log("\x1b[32mYukikoDB:\x1b[0m connected to \x1b[31m" + mongoose.connection.host + " \x1b[0m");
 })
