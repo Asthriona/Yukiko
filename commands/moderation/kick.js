@@ -42,7 +42,7 @@ module.exports = {
 		}
 
 		const embed = new MessageEmbed()()
-			.setAuthor("~Kick!~")
+			.setAuthor({ name: "~Kick!~"})
 			.setColor("#FF0000")
 			.setThumbnail(toKick.user.displayAvatarURL())
 			.setFooter(bot.user.username, bot.user.displayAvatarURL())
@@ -53,17 +53,17 @@ module.exports = {
 
 		const promptEmbed = new MessageEmbed()()
 			.setColor("GREEN")
-			.setAuthor("This verification becomes invalid after 30s.")
+			.setAuthor({ name: "This verification becomes invalid after 30s."})
 			.setDescription(`Do you want to kick ${toKick}?`)
 			.setTimestamp();
 
 		const publicEmbed = new MessageEmbed()()
 			.setColor("PURLPLE")
-			.setAuthor(bot.user.username, bot.user.displayAvatarURL())
+			.setAuthor({ name: bot.user.username, iconURL: bot.user.displayAvatarURL() })
 			.setDescription(`${toKick} Just got kicked by ${message.author}!`)
 			.setImage("https://cdn.asthriona.com/kick.gif")
 			.setTimestamp()
-			.setFooter("Kick Sponsored by Asthriona LLC!", bot.user.displayAvatarURL());
+			.setFooter({ text: "Kick Sponsored by Asthriona LLC!", iconURL: bot.user.displayAvatarURL() });
 
 		await message.channel.send(promptEmbed).then(async msg =>{
 			const emoji = await promptMessage(msg, message.author, 30, ["✔️", "❌"]);

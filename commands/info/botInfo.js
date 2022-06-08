@@ -8,7 +8,7 @@ module.exports = {
 		const botembed = new MessageEmbed()
 			.setThumbnail(bot.user.displayAvatarURL)
 			.setTitle("About this bot:")
-			.setAuthor(bot.user.username, bot.user.displayAvatarURL(), "https://yukiko.app/")
+			.setAuthor({name: bot.user.username, iconURL: bot.user.displayAvatarURL(), "https://yukiko.app/"})
 			.setDescription("this bot can make your cat explode, Mount the DOGO, burn your egg and clean your house. (but not your room. we tested all of this.(RIP my cat...))")
 			.setColor("#800080")
 			.addField("Bot name:", bot.user.username, true)
@@ -23,7 +23,7 @@ module.exports = {
 			.addField("Site: ", "http://yukiko.nishikino.me/", true)
 			.addField("Guilds Using this bot: ", bot.guilds.size, true)
 			.setTimestamp()
-			.setFooter(bot.user.username, bot.user.displayAvatarURL());
+			.setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() });
 		return message.reply({ embeds: [botembed] });
 	},
 };

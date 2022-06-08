@@ -15,9 +15,9 @@ module.exports = {
 				total = total + queue.duration;
 			});
 			const queueEmbed = new MessageEmbed()()
-				.setAuthor("Playlist " + ms(total, { long: true }), message.author.displayAvatarURL())
+				.setAuthor({name: "Playlist " + ms(total, { long: true }), iconURL: message.author.displayAvatarURL() })
 				.setTitle(`Now Playing: ${player.queue.current.title} requested by: ${player.queue.current.requester.username}`)
-				.setFooter(`${bot.user.username} - Yukiko Dev Team`, bot.user.displayAvatarURL());
+				.setFooter({ text: `${bot.user.username} - Yukiko Dev Team`, iconURL: bot.user.displayAvatarURL() });
 			queueEmbed.addField("Last Song:", player.queue.previous ? `${player.queue.previous.title} | ${player.queue.previous.requester.username}` : "No previously played songs.");
 			for (let i = 0; i < player.queue.length; i += 10) {queueEmbed.splitFields(player.queue.map(track => `${++i}) 『${track.title}』 | Requested by <@${track.requester.id}>`).join(("\n")));}
 			message.channel.send(queueEmbed);

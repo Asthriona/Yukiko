@@ -42,7 +42,7 @@ module.exports = {
 		}
 
 		const embed = new MessageEmbed()()
-			.setAuthor("~Ban!~")
+			.setAuthor({ name: "~Ban!~", iconURL: message.author.displayAvatarURL()})
 			.setColor("#FF0000")
 			.setThumbnail(toban.user.displayAvatarURL())
 			.setFooter(bot.user.username, bot.user.displayAvatarURL())
@@ -53,17 +53,17 @@ module.exports = {
 
 		const promptEmbed = new MessageEmbed()()
 			.setColor("GREEN")
-			.setAuthor("This verification becomes invalid after 30s.")
+			.setAuthor({ name: "This verification becomes invalid after 30s." })
 			.setDescription(`Do you want to ban ${toban}?`)
 			.setTimestamp();
 
 		const publicEmbed = new MessageEmbed()()
 			.setColor("PURLPLE")
-			.setAuthor(bot.user.username, bot.user.displayAvatarURL())
+			.setAuthor({ name: bot.user.username, iconURL: bot.user.displayAvatarURL() })
 			.setDescription(`${toban} Just got baned by ${message.author}!`)
 			.setImage("https://media.giphy.com/media/xUO4t2gkWBxDi/giphy.gif")
 			.setTimestamp()
-			.setFooter(bot.user.username, bot.user.displayAvatarURL());
+			.setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() });
 
 		await message.channel.send({ embeds: [promptEmbed] }).then(async msg =>{
 			const emoji = await promptMessage(msg, message.author, 30, ["✔️", "❌"]);

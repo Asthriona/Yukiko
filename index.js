@@ -61,11 +61,11 @@ bot.manager = new Manager({
 			return player.destroy();
 		}
 		const nowPlayingEmbed = new MessageEmbed()
-			.setAuthor("Now playing", bot.user.displayAvatarURL())
+			.setAuthor({ name: "Now playing", iconURL: bot.user.displayAvatarURL()})
 			.setDescription(`Now playing 『${track.title}』 requested by ${track.requester}`)
 			.setImage(track.displayThumbnail("mqdefault"))
 			.setTimestamp()
-			.setFooter(bot.user.username, bot.user.displayAvatarURL());
+			.setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL()});
 		bot.channels.cache.get(player.textChannel).send(nowPlayingEmbed);
 	})
 	.on("queueEnd", (player) => {

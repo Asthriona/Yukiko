@@ -21,10 +21,10 @@ module.exports = {
 		const created = formatDate(member.user.createdAt);
 
 		const embed = new MessageEmbed()
-			.setFooter(bot.user.username, bot.user.displayAvatarURL())
+			.setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL() })
 			.setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
 			.setColor(member.displayHexColor === "#000000" ? "#ffffff" : member.displayHexColor)
-			.setAuthor(message.author.username, message.author.displayAvatarURL())
+			.setFooter({ text: bot.user.username, iconURL: bot.user.displayAvatarURL() })
 
 			.addField("Member information:", stripIndents`**=> Display name:** ${member.displayName}
             **=> Joined at:** ${joined}

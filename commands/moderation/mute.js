@@ -9,6 +9,8 @@ module.exports = {
 	usage: "!mute <@mention> <time> <reason>",
 	run: async (bot, message, args) => {
 		// I need to fix that yeah... Eh I said I update the bot, not fixed all the shit. Re-reading this code is a pain...
+		// LOL I was checking all the embed to update the code, but since this thing is disabled fuck it. I wont do it.
+		// I will change all those things anyway. this code is such a pain OMG.
 		return message.reply("Command temporarly disabled.");
 		const tomute = message.mentions.members.first() || message.guild.members.cache.get(args[0]);
 		if (!tomute) return message.reply("Erreur 10-Mun-f. Merci de spécifier un utilisateur.");

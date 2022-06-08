@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 module.exports = {
 	name: "say",
 	category: "Moderation",
-	description: " ",
+	description: "Let the bot speak for you",
 	run: async (bot, message, args) => {
 		if(!message.member.permissions.has("BAN_MEMBERS")) return message.reply("Oy! dont tell me what to say!");
 		if(message.deletable) message.delete();
@@ -12,10 +12,10 @@ module.exports = {
 		if(args[0].toLowerCase() === "embed") {
 			const embed = new Discord.MessageEmbed()
 				.setColor(roleColor)
-				.setAuthor(message.author.username, message.author.displayAvatarURL())
+				.setAuthor({ name: message.author.username, iconURL: message.author.displayAvatarURL()})
 				.setDescription(args.slice(1).join(" "))
 				.setTimestamp()
-				.setFooter(`Powered by: ${bot.user.username}`, bot.user.displayAvatarURL());
+				.setFooter({ name: `Powered by: ${bot.user.username}`, iconURL: bot.user.displayAvatarURL()});
 			message.channel.send({ embeds:[embed] });
 		}
 		else{
