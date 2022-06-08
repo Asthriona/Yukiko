@@ -1,5 +1,5 @@
 /*
-/   Morning! Time to get Dirty again. I dont have to will to create a whole new client for this, but as you are still starring the project I will update it
+/   Morning! Time to get Dirty again. I dont have the will to create a whole new client for this, but as you are still starring the project I will update it
 / 	for Discord.js v13.
 / 	I mean so it start. Might add slash commands support later.
 /	if any of you wanna help update it, feel free to open a PR :)
@@ -7,9 +7,15 @@
 /	- Asthriona
 */
 
+/*
+/ Okay time to add the slash commands I guess...
+/ I wanted to test github codespace anyway soooo...
+*/
+
 const { Client, MessageEmbed, Collection } = require("discord.js");
 const Config = require("./botconfig.json");
 const fs = require("fs");
+const path = require("path");
 const mongoose = require("mongoose");
 const { Manager } = require("erela.js");
 
@@ -67,6 +73,17 @@ bot.manager = new Manager({
 		player.destroy();
 	});
 bot.on("raw", (d) => bot.manager.updateVoiceState(d));
+
+// Slash command Handler
+bot.slash = new Collection();
+const SlashPath = path.join(__dirname, "slash/commands");
+const SlashFiles = fs.readdirSync(SlashPath).filter(file => file.endsWith(".js"));
+
+for(const file of SlashFiles) {
+	const filePath = path.join(SlashPath, file);
+	const Slash = require(filePath);
+	bot.slash.set(Slash.data.name, Slash);
+}
 
 // Command Handler
 bot.Commands = new Collection();
