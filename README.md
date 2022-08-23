@@ -4,10 +4,10 @@ As Yukiko 2.0 (Closed sources) grow I don't have much time to work and update th
  [![Discord Bots](https://top.gg/api/widget/status/641626560457342987.svg)](https://top.gg/bot/641626560457342987)
   
 ## Edit (21/04/21)
-You are a lot to still star this thing so I updated it, should be working fine now, and updated to djs 12 and better music system. I didnt put as much work or code quality then in Yukiko.app but its working. Your welcome :)
+You are a lot to still star this thing so I updated it, should be working fine now, and updated to djs 12 and better music system. I didnt put as much work or code quality than on Yukiko.app but its working. You are very welcome :)
   
 # Yukiko
-Yukiko is a pretty powerfull Discord bot that include XP system, Leaderboard, Music, Welcome and farewell message, Moderation, and much more!
+Yukiko is a powerfull Discord bot that include XP system, Leaderboard, Music, Welcome and farewell message, Moderation, and much more!
 
 This bot is in developement state and actively updated, Feel free to come back take a look to our change logs!
 
