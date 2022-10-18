@@ -1,18 +1,13 @@
 /*
-/   Morning! Time to get Dirty again. I dont have the will to create a whole new client for this, but as you are still starring the project I will update it
-/ 	for Discord.js v13.
-/ 	I mean so it start. Might add slash commands support later.
-/	if any of you wanna help update it, feel free to open a PR :)
-/	Rise (https://github.com/Heazher) or myself will be more than happy to review it!
+/   Welp, Discord used Yukiko-dev-team as an exemple for their new ToS enforcement. because they are releasing a new feature with YouTube.
+/ 	So I guess I have time again?
+/ 	funyn they wont reply to the ticket they TOLD me to make.
+/ 	so this might be last update of this bot and then I leave Discord to use LINE, messenger, or something else.
+/   Here is the link to my LINE account :) https://line.me/ti/p/FOBYHR9htn
 /	- Asthriona
 */
 
-/*
-/ Okay time to add the slash commands I guess...
-/ I wanted to test github codespace anyway soooo...
-*/
-
-const { Client, MessageEmbed, Collection } = require("discord.js");
+const { Client, MessageEmbed, Collection, GatewayIntentBits } = require("discord.js");
 const Config = require("./botconfig.json");
 const fs = require("fs");
 const path = require("path");
@@ -21,15 +16,15 @@ const { Manager } = require("erela.js");
 
 const bot = new Client({
 	disableMentions: "everyone",
-	partials: ["USER", "MESSAGE", "CHANNEL", "REACTION"],
-	intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_VOICE_STATES", "GUILD_MESSAGE_REACTIONS"],
+	// partials: ["USER", "MESSAGE", "CHANNEL", "REACTION"],
+	intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.GuildMembers],
 });
 
 // Connection to mongoDB
 mongoose.connect(Config.dbLink, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
-}).catch(error => console.log(error));
+}).catch(error => console.error(error));
 
 mongoose.connection.on("error", function(e) {
 	console.log("YukikoDB: Can not connect Error: " + e);
