@@ -1,4 +1,4 @@
-const superagent = require("superagent");
+const axios = require("axios");
 const { MessageEmbed } = require("discord.js");
 
 module.exports = {
@@ -7,7 +7,7 @@ module.exports = {
 	description: "Send an image from a sub reddit!",
 	usage: "$reddit [sub-reddit]",
 	run: async (bot, message, args) => {
-		const { body } = await superagent
+		const { body } = await axios
 			.get(`https://www.reddit.com/r/${args}.json?sort=top&t=week`)
 			.query({ limit: 800 });
 

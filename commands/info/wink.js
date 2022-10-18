@@ -1,11 +1,11 @@
-const superagent = require("superagent");
+const axios = require("axios");
 const { MessageEmbed } = require("discord.js");
 module.exports = {
 	name: "wink",
 	category: "info",
 	description: "send a Winky face!",
 	run: async (bot, message) => {
-		const { body } = await superagent
+		const { body } = await axios
 			.get("https://some-random-api.ml/animu/wink");
 		const winkembed = new MessageEmbed()
 			.setColor("#800080")
