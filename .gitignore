@@ -71,3 +71,4 @@ IbeatYou.js
 createinvite.js
 commands/dev/fetch.js
 commands/dev/create.js
+package-lock.json
